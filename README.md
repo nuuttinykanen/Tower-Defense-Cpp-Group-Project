@@ -9,6 +9,18 @@ You can use Markdown language to render it as formatted **HTML** file.
 - Member 3
 - Member 4
 
+# Installation
+
+Instructions for windows with clion IDE:
+- Download SFML: https://www.sfml-dev.org/files/SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip
+- Extract SFML-2.5.1 folder to C:\
+- Download MinGW 7.3.0 (64-bit): https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/7.3.0/threads-posix/seh/x86_64-7.3.0-release-posix-seh-rt_v5-rev0.7z/download
+- Extract MinGw to C:\
+- Install and open clion
+- From the welcome screen click "Get from vsc" and write to url: git@version.aalto.fi:cpp-autumun-2021/tower-defense/tower-defense-12.git
+- (If you don't get the welcome screen close the current project from file -> close project)
+- Start the project from upright panel
+
 # Repository organization
 Your project implementation should follow the skelaton organization in this repository.
 See readme.md files in each folder.

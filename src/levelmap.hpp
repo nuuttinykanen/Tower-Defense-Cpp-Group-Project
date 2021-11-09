@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream>
 class LevelMap {
 
   public:
@@ -24,7 +25,7 @@ class LevelMap {
     for(auto it : enemy_path) {
       std::pair<int, int> first = it.first;
       std::pair<int, int> second = it.second;
-      while(it.first != it.second) {
+      while(first != second) {
         std::pair<int, int> ins = std::make_pair(first.first, first.second);
         EnemyPathSquare* new_square = new EnemyPathSquare(ins.first, ins.second);
         ChangeSquare(ins.first, ins.second, new_square);
@@ -32,13 +33,14 @@ class LevelMap {
 
         // for ex. (2, 4) -> (2, 9)
         if(first.first == second.first) {
+          std::cout << "awnfsaijnfkljsdnfldsjk " << std::endl;
           if(first.second < second.second) first.second++;
           else first.second--;
         }
         // for ex. (2, 4) -> (9, 4)
         else {
           if(first.first < second.first) first.first++;
-          else first.second++;
+          else first.first--;
         }
       }
     }

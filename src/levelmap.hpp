@@ -4,13 +4,14 @@
 #include <string>
 #include <iostream>
 #include "tower.hpp"
+#include "enemy.hpp"
 class LevelMap {
 
   public:
   // TODO: Path validity checks. 
   LevelMap(size_t size, std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path) : size_(size) {
-    towers_ = std::vector<std::string>();
-    enemies_ = std::vector<std::string>();
+    towers_ = std::vector<Tower*>();
+    enemies_ = std::vector<Enemy*>();
     squares_ = std::map<std::pair<int, int>, MapSquare*>();
     e_path_begin_ = enemy_path.at(0).first;
     e_path_end_ = enemy_path.at(enemy_path.size() - 1).second;
@@ -53,21 +54,28 @@ class LevelMap {
     this->GetEpathSquares();
     this->GetFreeSquares();
     this->GetEnemySquares();
-    std::vector<std::string> enemies;
-    enemies.push_back("zombie");
-    enemies.push_back("frankenstein's monster");
+    std::vector<Enemy*> enemies;
+    Enemy* zombie = new Zombie;
+    Enemy* myers = new MichaelMyers;
+    enemies.push_back(zombie);
+    enemies.push_back(myers);
     EnemySquare* e_square = new EnemySquare(0, 4, enemies);
     this->ChangeSquare(0, 4, e_square);
     for(auto it : this->EnemiesAt(0, 4)) {
-      std::cout << it << std::endl;
+      std::cout << it->GetName() << std::endl;
     }
+    Tower* new_t = new Tower("SDADSA", 2, 5, 1, nullptr);
+    TowerSquare* t_square = new TowerSquare(4, 4, *new_t);
+    this->ChangeSquare(4, 4, t_square);
+
+    this->GetTowerSquares();
    }
 
   
   
   std::map<std::pair<int, int>, MapSquare*>& GetSquares() { return squares_; }
-  std::vector<std::string>& GetTowers() { return towers_; }
-  std::vector<std::string>& GetEnemies()  { return enemies_; }
+  std::vector<Tower*>& GetTowers() { return towers_; }
+  std::vector<Enemy*>& GetEnemies()  { return enemies_; }
 
   MapSquare* GetSquare(int x, int y) const { return squares_.at(std::make_pair(x, y)); }
 
@@ -120,12 +128,12 @@ class LevelMap {
   }
 
 
-  std::vector<std::string> EnemiesAt(int x, int y) {
+  std::vector<Enemy*> EnemiesAt(int x, int y) {
     MapSquare* square = this->GetSquare(x, y);
     for(auto it : this->GetEnemySquares()) {
       if(it.second == square) return it.second->getEnemies();
     }
-    return std::vector<std::string>();
+    return std::vector<Enemy*>();
   }
 
   Tower& TowerAt(int x, int y) {
@@ -146,8 +154,8 @@ class LevelMap {
   std::map<std::pair<int, int>, EnemyPathSquare*> enemy_path_;
   std::pair<int, int> e_path_begin_;
   std::pair<int, int> e_path_end_;
-  std::vector<std::string> towers_;
-  std::vector<std::string> enemies_;
+  std::vector<Tower*> towers_;
+  std::vector<Enemy*> enemies_;
   std::vector<std::string> projectiles_;
 };
 

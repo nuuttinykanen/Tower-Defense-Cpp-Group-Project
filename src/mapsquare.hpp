@@ -1,6 +1,7 @@
 #include "tower.hpp"
 #include <string>
 #include <vector>
+#include "enemy.hpp"
 class MapSquare {
     public:
     MapSquare(int x, int y) : x_(x), y_(y) { }
@@ -48,12 +49,12 @@ class EnemyPathSquare : public MapSquare {
 
 class EnemySquare : public EnemyPathSquare { 
     public: 
-    EnemySquare(int x, int y, std::vector<std::string> enemies) : EnemyPathSquare(x, y), enemies_(enemies){} 
+    EnemySquare(int x, int y, std::vector<Enemy*> enemies) : EnemyPathSquare(x, y), enemies_(enemies){} 
     ~EnemySquare(){} 
     virtual bool free() { return false; } 
     virtual bool occupied() { return true; }
-    std::vector<std::string> getEnemies() { return enemies_; }
+    std::vector<Enemy*> getEnemies() { return enemies_; }
     virtual std::string type() { return "enemy"; }
     private:
-    std::vector<std::string> enemies_;
+    std::vector<Enemy*> enemies_;
 }; 

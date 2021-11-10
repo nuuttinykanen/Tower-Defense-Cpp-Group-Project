@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include "tower.hpp"
 class LevelMap {
 
   public:
@@ -49,12 +50,16 @@ class LevelMap {
           if(first == second) enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
       }
     }
-
-    for(auto it : enemy_path_) {
-        std::cout << it.first.first << " " << it.first.second << std::endl;
-    }
-    for(auto it : squares_) {
-        std::cout << it.first.first << " " << it.first.second << std::endl;
+    this->GetEpathSquares();
+    this->GetFreeSquares();
+    this->GetEnemySquares();
+    std::vector<std::string> enemies;
+    enemies.push_back("zombie");
+    enemies.push_back("frankenstein's monster");
+    EnemySquare* e_square = new EnemySquare(0, 4, enemies);
+    this->ChangeSquare(0, 4, e_square);
+    for(auto it : this->EnemiesAt(0, 4)) {
+      std::cout << it << std::endl;
     }
    }
 
@@ -66,20 +71,73 @@ class LevelMap {
 
   MapSquare* GetSquare(int x, int y) const { return squares_.at(std::make_pair(x, y)); }
 
-  void ChangeSquare(int x, int y, MapSquare* new_square) {
-    squares_.at(std::make_pair(x, y)) = new_square;
-  }
-
-  std::map<std::pair<int, int>, MapSquare*> GetSquaresOfType(std::string type) const {
-    std::map<std::pair<int, int>, MapSquare*> list;
+  std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares() const {
+    std::map<std::pair<int, int>, FreeSquare*> list;
     for(auto it : squares_) {
-      if(it.second->type() == type) {
-        std::pair<std::pair<int, int>, MapSquare*> ins = std::make_pair(it.first, it.second);
+      if(it.second->type() == "free") {
+        std::pair<std::pair<int, int>, FreeSquare*> ins = std::make_pair(it.first, (FreeSquare*)it.second);
         list.insert(ins);
       }
     }
-    std::cout << "Got squares of type " << type << " a total of " << list.size() << std::endl;
+    std::cout << "Got squares of type FreeSquare, a total of " << list.size() << std::endl;
     return list;
+  }
+
+  std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares() const {
+    std::map<std::pair<int, int>, TowerSquare*> list;
+    for(auto it : squares_) {
+      if(it.second->type() == "tower") {
+        std::pair<std::pair<int, int>, TowerSquare*> ins = std::make_pair(it.first, (TowerSquare*)it.second);
+        list.insert(ins);
+      }
+    }
+    std::cout << "Got squares of type TowerSquare, a total of " << list.size() << std::endl;
+    return list;
+  }
+
+  std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares() const {
+    std::map<std::pair<int, int>, EnemySquare*> list;
+    for(auto it : squares_) {
+      if(it.second->type() == "enemy") {
+        std::pair<std::pair<int, int>, EnemySquare*> ins = std::make_pair(it.first, (EnemySquare*)it.second);
+        list.insert(ins);
+      }
+    }
+    std::cout << "Got squares of type EnemySquare, a total of " << list.size() << std::endl;
+    return list;
+  }
+
+  std::map<std::pair<int, int>, EnemyPathSquare*> GetEpathSquares() const {
+    std::map<std::pair<int, int>, EnemyPathSquare*> list;
+    for(auto it : squares_) {
+      if(it.second->type() == "epath") {
+        std::pair<std::pair<int, int>, EnemyPathSquare*> ins = std::make_pair(it.first, (EnemyPathSquare*)it.second);
+        list.insert(ins);
+      }
+    }
+    std::cout << "Got squares of type EnemyPathSquare, a total of " << list.size() << std::endl;
+    return list;
+  }
+
+
+  std::vector<std::string> EnemiesAt(int x, int y) {
+    MapSquare* square = this->GetSquare(x, y);
+    for(auto it : this->GetEnemySquares()) {
+      if(it.second == square) return it.second->getEnemies();
+    }
+    return std::vector<std::string>();
+  }
+
+  Tower& TowerAt(int x, int y) {
+    MapSquare* square = this->GetSquare(x, y);
+    for(auto it : this->GetTowerSquares()) {
+      if(it.second == square) return it.second->getTower();
+    }
+    throw std::invalid_argument("No tower found!");
+  }
+
+  void ChangeSquare(int x, int y, MapSquare* new_square) {
+    squares_.at(std::make_pair(x, y)) = new_square;
   }
 
   private:

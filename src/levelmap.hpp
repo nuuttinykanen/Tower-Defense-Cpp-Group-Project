@@ -6,6 +6,7 @@
 class LevelMap {
 
   public:
+  // TODO: Path validity checks. 
   LevelMap(size_t size, std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path) : size_(size) {
     towers_ = std::vector<std::string>();
     enemies_ = std::vector<std::string>();
@@ -26,23 +27,31 @@ class LevelMap {
       std::pair<int, int> first = it.first;
       std::pair<int, int> second = it.second;
       while(first != second) {
-        std::pair<int, int> ins = std::make_pair(first.first, first.second);
-        EnemyPathSquare* new_square = new EnemyPathSquare(ins.first, ins.second);
-        ChangeSquare(ins.first, ins.second, new_square);
-        enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
+          std::pair<int, int> ins = std::make_pair(first.first, first.second);
+          EnemyPathSquare* new_square = new EnemyPathSquare(ins.first, ins.second);
+          ChangeSquare(ins.first, ins.second, new_square);
+          enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
 
-        // for ex. (2, 4) -> (2, 9)
-        if(first.first == second.first) {
-          std::cout << "awnfsaijnfkljsdnfldsjk " << std::endl;
-          if(first.second < second.second) first.second++;
-          else first.second--;
-        }
-        // for ex. (2, 4) -> (9, 4)
-        else {
-          if(first.first < second.first) first.first++;
-          else first.first--;
-        }
+          // for ex. (2, 4) -> (2, 9)
+          if(first.first == second.first) {
+            if(first.second < second.second) first.second++;
+            else first.second--;
+          }
+          // for ex. (2, 4) -> (9, 4)
+          else {
+            if(first.first < second.first) first.first++;
+            else first.first--;
+          }
       }
+      if(first == second) {
+          std::pair<int, int> ins = std::make_pair(first.first, first.second);
+          EnemyPathSquare* new_square = new EnemyPathSquare(ins.first, ins.second);
+          if(first == second) enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
+      }
+    }
+
+    for(auto it : enemy_path_) {
+        std::cout << it.first.first << " " << it.first.second << std::endl;
     }
    }
 

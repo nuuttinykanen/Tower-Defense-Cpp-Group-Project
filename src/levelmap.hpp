@@ -30,7 +30,7 @@ class LevelMap {
       std::pair<int, int> second = it.second;
       while(first != second) {
           std::pair<int, int> ins = std::make_pair(first.first, first.second);
-          EnemyPathSquare* new_square = new EnemyPathSquare(ins.first, ins.second);
+          EnemySquare* new_square = new EnemySquare(ins.first, ins.second, std::vector<Enemy*>());
           ChangeSquare(ins.first, ins.second, new_square);
           enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
 
@@ -47,31 +47,11 @@ class LevelMap {
       }
       if(first == second) {
           std::pair<int, int> ins = std::make_pair(first.first, first.second);
-          EnemyPathSquare* new_square = new EnemyPathSquare(ins.first, ins.second);
+          EnemySquare* new_square = new EnemySquare(ins.first, ins.second, std::vector<Enemy*>());
           if(first == second) enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
       }
     }
-    this->GetEpathSquares();
-    this->GetFreeSquares();
-    this->GetEnemySquares();
-    std::vector<Enemy*> enemies;
-    Enemy* zombie = new Zombie;
-    Enemy* myers = new MichaelMyers;
-    enemies.push_back(zombie);
-    enemies.push_back(myers);
-    EnemySquare* e_square = new EnemySquare(0, 4, enemies);
-    this->ChangeSquare(0, 4, e_square);
-    for(auto it : this->EnemiesAt(0, 4)) {
-      std::cout << it->GetName() << std::endl;
-    }
-    Tower* new_t = new Tower("SDADSA", 2, 5, 1, nullptr);
-    TowerSquare* t_square = new TowerSquare(4, 4, *new_t);
-    this->ChangeSquare(4, 4, t_square);
-
-    this->GetTowerSquares();
    }
-
-  
   
   std::map<std::pair<int, int>, MapSquare*>& GetSquares() { return squares_; }
   std::vector<Tower*>& GetTowers() { return towers_; }
@@ -115,18 +95,6 @@ class LevelMap {
     return list;
   }
 
-  std::map<std::pair<int, int>, EnemyPathSquare*> GetEpathSquares() const {
-    std::map<std::pair<int, int>, EnemyPathSquare*> list;
-    for(auto it : squares_) {
-      if(it.second->type() == "epath") {
-        std::pair<std::pair<int, int>, EnemyPathSquare*> ins = std::make_pair(it.first, (EnemyPathSquare*)it.second);
-        list.insert(ins);
-      }
-    }
-    std::cout << "Got squares of type EnemyPathSquare, a total of " << list.size() << std::endl;
-    return list;
-  }
-
 
   std::vector<Enemy*> EnemiesAt(int x, int y) {
     MapSquare* square = this->GetSquare(x, y);
@@ -151,7 +119,7 @@ class LevelMap {
   private:
   size_t size_;
   std::map<std::pair<int, int>, MapSquare*> squares_;
-  std::map<std::pair<int, int>, EnemyPathSquare*> enemy_path_;
+  std::map<std::pair<int, int>, EnemySquare*> enemy_path_;
   std::pair<int, int> e_path_begin_;
   std::pair<int, int> e_path_end_;
   std::vector<Tower*> towers_;

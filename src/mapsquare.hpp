@@ -38,23 +38,18 @@ class TowerSquare : public MapSquare {
     Tower tower_; 
 }; 
 
-class EnemyPathSquare : public MapSquare { 
+class EnemySquare : public MapSquare { 
     public: 
-    EnemyPathSquare(int x, int y) : MapSquare(x, y){} 
-    ~EnemyPathSquare(){} 
-    virtual bool free() { return false; } 
-    virtual bool occupied() { return false; } 
-    virtual std::string type() { return "epath"; }
-}; 
-
-class EnemySquare : public EnemyPathSquare { 
-    public: 
-    EnemySquare(int x, int y, std::vector<Enemy*> enemies) : EnemyPathSquare(x, y), enemies_(enemies){} 
+    EnemySquare(int x, int y, std::vector<Enemy*> enemies) : MapSquare(x, y), enemies_(enemies) {} 
     ~EnemySquare(){} 
     virtual bool free() { return false; } 
-    virtual bool occupied() { return true; }
-    std::vector<Enemy*> getEnemies() { return enemies_; }
+    virtual bool occupied() { return true; } 
     virtual std::string type() { return "enemy"; }
+    std::vector<Enemy*> getEnemies() { return enemies_; }
+    bool containsEnemy() {
+        if(enemies_.empty()) return false;
+        else return true;
+    }
     private:
     std::vector<Enemy*> enemies_;
 }; 

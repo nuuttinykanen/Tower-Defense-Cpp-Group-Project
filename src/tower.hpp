@@ -4,7 +4,9 @@
 class Tower {
     public:
     Tower(std::string name, unsigned int strength, unsigned int range, unsigned int price, Tower* upgrade) : name_(name), strength_(strength), range_(range), price_(price), upgrade_(upgrade) { }
-    ~Tower() { }
+    ~Tower() {
+        delete upgrade_;
+     }
     std::string GetName() { return name_; }
     unsigned int GetStrength() { return strength_; }
     unsigned int GetRange() { return range_; }

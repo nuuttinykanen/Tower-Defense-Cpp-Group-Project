@@ -7,6 +7,73 @@ In each meeting, you are required to discuss:
 3. Plan for the next week for everyone
 4. Deviations and changes to the project plan, if any
 
+# Meeting 11.11.2021 13:00
+**Participants**: 
+1. Tino Korpelainen
+2. Nuutti Nykänen
+3. Patrik Ahola
+
+# Summary of works
+1.	Tino Korpelainen
+-	Added the SFML -library to the project
+-	Made a prototype SFML -window
+-	Added boilerplate Gui -class
+
+2.	Nuutti Nykänen & Elias Kauranen
+- LevelMap class base laid out
+  - Constructor 
+    - Initializes the map to be full of FreeSquares 
+    - Initializes the enemy path from given (edge) coordinates No validity checks yet 
+  - Get() any subclass of MapSquare 
+  - Can Get() enemies or a tower at given (x, y)
+  - Can change MapSquares on the map
+- MapSquare (abstract)
+  - Subclasses FreeSquare, EnemySquare, TowerSquare
+- Enemy 
+  - Base class and a few enemy subclasses
+- Tower 
+  - Base class
+
+3. Patrik Ahola
+- Game class basic structure 
+- Definition of some basic functions and variables (mostly pseudo code)
+  - Constructor 
+  - UpdateState-function to update the game’s state 
+  - Run-function to run the game loop 
+  - SpawnEnemy, SpawnTower, StartWave
+
+## Challenges
+- Current project is not runnable on a Linux machine due to SFML -library. The final project will need to run in a Linux machine for grading. 
+  - Tino will contact the group advisor for help.
+## Project status 
+The project has been successfully started smoothly. Each team member has worked on important aspects to build the game on.  LevelMap has seen considerable progress and will hopefully be functional in a game setting next week. 
+
+## TODOs
+1.	Tino Korpelainen
+-	Add different scenes to the window (eg. MenuScene, GameScene, LevelSelectorScreen, LevelEditorScene.)
+-	A working game loop in the Gui which updates the game state and then updates the screen
+2.	Nuutti Nykänen & Elias Kauranen
+- Continue working on the LevelMap. 
+  - Tower, Enemy integration 
+  - Movement
+- Further implementation of Tower and Enemy 
+  - Tower subclasses 
+  - Tower attack() function
+- Work on projectiles
+- Enemy path creation validity checks (no overlap, within bounds of the map)
+3.	Patrik Ahola
+-	Further improvements to the Game class
+-	Implementation of functions, when possible
+-	Likely restructuring
+
+
+
+
+
+
+
+
+
 
 # Meeting dd.mm.2021 HH::MM
 

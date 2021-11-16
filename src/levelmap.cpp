@@ -93,7 +93,7 @@ const std::map<std::pair<int, int>, EnemySquare*> LevelMap::GetEnemySquares() {
 std::vector<Enemy*> LevelMap::EnemiesAt(int x, int y) {
     const MapSquare* square = this->GetSquare(x, y);
     for(auto it : this->GetEnemySquares()) {
-      if(it.second == square) return it.second->getEnemies();
+      if(it.second == square) return it.second->GetEnemies();
     }
     return std::vector<Enemy*>();
 }
@@ -124,7 +124,7 @@ void LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
 
 void LevelMap::EraseEnemy(Enemy* enemy) {
   auto s_enemies = this->GetEnemySquares();
-  for(auto it = s_enemies.begin(); it != s_enemies.end(); it++) {
+  for(auto it = s_enemies.rbegin(); it != s_enemies.rend(); it++) {
     auto h = *it;
     if(h.second->ContainsEnemy(enemy)) {
       h.second->RemoveEnemy(enemy);
@@ -159,13 +159,14 @@ void LevelMap::MoveEnemies() {
   auto e_squares = this->GetEnemySquares();
   for(auto it = e_squares.rbegin(); it != e_squares.rend(); it++) {
     auto h = *it;
-    auto enemies = h.second->getEnemies();
+    auto enemies = h.second->GetEnemies();
     for(auto et = enemies.begin(); et != enemies.end(); et++) {
       auto e = *et;
       EnemySquare* destination = h.second->GetNext();
       bool end = false;
+      if(destination == nullptr) end = true;
       for(int i = 1; i < e->GetSpeed(); i++) {
-        if(destination->HasNext()) destination = destination->GetNext();
+        if(destination != nullptr && destination->HasNext()) destination = destination->GetNext();
         else {
           end = true;
           break;

@@ -50,10 +50,10 @@ class EnemySquare : public MapSquare {
     virtual bool free() const { return false; } 
     virtual bool occupied() const { return true; } 
     virtual std::string type() const { return "enemy"; }
-    std::vector<Enemy*> getEnemies() { return enemies_; }
+    std::vector<Enemy*> GetEnemies() { return enemies_; }
     void SetNext(EnemySquare* e_square) { next_ = e_square; }
     bool HasNext() { 
-        if(next_ != nullptr) return true;
+        if(this->next_ != nullptr) return true;
         else return false;
     }
     EnemySquare* GetNext() { return next_; }

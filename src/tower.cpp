@@ -4,17 +4,19 @@
         delete upgrade_;
     }
 
-    std::string Tower::GetName() { return name_; }
+    std::string Tower::GetName() const { return name_; }
 
-    unsigned int Tower::GetStrength() { return strength_; }
+    std::string Tower::GetDescription() const { return description_; } 
 
-    unsigned int Tower::GetRange() { return range_; }
+    unsigned int Tower::GetStrength() const { return strength_; }
 
-    unsigned int Tower::GetPrice() { return price_; }
+    unsigned int Tower::GetRange() const { return range_; }
 
-    Tower* Tower::GetUpgrade() { return upgrade_; }
+    unsigned int Tower::GetPrice() const { return price_; }
+
+    Tower* Tower::GetUpgrade() const { return upgrade_; }
     
-    bool Tower::HasUpgrade() { 
+    bool Tower::HasUpgrade() const { 
         if(upgrade_ == nullptr) return false;
         else return true;
     }

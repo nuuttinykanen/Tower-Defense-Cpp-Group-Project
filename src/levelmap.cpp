@@ -9,7 +9,7 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
       std::pair<int, int> second = it.second;
       while(first != second) {
           std::pair<int, int> ins = std::make_pair(first.first, first.second);
-          EnemySquare* new_square = new EnemySquare(ins.first, ins.second, std::vector<Enemy*>(), nullptr);
+          EnemySquare* new_square = new EnemySquare(ins.first, ins.second);
 
           if(previous != nullptr) {
             previous->SetNext(new_square);
@@ -30,16 +30,14 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
           }
           previous = new_square;
       }
-      if(first == second) {
-          std::pair<int, int> ins = std::make_pair(first.first, first.second);
-          EnemySquare* new_square = new EnemySquare(ins.first, ins.second, std::vector<Enemy*>(), previous);
-
-          if(previous != nullptr) {
-            previous->SetNext(new_square);
-          }
-          if(first == second) enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
-      }
     }
+    std::pair<int, int> last = enemy_path.back().second;
+    EnemySquare* new_square = new EnemySquare(last.first, last.second);
+    if(previous != nullptr) {
+      previous->SetNext(new_square);
+    }
+    ChangeSquare(last.first, last.second, new_square);
+    this->enemy_path_.insert(std::make_pair(std::make_pair(last.first, last.second), new_square));
 }
 
 const std::map<std::pair<int, int>, MapSquare*>& LevelMap::GetSquares() {
@@ -66,7 +64,6 @@ const std::map<std::pair<int, int>, FreeSquare*> LevelMap::GetFreeSquares() {
         list.insert(ins);
       }
     }
-    std::cout << "Got squares of type FreeSquare, a total of " << list.size() << std::endl;
     return list;
   }
 
@@ -78,7 +75,6 @@ const std::map<std::pair<int, int>, TowerSquare*> LevelMap::GetTowerSquares() {
         list.insert(ins);
       }
     }
-    std::cout << "Got squares of type TowerSquare, a total of " << list.size() << std::endl;
     return list;
 }
 
@@ -90,7 +86,6 @@ const std::map<std::pair<int, int>, EnemySquare*> LevelMap::GetEnemySquares() {
         list.insert(ins);
       }
     }
-    std::cout << "Got squares of type EnemySquare, a total of " << list.size() << std::endl;
     return list;
 }
 
@@ -127,26 +122,35 @@ void LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
     throw std::invalid_argument("Input coordinates out of bounds!");
 }
 
-void LevelMap::RemoveEnemy(Enemy* enemy) {
+void LevelMap::EraseEnemy(Enemy* enemy) {
   auto s_enemies = this->GetEnemySquares();
   for(auto it = s_enemies.begin(); it != s_enemies.end(); it++) {
     auto h = *it;
-    Enemy* enemy = h.second->GetEnemy(enemy);
-    if(enemy != nullptr) {
+    if(h.second->ContainsEnemy(enemy)) {
       h.second->RemoveEnemy(enemy);
       return;
     }
   }
 }
 
-void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* destination) {
+void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destination) {
   auto s_enemies = this->GetEnemySquares();
   for(auto it = s_enemies.begin(); it != s_enemies.end(); it++) {
     auto h = *it;
-    Enemy* enemy = h.second->GetEnemy(enemy);
-    if(enemy != nullptr) {
-      h.second->RemoveEnemy(enemy);
-      destination->AddEnemy(enemy);
+    if(h.second == destination) {
+      if(enemy != nullptr) {
+        start->RemoveEnemy(enemy);
+        destination->AddEnemy(enemy);
+      }
+    }
+  }
+  for(auto it = s_enemies.begin(); it != s_enemies.end(); it++) {
+    auto h = *it;
+    if(h.second == destination) {
+      if(enemy != nullptr) {
+        h.second->RemoveEnemy(enemy);
+        destination->AddEnemy(enemy);
+      }
     }
   }
 }
@@ -160,14 +164,17 @@ void LevelMap::MoveEnemies() {
       auto e = *et;
       EnemySquare* destination = h.second->GetNext();
       bool end = false;
-      for(int i = 0; i < e->GetSpeed(); i++) {
+      for(int i = 1; i < e->GetSpeed(); i++) {
         if(destination->HasNext()) destination = destination->GetNext();
-        else end = true;
+        else {
+          end = true;
+          break;
+        }
       }
       if(end) {
-        this->RemoveEnemy(e);
+        this->EraseEnemy(e);
       } else {
-        this->MoveEnemy(e, destination);
+        this->MoveEnemy(e, h.second, destination);
       }
     }
   } 

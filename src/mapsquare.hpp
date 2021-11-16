@@ -42,7 +42,10 @@ class TowerSquare : public MapSquare {
 
 class EnemySquare : public MapSquare { 
     public: 
-    EnemySquare(int x, int y, std::vector<Enemy*> enemies, EnemySquare* next) : MapSquare(x, y), enemies_(enemies), next_(next) {} 
+    EnemySquare(int x, int y) : MapSquare(x, y) {
+        enemies_ = std::vector<Enemy*>();
+        next_ = nullptr;
+    } 
     ~EnemySquare(){} 
     virtual bool free() const { return false; } 
     virtual bool occupied() const { return true; } 
@@ -66,7 +69,7 @@ class EnemySquare : public MapSquare {
         }
         return false;
     }
-    bool ContainsEnemy() const {
+    bool ContainsEnemies() const {
         if(enemies_.empty()) return false;
         else return true;
     }
@@ -75,6 +78,11 @@ class EnemySquare : public MapSquare {
             if(it == enemy) return it;
         }
         return nullptr;
+    }
+
+    bool ContainsEnemy(Enemy* enemy) const {
+        if(this->GetEnemy(enemy) != nullptr) return true;
+        else return false;
     }
 
     private:

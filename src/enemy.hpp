@@ -7,17 +7,20 @@ class Enemy {
     name_(name), maxHealth_(health), currentHealth_(health), attack_(attack), currentBounty_(bounty) {}
 
     ~Enemy(){}
-    std::string GetName() { return name_; }
-    int getMaxHealth() { return maxHealth_; }
-    int getHealth() { return currentHealth_; }
-    int getAttack() { return attack_; }
-    int getBounty() { return currentBounty_; }
 
-    double healthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
+    std::string GetName();
 
+    int getMaxHealth();
 
-    void changeHealth(int amount) { currentHealth_ += amount; }
+    int getHealth();
 
+    int getAttack();
+
+    int getBounty();
+
+    double healthPercentage();
+
+    void changeHealth(int amount);
 
     private:
     std::string name_;

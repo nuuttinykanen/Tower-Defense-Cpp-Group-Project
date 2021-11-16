@@ -4,18 +4,20 @@
 class Tower {
     public:
     Tower(std::string name, unsigned int strength, unsigned int range, unsigned int price, Tower* upgrade) : name_(name), strength_(strength), range_(range), price_(price), upgrade_(upgrade) { }
-    ~Tower() {
-        delete upgrade_;
-     }
-    std::string GetName() { return name_; }
-    unsigned int GetStrength() { return strength_; }
-    unsigned int GetRange() { return range_; }
-    unsigned int GetPrice() { return price_; }
-    Tower* GetUpgrade() { return upgrade_; }
-    bool HasUpgrade() { 
-        if(upgrade_ == nullptr) return false;
-        else return true;
-    }
+    
+    ~Tower();
+
+    std::string GetName();
+
+    unsigned int GetStrength();
+
+    unsigned int GetRange();
+
+    unsigned int GetPrice();
+
+    Tower* GetUpgrade();
+
+    bool HasUpgrade();
 
     private:
     std::string name_;    

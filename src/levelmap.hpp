@@ -22,29 +22,32 @@ class LevelMap {
         std::pair<int, int> coords = std::make_pair(i, j);
         FreeSquare* new_square = new FreeSquare(i, j);
         std::pair<std::pair<int, int>, FreeSquare*> ins = std::make_pair(coords, new FreeSquare(i, j));
-        squares_.insert(ins);
+        squares_.insert(ins); 
       }
     }
   }
 
   void InitializePath(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path);
-  const std::map<std::pair<int, int>, MapSquare*>& GetSquares() const;
-  const std::vector<Tower*>& GetTowers() const;
-  const std::vector<Enemy*>& GetEnemies() const;
-  const MapSquare* GetSquare(int x, int y) const; 
-  const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares() const;
-  const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares() const;
-  const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares() const;
+  const std::map<std::pair<int, int>, MapSquare*>& GetSquares();
+  const std::vector<Tower*>& GetTowers();
+  const std::vector<Enemy*>& GetEnemies();
+  const MapSquare* GetSquare(int x, int y); 
+  const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
+  const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
+  const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
 
   /*
   const std::map<std::pair<int, int>, EnemySquare*> GetPathStart() const;
   const std::map<std::pair<int, int>, EnemySquare*> GetPathEnd() const;
   */
 
-  const std::vector<Enemy*> EnemiesAt(int x, int y) const;
-  const Tower& TowerAt(int x, int y) const;
-
+  std::vector<Enemy*> EnemiesAt(int x, int y);
+  Tower& TowerAt(int x, int y);
   void ChangeSquare(int x, int y, MapSquare* new_square);
+  void MoveEnemy(Enemy* enemy, EnemySquare* destination);
+  void MoveEnemies();
+  void RemoveEnemy(Enemy* enemy);
+  void PlaceEnemy(int x, int y, Enemy* enemy);
 
   private:
   size_t size_;

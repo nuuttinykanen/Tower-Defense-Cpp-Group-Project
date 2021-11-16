@@ -3,14 +3,16 @@
 
     std::string Enemy::GetName() { return name_; }
 
-    int Enemy::getMaxHealth() { return maxHealth_; }
+    int Enemy::GetMaxHealth() { return maxHealth_; }
 
-    int Enemy::getHealth() { return currentHealth_; }
+    int Enemy::GetHealth() { return currentHealth_; }
 
-    int Enemy::getAttack() { return attack_; }
+    int Enemy::GetAttack() { return attack_; }
     
-    int Enemy::getBounty() { return currentBounty_; }
+    int Enemy::GetSpeed() { return speed_; }
 
-    double Enemy::healthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
+    int Enemy::GetBounty() { return currentBounty_; }
 
-    void Enemy::changeHealth(int amount) { currentHealth_ += amount; }
+    double Enemy::HealthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
+
+    void Enemy::ChangeHealth(int amount) { currentHealth_ += amount; }

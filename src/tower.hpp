@@ -7,17 +7,17 @@ class Tower {
     
     ~Tower();
 
-    std::string GetName();
+    std::string GetName() const;
 
-    unsigned int GetStrength();
+    unsigned int GetStrength() const;
 
-    unsigned int GetRange();
+    virtual unsigned int GetRange() const;
 
-    unsigned int GetPrice();
+    unsigned int GetPrice() const;
 
-    Tower* GetUpgrade();
+    Tower* GetUpgrade() const;
 
-    bool HasUpgrade();
+    bool HasUpgrade() const;
 
     private:
     std::string name_;    

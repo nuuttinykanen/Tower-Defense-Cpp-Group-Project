@@ -12,9 +12,8 @@ void Game::SpawnTower(Tower* tower, double x, double y) {
     towers_.push_back(tower);
 }
 
-/*
-LevelMap map_;
-std::vector<Wave> enemyWaves_;
-std::vector<Tower> towers_;
-Player player_;
-*/
+void Game::StartWave(Wave v) {
+    for(auto e : v){
+        SpawnEnemy(e);
+    }
+}

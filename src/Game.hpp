@@ -1,13 +1,15 @@
 #include "levelmap.hpp"
 #include <vector>
-
+#include "player.hpp"
 
 class Game {
 
     public:
 
-    Game() : map_(LevelMap(20)), towers_(std::vector<Tower*>()), enemyWaves_(std::vector<Wave>())
-    , player_(Player()) {};
+    Game(map = LevelMap(20), player = Player()) : map_(map), player_(player) {
+
+        this->towers_ = player_.GetTowers();
+    };
 
 
     void UpdateState();
@@ -19,14 +21,11 @@ class Game {
 
     void StartWave(Wave v);
 
-    void StartGame();
-
-
 
 
     private:
     LevelMap map_;
-    std::vector<Wave> enemyWaves_;
+    //std::vector<Wave> enemyWaves_;
     std::vector<Tower*> towers_;
     Player player_;
 

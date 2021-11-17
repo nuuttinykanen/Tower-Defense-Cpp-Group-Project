@@ -50,11 +50,14 @@ class LevelMap {
   bool EraseEnemy(Enemy* enemy);
   bool PlaceEnemy(int x, int y, Enemy* enemy);
   EnemySquare* FindEnemy(Enemy* enemy);
+  Enemy* GetFarthestEnemy();
 
   bool PlaceTower(int x, int y, Tower* tower);
   bool EraseTower(Tower* tower);
+  TowerSquare* FindTower(Tower* tower);
 
   std::vector<Projectile*> GetProjectiles();
+  void SetProjStartSquare(Projectile* projec);
   void PlaceProjectile(Projectile* projec);
   void RemoveProjectile(Projectile* projec);
   void ScanProjectiles();

@@ -3,7 +3,7 @@
 #include "levelmap.hpp"
 #include <cmath>
 void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path) {
-    EnemySquare* previous;
+    EnemySquare* previous = nullptr;
     for(auto it : enemy_path) {
       std::pair<int, int> first = it.first;
       std::pair<int, int> second = it.second;
@@ -12,6 +12,7 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
           EnemySquare* new_square = new EnemySquare(ins.first, ins.second);
 
           if(previous != nullptr) {
+            new_square->SetPrevious(previous);
             previous->SetNext(new_square);
           }
 
@@ -34,6 +35,7 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
     std::pair<int, int> last = enemy_path.back().second;
     EnemySquare* new_square = new EnemySquare(last.first, last.second);
     if(previous != nullptr) {
+      new_square->SetPrevious(previous);
       previous->SetNext(new_square);
     }
     ChangeSquare(last.first, last.second, new_square);
@@ -219,9 +221,63 @@ bool LevelMap::EraseTower(Tower* tower) {
   return false;
 }
 
+TowerSquare* LevelMap::FindTower(Tower* tower) {
+  auto towers = this->GetTowerSquares();
+  for(auto it = towers.rbegin(); it != towers.rend(); it++) {
+    auto h = *it;
+    if(h.second->ContainsTower(tower)) {
+      return h.second;
+    }
+  }
+  return nullptr;
+}
+
 std::vector<Projectile*> LevelMap::GetProjectiles() { return projectiles_; }
 
-void LevelMap::PlaceProjectile(Projectile* projec) { projectiles_.push_back(projec); }
+void LevelMap::SetProjStartSquare(Projectile* proj) {
+  TowerSquare* sender = this->FindTower(proj->GetSender());
+  EnemySquare* t_location = this->GetProjTargetSquare(proj);
+  MapSquare* new_square;
+  if(t_location != nullptr) {
+        double x_pow = pow(proj->GetLocation()->GetX() - t_location->GetX(), 2.0);
+        double x_distance = sqrt(x_pow);
+        double y_pow = pow(proj->GetLocation()->GetY() - t_location->GetY(), 2.0);
+        double y_distance = sqrt(y_pow);
+
+        // If diffx > diffy, either east or west
+        std::string direction;
+        if(x_distance > y_distance) {
+            double west_x_dist = sqrt(pow(proj->GetLocation()->GetX() - 1 - t_location->GetX(), 2.0));
+            double east_x_dist = sqrt(pow(proj->GetLocation()->GetX() + 1 - t_location->GetX(), 2.0));
+            if(west_x_dist < east_x_dist) new_square = this->GetSquare(proj->GetLocation()->GetX() - 1, proj->GetLocation()->GetY());
+            else new_square =                          this->GetSquare(proj->GetLocation()->GetX() + 1, proj->GetLocation()->GetY());
+        } 
+        else {
+            double north_y_dist = sqrt(pow(proj->GetLocation()->GetY() + 1 - t_location->GetY(), 2.0));
+            double south_y_dist = sqrt(pow(proj->GetLocation()->GetY() - 1 - t_location->GetY(), 2.0));
+            if(north_y_dist < south_y_dist) new_square = this->GetSquare(proj->GetLocation()->GetX(), proj->GetLocation()->GetY() + 1);
+            else                            new_square = this->GetSquare(proj->GetLocation()->GetX(), proj->GetLocation()->GetY() - 1);
+        }
+        if(new_square != nullptr) proj->ChangeLocation(new_square);
+  }
+}
+
+Enemy* LevelMap::GetFarthestEnemy() {
+  auto e_squares = this->GetEnemySquares();
+  for(auto it = this->GetEnemySquares().rbegin(); it != this->GetEnemySquares().rend(); it++) {
+    if(it->second->ContainsEnemies()) {
+      return *(it->second->GetEnemies().begin());
+    }
+  }
+  return nullptr;
+}
+
+void LevelMap::PlaceProjectile(Projectile* projec) { 
+  this->SetProjStartSquare(projec);
+  Enemy* farthest = this->GetFarthestEnemy();
+  if(farthest != nullptr) projec->SetTarget(farthest);
+  projectiles_.push_back(projec); 
+}
 
 void LevelMap::ScanProjectiles() {
   for(auto it = projectiles_.begin(); it != projectiles_.end(); it++) {
@@ -286,7 +342,7 @@ void LevelMap::MoveProjectile(Projectile* proj) {
         }
         if(new_square != nullptr) proj->ChangeLocation(new_square);
 
-        if(ProjDistanceToTarget(proj) < 2) {
+        if(ProjDistanceToTarget(proj) <= 1) {
             proj->SetRemovalTrue();
             proj->GetTarget()->ChangeHealth(-1 * proj->GetStrength());
         }

@@ -44,7 +44,7 @@ class ZombieHorde : public Enemy {
 
 class MichaelMyers : public Enemy {
     public:
-    MichaelMyers(int health = 80, int attack = 5, int speed = 2, int bounty = 100) : 
+    MichaelMyers(int health = 80, int attack = 5, int speed = 3, int bounty = 100) : 
     Enemy("Michael Myers", health, attack, speed, bounty) {}
     ~MichaelMyers(){}
 };

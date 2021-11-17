@@ -8,7 +8,7 @@ class AttackTower : public Tower {
     Tower(name, description, strength, range, cost, upgrade), 
     cooldown_(cooldown), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
-    ~AttackTower();
+    ~AttackTower(){};
 
     unsigned int CurrentCooldown() const;
     
@@ -28,10 +28,6 @@ class AttackTower : public Tower {
 
     void RemoveModifiers();
 
-    void attack(Enemy* enemy) {
-        std::cout << "\n" << this->GetName() << " ATTACKS!\n" << std::endl;
-    };
-
     private:
     unsigned int cooldown_;
     unsigned int cooldownModifiers_;
@@ -39,12 +35,15 @@ class AttackTower : public Tower {
     unsigned int rangeModifiers_;
 
     unsigned int CurrentRange() const;
-
-
 };
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) {}
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) {        
+        projectile_ = new BombProjectile(this);
+    }
     ~Bomber(){}
+
+    private:
+    Projectile* projectile_;
 };

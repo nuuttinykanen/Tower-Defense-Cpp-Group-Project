@@ -6,16 +6,21 @@
 
 class Projectile {
     public:
-    Projectile(Tower* sender,  MapSquare* location, Enemy* target, unsigned int strength) : sender_(sender), target_(target), strength_(strength), location_(location) {
+    Projectile(Tower* sender, unsigned int strength) : sender_(sender), strength_(strength)  {
+        location_ = nullptr;
+        target_ = nullptr;
         to_be_removed_ = false;
     }
     ~Projectile(){}
+    Tower* GetSender();
     MapSquare* GetLocation();
     Enemy* GetTarget();
+    void SetTarget(Enemy* target);
     unsigned int GetStrength();
     void ChangeLocation(MapSquare* square);
     void SetRemovalTrue();
     bool ToBeRemoved();
+    virtual void Effect(EnemySquare* enemy) = 0;
 
     private:
     Tower* sender_;
@@ -23,6 +28,12 @@ class Projectile {
     Enemy* target_;
     unsigned int strength_;
     bool to_be_removed_;
+};
+
+class BombProjectile : public Projectile {
+    public:
+    BombProjectile(Tower* sender) : Projectile(sender, sender->GetStrength()) { }
+    void Effect(EnemySquare* enemy);
 };
 
 #endif

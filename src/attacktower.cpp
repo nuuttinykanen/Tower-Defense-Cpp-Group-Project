@@ -1,48 +1,48 @@
 #include "attacktower.hpp"
 
-    unsigned int AttackTower::currentCooldown() const {
+    unsigned int AttackTower::CurrentCooldown() const {
      if(cooldown_ + cooldownModifiers_ > 0) {
          return cooldown_ + cooldownModifiers_;
      }
      return 0;
     }
 
-    double AttackTower::cooldownPercentage() const {
-      if(currentCooldown() > 0) {
-          return (double)attackCounter_ / (double)currentCooldown();
+    double AttackTower::CooldownPercentage() const {
+      if(CurrentCooldown() > 0) {
+          return (double)attackCounter_ / (double)CurrentCooldown();
       }
       return 0;
     }
 
-    bool AttackTower::canAttack() const {
+    bool AttackTower::CanAttack() const {
         return attackCounter_ == 0;
     }
 
-    void AttackTower::restartCooldown() {
-        attackCounter_ = currentCooldown();
+    void AttackTower::RestartCooldown() {
+        attackCounter_ = CurrentCooldown();
     }
 
-    void AttackTower::reload() {
+    void AttackTower::Reload() {
         if(attackCounter_ > 0) attackCounter_ -= 1;
     }
 
-    unsigned int AttackTower::getRange() const {
+    unsigned int AttackTower::GetRange() const {
         return this->GetRange() + rangeModifiers_;
     }
 
-    void AttackTower::addCooldownModifier(int amount) {
+    void AttackTower::AddCooldownModifier(int amount) {
         cooldownModifiers_ += amount;
     }
 
-    void AttackTower::addRangeModifier(int amount) {
+    void AttackTower::AddRangeModifier(int amount) {
         rangeModifiers_ += amount;
     }
 
-    void AttackTower::removeModifiers() {
+    void AttackTower::RemoveModifiers() {
         cooldownModifiers_ = 0;
         rangeModifiers_ = 0;
     }
 
-    unsigned int AttackTower::currentRange() const {
+    unsigned int AttackTower::CurrentRange() const {
         return this->GetRange() + rangeModifiers_;
     }

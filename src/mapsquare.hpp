@@ -1,3 +1,5 @@
+#ifndef MAPSQUARE_HPP
+#define MAPSQUARE_HPP
 #include "tower.hpp"
 #include <string>
 #include <vector>
@@ -95,3 +97,5 @@ class EnemySquare : public MapSquare {
     std::vector<Enemy*> enemies_;
     EnemySquare* next_;
 }; 
+
+#endif

@@ -29,15 +29,21 @@ class FreeSquare : public MapSquare {
 class TowerSquare : public MapSquare { 
 
     public: 
-    TowerSquare(int x, int y, Tower tower) : MapSquare(x, y), tower_(tower) {} 
+    TowerSquare(int x, int y, Tower* tower) : MapSquare(x, y), tower_(tower) {} 
     ~TowerSquare(){} 
     virtual bool free() const { return false; } 
     virtual bool occupied() const { return true; } 
-    Tower& getTower() { return tower_; } 
     virtual std::string type() const { return "tower"; }
 
+    Tower* GetTower() { return tower_; } 
+    bool ContainsTower(Tower* tower) {
+        if(tower_ == tower) return true;
+        else return false;
+    }
+
+
     private: 
-    Tower tower_; 
+    Tower* tower_; 
 }; 
 
 class EnemySquare : public MapSquare { 

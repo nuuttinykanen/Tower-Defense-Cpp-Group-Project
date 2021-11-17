@@ -98,10 +98,10 @@ std::vector<Enemy*> LevelMap::EnemiesAt(int x, int y) {
     return std::vector<Enemy*>();
 }
 
-Tower& LevelMap::TowerAt(int x, int y) {
+Tower* LevelMap::TowerAt(int x, int y) {
     const MapSquare* square = this->GetSquare(x, y);
     for(auto it : this->GetTowerSquares()) {
-      if(it.second == square) return it.second->getTower();
+      if(it.second == square) return it.second->GetTower();
     }
     throw std::invalid_argument("No tower found!");
 }
@@ -110,27 +110,28 @@ void LevelMap::ChangeSquare(int x, int y, MapSquare* new_square) {
     squares_.at(std::make_pair(x, y)) = new_square;
 }
 
-void LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
+bool LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
     auto e_squares = this->GetEnemySquares();
     for(auto it = e_squares.begin(); it != e_squares.end(); it++) {
       auto h = *it;
       if(h.first.first == x && h.first.second == y) {
         h.second->AddEnemy(enemy);
-        return;
+        return true;
       }
     }
-    throw std::invalid_argument("Input coordinates out of bounds!");
+    return false;
 }
 
-void LevelMap::EraseEnemy(Enemy* enemy) {
+bool LevelMap::EraseEnemy(Enemy* enemy) {
   auto s_enemies = this->GetEnemySquares();
   for(auto it = s_enemies.rbegin(); it != s_enemies.rend(); it++) {
     auto h = *it;
     if(h.second->ContainsEnemy(enemy)) {
       h.second->RemoveEnemy(enemy);
-      return;
+      return true;
     }
   }
+  return false;
 }
 
 void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destination) {
@@ -179,6 +180,33 @@ void LevelMap::MoveEnemies() {
       }
     }
   } 
+}
+
+bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
+    auto t_squares = this->GetFreeSquares();
+    for(auto it = t_squares.begin(); it != t_squares.end(); it++) {
+      auto h = *it;
+      if(h.first.first == x && h.first.second == y) {
+        TowerSquare* t_square = new TowerSquare(x, y, tower);
+        this->ChangeSquare(x, y, t_square);
+        return true;
+      }
+    }
+    return false;
+}
+
+bool LevelMap::EraseTower(Tower* tower) {
+  auto t_squares = this->GetTowerSquares();
+  for(auto it = t_squares.rbegin(); it != t_squares.rend(); it++) {
+    auto h = *it;
+    if(h.second->ContainsTower(tower)) { 
+        FreeSquare* f_square = new FreeSquare(h.second->GetX(), h.second->GetY());
+        this->ChangeSquare(h.second->GetX(), h.second->GetY(), f_square);
+        return true;
+      return true;
+    }
+  }
+  return false;
 }
 
 #endif

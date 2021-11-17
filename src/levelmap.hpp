@@ -42,12 +42,15 @@ class LevelMap {
   */
 
   std::vector<Enemy*> EnemiesAt(int x, int y);
-  Tower& TowerAt(int x, int y);
+  Tower* TowerAt(int x, int y);
   void ChangeSquare(int x, int y, MapSquare* new_square);
   void MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destination);
   void MoveEnemies();
-  void EraseEnemy(Enemy* enemy);
-  void PlaceEnemy(int x, int y, Enemy* enemy);
+  bool EraseEnemy(Enemy* enemy);
+  bool PlaceEnemy(int x, int y, Enemy* enemy);
+
+  bool PlaceTower(int x, int y, Tower* tower);
+  bool EraseTower(Tower* tower);
 
   private:
   size_t size_;

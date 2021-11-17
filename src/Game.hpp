@@ -1,51 +1,33 @@
 #include "levelmap.hpp"
 #include <vector>
 
+
 class Game {
 
     public:
 
-    Game()  {
-        map_ = new LevelMap(...);
-        player_ = new Player(....);
-        towers_ = std::vector<Tower>();
-        enemyWaves_ = std::vector<Wave>();
-    }
-
-    void UpdateState(){
-
-        //Update enemies, projectiles and towers in _map (spawn, move, take damage etc..)
-        // ----->
-        //Update state locally according to map_, GUI renders accordingly ?
-        // ----->
+    Game() : map_(LevelMap(20)), towers_(std::vector<Tower*>()), enemyWaves_(std::vector<Wave>())
+    , player_(Player()) {};
 
 
-    }
+    void UpdateState();
 
-    void Run() {
 
-        // While game in progress {
-        // sleep(..)
-        // this->UpdateState();
-        //
-        // }
-    }
+    void SpawnEnemy(Enemy* enemy);
 
-    // Add enemy or Tower to map_?
-    void SpawnEnemy(Enemy enemy);
+    void SpawnTower(Tower* tower, double x, double y);
 
-    void SpawnTower(Tower tower, double x, double y);
+    void StartWave(Wave v);
 
-    void StartWave(Wave v){
+    void StartGame();
 
-        // SpawnEnemy(Enemy enemy); for each enemy in the wave, with a delay?
-    }
+
 
 
     private:
     LevelMap map_;
     std::vector<Wave> enemyWaves_;
-    std::vector<Tower> towers_;
+    std::vector<Tower*> towers_;
     Player player_;
 
 

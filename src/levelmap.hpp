@@ -8,6 +8,7 @@
 #include <iostream>
 #include "tower.hpp"
 #include "enemy.hpp"
+#include "projectile.hpp"
 class LevelMap {
 
   public:
@@ -31,7 +32,7 @@ class LevelMap {
   const std::map<std::pair<int, int>, MapSquare*>& GetSquares();
   const std::vector<Tower*>& GetTowers();
   const std::vector<Enemy*>& GetEnemies();
-  const MapSquare* GetSquare(int x, int y); 
+  MapSquare* GetSquare(int x, int y); 
   const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
   const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
   const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
@@ -48,9 +49,23 @@ class LevelMap {
   void MoveEnemies();
   bool EraseEnemy(Enemy* enemy);
   bool PlaceEnemy(int x, int y, Enemy* enemy);
+  EnemySquare* FindEnemy(Enemy* enemy);
+  Enemy* GetFarthestEnemy();
 
   bool PlaceTower(int x, int y, Tower* tower);
   bool EraseTower(Tower* tower);
+  TowerSquare* FindTower(Tower* tower);
+
+  std::vector<Projectile*> GetProjectiles();
+  void SetProjStartSquare(Projectile* projec);
+  void PlaceProjectile(Projectile* projec);
+  void RemoveProjectile(Projectile* projec);
+  void ScanProjectiles();
+  void MoveProjectiles();
+
+  EnemySquare* GetProjTargetSquare(Projectile* proj);
+  double ProjDistanceToTarget(Projectile* proj);
+  void MoveProjectile(Projectile* proj); 
 
   private:
   size_t size_;
@@ -58,7 +73,7 @@ class LevelMap {
   std::map<std::pair<int, int>, EnemySquare*> enemy_path_;
   std::vector<Tower*> towers_;
   std::vector<Enemy*> enemies_;
-  std::vector<std::string> projectiles_;
+  std::vector<Projectile*> projectiles_;
 };
 
 #endif

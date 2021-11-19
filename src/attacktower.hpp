@@ -1,31 +1,32 @@
 #pragma once
 #include "tower.hpp"
 #include <string>
+#include "enemy.hpp"
 class AttackTower : public Tower {
     public:
     AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int cooldown, unsigned int cost, Tower* upgrade) : 
     Tower(name, description, strength, range, cost, upgrade), 
     cooldown_(cooldown), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
-    ~AttackTower();
+    ~AttackTower(){};
 
-    unsigned int currentCooldown() const;
+    unsigned int CurrentCooldown() const;
     
-    double cooldownPercentage() const;
+    double CooldownPercentage() const;
 
-    bool canAttack() const;
+    bool CanAttack() const;
 
-    void restartCooldown();
+    void RestartCooldown();
 
-    void reload();
+    void Reload();
 
-    virtual unsigned int getRange() const;
+    unsigned int GetRange() const;
 
-    void addCooldownModifier(int amount);
+    void AddCooldownModifier(int amount);
 
-    void addRangeModifier(int amount);
+    void AddRangeModifier(int amount);
 
-    void removeModifiers();
+    void RemoveModifiers();
 
     private:
     unsigned int cooldown_;
@@ -33,7 +34,16 @@ class AttackTower : public Tower {
     unsigned int attackCounter_;
     unsigned int rangeModifiers_;
 
-    unsigned int currentRange() const;
+    unsigned int CurrentRange() const;
+};
 
+class Bomber : public AttackTower {
+    public:
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) {        
+        projectile_ = new BombProjectile(this);
+    }
+    ~Bomber(){}
 
+    private:
+    Projectile* projectile_;
 };

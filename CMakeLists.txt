@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 
 set(SFML_STATIC_LIBRARIES TRUE)
 
-add_executable(tower-defense-12 src/main.cpp src/Gui.cpp src/Gui.h src/Game.hpp src/game_states/window_state.cpp src/game_states/window_state.h src/game_states/menu_state.cpp src/game_states/menu_state.h src/game_states/game_state.cpp src/game_states/game_state.h src/game_states/level_select_state.cpp src/game_states/level_select_state.h src/game_states/level_editor_state.cpp src/game_states/level_editor_state.h)
+add_executable(tower-defense-12 src/main.cpp src/Gui.cpp src/Gui.h src/game_states/window_state.cpp src/game_states/window_state.h src/game_states/menu_state.cpp src/game_states/menu_state.h src/game_states/game_state.cpp src/game_states/game_state.h src/game_states/level_select_state.cpp src/game_states/level_select_state.h src/game_states/level_editor_state.cpp src/game_states/level_editor_state.h)
 
 # include_directories(headers /usr/include c:/SFML/include)
 

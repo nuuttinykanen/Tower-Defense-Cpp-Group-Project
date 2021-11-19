@@ -1,3 +1,5 @@
+#ifndef MAPSQUARE_HPP
+#define MAPSQUARE_HPP
 #include "tower.hpp"
 #include <string>
 #include <vector>
@@ -51,6 +53,7 @@ class EnemySquare : public MapSquare {
     EnemySquare(int x, int y) : MapSquare(x, y) {
         enemies_ = std::vector<Enemy*>();
         next_ = nullptr;
+        previous_ = nullptr;
     } 
     ~EnemySquare(){} 
     virtual bool free() const { return false; } 
@@ -63,6 +66,12 @@ class EnemySquare : public MapSquare {
         else return false;
     }
     EnemySquare* GetNext() { return next_; }
+    void SetPrevious(EnemySquare* e_square) { previous_ = e_square; }
+    EnemySquare* GetPrevious() { return previous_; }
+    bool HasPrevious() { 
+        if(this->previous_ != nullptr) return true;
+        else return false;
+    }
     void AddEnemy(Enemy* enemy) {
         enemies_.push_back(enemy);
     }
@@ -93,5 +102,7 @@ class EnemySquare : public MapSquare {
 
     private:
     std::vector<Enemy*> enemies_;
-    EnemySquare* next_;
-}; 
+    EnemySquare* next_; 
+    EnemySquare* previous_;
+};
+#endif

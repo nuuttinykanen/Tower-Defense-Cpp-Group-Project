@@ -1,6 +1,6 @@
 #include "game_state.h"
 
-GameState::GameState(sf::RenderWindow &window) : WindowState(window) {
+GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, gui) {
 
 }
 

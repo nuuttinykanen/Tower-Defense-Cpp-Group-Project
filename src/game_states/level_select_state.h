@@ -3,10 +3,12 @@
 
 #include "window_state.h"
 #include <iostream>
+// #include "../Gui.h"
+
 
 class LevelSelectState: public WindowState {
 public:
-    LevelSelectState(sf::RenderWindow& window);
+    LevelSelectState(sf::RenderWindow& window, Gui* gui);
     ~LevelSelectState() override = default;
 
     void advance_state() override;

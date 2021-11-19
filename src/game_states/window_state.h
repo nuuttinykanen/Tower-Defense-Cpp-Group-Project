@@ -3,13 +3,16 @@
 
 #include <SFML/Graphics.hpp>
 
+// Forward declare gui as an incomplete type
+class Gui;
+
 
 // Base class for all game states
 
 class WindowState {
 public:
-    WindowState(sf::RenderWindow& window);
-    virtual ~WindowState() = 0;
+    WindowState(sf::RenderWindow& window, Gui* gui);
+    virtual ~WindowState() = default;;
     void draw_window();
 
     // Advance the current game state
@@ -21,6 +24,8 @@ public:
     // Protected allows us to access this from child classes
 protected:
     sf::RenderWindow& window_;
+    Gui* gui_;
 };
+
 
 #endif //TOWER_DEFENSE_12_WINDOW_STATE_H

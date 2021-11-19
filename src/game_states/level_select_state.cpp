@@ -1,6 +1,6 @@
 #include "level_select_state.h"
 
-LevelSelectState::LevelSelectState(sf::RenderWindow &window): WindowState(window) {
+LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
 
 }
 

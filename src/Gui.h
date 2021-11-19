@@ -2,8 +2,12 @@
 #define TOWER_DEFENSE_12_GUI_H
 
 #include <SFML/Graphics.hpp>
-#include "game_states/window_state.h"
-#include "game_states/menu_state.h"
+
+class WindowState;
+class MenuState;
+
+
+
 
 
 class Gui {

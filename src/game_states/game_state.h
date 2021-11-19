@@ -6,7 +6,8 @@
 
 class GameState: public WindowState {
 public:
-    GameState(sf::RenderWindow& window);
+    // TODO: Specify which level to start
+    GameState(sf::RenderWindow& window, Gui* gui);
     ~GameState() override = default;
 
     void advance_state() override;

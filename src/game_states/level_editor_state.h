@@ -3,10 +3,11 @@
 
 #include "window_state.h"
 #include <iostream>
+// #include "../Gui.h"
 
 class LevelEditorState: public WindowState {
 public:
-    LevelEditorState(sf::RenderWindow& window);
+    LevelEditorState(sf::RenderWindow& window, Gui* gui);
     ~LevelEditorState() override = default;
 
     void advance_state() override;

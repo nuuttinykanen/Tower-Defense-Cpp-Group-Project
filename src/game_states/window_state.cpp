@@ -1,8 +1,9 @@
 #include "window_state.h"
+#include "../Gui.h"
 
 
-WindowState::WindowState(sf::RenderWindow& window)
-    : window_(window){
+WindowState::WindowState(sf::RenderWindow& window, Gui* gui)
+    : window_(window), gui_(gui) {
 
 }
 

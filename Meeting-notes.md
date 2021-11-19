@@ -67,6 +67,64 @@ The project has been successfully started smoothly. Each team member has worked 
 -	Likely restructuring
 
 
+## Meeting 19.11.2021 15:00
+**Participants:**
+1.	Nuutti Nykänen
+2.	Elias Kauranen
+3.	Tino Korpelainen
+4.	Patrik Ahola
+
+## Summary of works
+1.	Nuutti Nykänen & Elias Kauranen
+- Enemy movement 
+  - works correctly, from start to finish 
+  - bidirectional linked-list enemy path 
+    - allows for “area of effect” damage (todo)
+- Further tower implementation 
+  - placement on map 
+  - no attack function yet 
+  - subclasses SupportTower & AttackTower 
+    - subclasses not implemented
+- Projectiles 
+  - movement on map towards an enemy target works 
+  - hits an enemy, damaging it 
+  - subclasses possible for different towers
+  - 
+2.	Tino Korpelainen
+-	Added a parent window state class from which different child classes extend
+-	Added child classes: GameState, LevelEditorState, LevelSelectorState, MenuState
+-	Gui loop calls different states loops. State loops first advance the game state and then draw the updated game stat
+4.	Patrik Ahola
+-	Wave and player classes first versions
+-	Game class - SpawnEnemy, SpawnTower, Startwave functions. 
+-	Game constructor initializes a player and waves.
+ 
+## Challenges
+-	A rework of Projectile to support different effects for different towers and its integration with LevelMap
+## Project status
+Enemies seem to move correctly and projectiles seem to function as intended. The game itself still requires an implementation for the Tower::attack() function, which should allow the core map gameplay to work. There is still a lot of honing and debugging to do regarding the LevelMap, but the core is nearly formed.
+Working gui elements should be soon implemented to check other classes functionality visually.
+
+## TODOs
+
+1.	Tino Korpelainen
+- Add a working menu scene 
+  - Implement working buttons in window states which on click execute a function 
+  - Different buttons remove current scene and add a new one
+- Make a gui “system” 
+  - Some sort of a global object from which states can request different gui elements (buttons, enemies, towers etc.)
+- Start figuring out how to save levels in to .json files
+- Make it so that scenes poll events instead of the main gui
+
+2.	Nuutti Nykänen & Elias Kauranen
+- Tower::attack(Enemy*) function 
+  - Should launch customized projectiles 
+  - Different projectiles for each tower (with different effects)
+- AttackTower and SupportTower subclasses
+- improve and debug Projectile / Tower / Enemy interaction
+3.	Patrik Ahola
+-	Further implementation of wave, player and game classes
+-	TowerStore - class first version	
 
 
 

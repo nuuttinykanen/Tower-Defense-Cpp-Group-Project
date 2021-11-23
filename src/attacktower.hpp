@@ -35,15 +35,12 @@ class AttackTower : public Tower {
     unsigned int rangeModifiers_;
 
     unsigned int CurrentRange() const;
+
+    virtual std::string GetType() const;
 };
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) {        
-        projectile_ = new BombProjectile(this);
-    }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) { }
     ~Bomber(){}
-
-    private:
-    Projectile* projectile_;
 };

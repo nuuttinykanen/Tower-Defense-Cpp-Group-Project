@@ -21,6 +21,8 @@ class Tower {
 
     bool HasUpgrade() const;
 
+    virtual std::string GetType() const = 0;
+
     private:
     std::string name_;
     std::string description_;    

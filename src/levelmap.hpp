@@ -35,6 +35,8 @@ class LevelMap {
   MapSquare* GetSquare(int x, int y); 
   const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
   const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
+  const std::map<std::pair<int, int>, AttTowerSquare*> GetAttTowerSquares();
+  const std::map<std::pair<int, int>, SuppTowerSquare*> GetSuppTowerSquares();
   const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
 
   /*

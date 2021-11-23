@@ -46,3 +46,5 @@
     unsigned int AttackTower::CurrentRange() const {
         return this->GetRange() + rangeModifiers_;
     }
+
+    std::string AttackTower::GetType() const { return "attack"; }

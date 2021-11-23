@@ -72,8 +72,30 @@ const std::map<std::pair<int, int>, FreeSquare*> LevelMap::GetFreeSquares() {
 const std::map<std::pair<int, int>, TowerSquare*> LevelMap::GetTowerSquares() {
     std::map<std::pair<int, int>, TowerSquare*> list;
     for(auto it : squares_) {
-      if(it.second->type() == "tower") {
+      if(it.second->type() == "attack" || it.second->type() == "support") {
         std::pair<std::pair<int, int>, TowerSquare*> ins = std::make_pair(it.first, (TowerSquare*)it.second);
+        list.insert(ins);
+      }
+    }
+    return list;
+}
+
+const std::map<std::pair<int, int>, AttTowerSquare*> LevelMap::GetAttTowerSquares() {
+    std::map<std::pair<int, int>, AttTowerSquare*> list;
+    for(auto it : squares_) {
+      if(it.second->type() == "attack") {
+        std::pair<std::pair<int, int>, AttTowerSquare*> ins = std::make_pair(it.first, (AttTowerSquare*)it.second);
+        list.insert(ins);
+      }
+    }
+    return list;
+}
+
+const std::map<std::pair<int, int>, SuppTowerSquare*> LevelMap::GetSuppTowerSquares() {
+    std::map<std::pair<int, int>, SuppTowerSquare*> list;
+    for(auto it : squares_) {
+      if(it.second->type() == "attack") {
+        std::pair<std::pair<int, int>, SuppTowerSquare*> ins = std::make_pair(it.first, (SuppTowerSquare*)it.second);
         list.insert(ins);
       }
     }
@@ -200,7 +222,9 @@ bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
     for(auto it = t_squares.begin(); it != t_squares.end(); it++) {
       auto h = *it;
       if(h.first.first == x && h.first.second == y) {
-        TowerSquare* t_square = new TowerSquare(x, y, tower);
+        TowerSquare* t_square;
+        if(tower->GetType() == "attack") t_square = new AttTowerSquare(x, y, (AttackTower*)tower);
+        else t_square = new SuppTowerSquare(x, y, (SupportTower*)tower);
         this->ChangeSquare(x, y, t_square);
         return true;
       }

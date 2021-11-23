@@ -8,8 +8,8 @@ class SupportTower : public Tower {
     public:
     SupportTower(std::string name, std::string description, int strength, int range, int cost, Tower* upgrade):
      Tower(name, description, strength, range, cost, upgrade) {}
-     ~SupportTower(){}
-    
+    ~SupportTower(){}
+
     virtual std::string GetType() const;
 
 };

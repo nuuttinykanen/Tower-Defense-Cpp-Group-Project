@@ -14,6 +14,7 @@ class MapSquare {
     virtual std::string type() const = 0;
     int GetX() { return x_; }
     int GetY() { return y_; }
+    void PrintLocation() { std::cout << this->GetX() << ":" << this->GetY() << std::endl; }
     private: 
     int x_;
     int y_;
@@ -82,6 +83,7 @@ class EnemySquare : public MapSquare {
         enemies_ = std::vector<Enemy*>();
         next_ = nullptr;
         previous_ = nullptr;
+        number_ = -1;
     } 
     ~EnemySquare(){} 
     virtual bool free() const { return false; } 
@@ -127,10 +129,13 @@ class EnemySquare : public MapSquare {
         if(this->GetEnemy(enemy) != nullptr) return true;
         else return false;
     }
+    unsigned int GetNumber() { return number_; }
+    void SetNumber(unsigned int number) { number_ = number; }
 
     private:
     std::vector<Enemy*> enemies_;
     EnemySquare* next_; 
     EnemySquare* previous_;
+    unsigned int number_;
 };
 #endif

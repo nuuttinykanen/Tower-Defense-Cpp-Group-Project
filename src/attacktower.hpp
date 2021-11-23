@@ -20,13 +20,13 @@ class AttackTower : public Tower {
 
     void Reload();
 
-    unsigned int GetRange() const;
-
     void AddCooldownModifier(int amount);
 
     void AddRangeModifier(int amount);
 
     void RemoveModifiers();
+
+    unsigned int GetCurrentRange() const;
 
     private:
     unsigned int cooldown_;
@@ -41,6 +41,6 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) { }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 100, 10, 500, nullptr) { }
     ~Bomber(){}
 };

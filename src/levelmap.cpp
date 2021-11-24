@@ -73,7 +73,7 @@ const std::map<std::pair<int, int>, FreeSquare*> LevelMap::GetFreeSquares() {
 const std::map<std::pair<int, int>, TowerSquare*> LevelMap::GetTowerSquares() {
     std::map<std::pair<int, int>, TowerSquare*> list;
     for(auto it : squares_) {
-      if(it.second->type() == "support" || it.second->type() == "attack") {
+      if(it.second->type() == "tower") {
         std::pair<std::pair<int, int>, TowerSquare*> ins = std::make_pair(it.first, (TowerSquare*)it.second);
         list.insert(ins);
       }
@@ -207,9 +207,7 @@ bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
       auto h = *it;
       if(h.first.first == x && h.first.second == y) {
         TowerSquare* t_square;
-        if(tower->GetType() == "attack") {
-               t_square = new AttTowerSquare(x, y, (AttackTower*)tower);
-        } else t_square = new SuppTowerSquare(x, y, (SupportTower*)tower);
+        t_square = new TowerSquare(x, y, tower);
         this->ChangeSquare(x, y, t_square);
         return true;
       }

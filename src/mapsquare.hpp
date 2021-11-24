@@ -3,8 +3,7 @@
 #include <string>
 #include <vector>
 #include "enemy.hpp"
-#include "attacktower.hpp"
-#include "supporttower.hpp"
+#include "tower.hpp"
 class MapSquare {
     public:
     MapSquare(int x, int y) : x_(x), y_(y) { }
@@ -36,45 +35,16 @@ class TowerSquare : public MapSquare {
     ~TowerSquare(){} 
     virtual bool free() const { return false; } 
     virtual bool occupied() const { return true; } 
-    virtual std::string type() const = 0;
+    virtual std::string type() const { return "tower"; }
 
     Tower* GetTower() { return tower_; } 
     bool ContainsTower(Tower* tower) {
         if(tower_ == tower) return true;
         else return false;
     }
-    protected: 
-    Tower* tower_; 
-}; 
-
-class AttTowerSquare : public TowerSquare { 
-    public: 
-    AttTowerSquare(int x, int y, AttackTower* tower) : TowerSquare(x, y, tower) {} 
-    ~AttTowerSquare(){} 
-    virtual bool free() const { return false; } 
-    virtual bool occupied() const { return true; } 
-    virtual std::string type() const { return "attack"; };
-
-    Tower* GetTower() { return tower_; } 
-    bool ContainsTower(Tower* tower) {
-        if(tower_ == tower) return true;
-        else return false;
-    }
-}; 
-
-class SuppTowerSquare : public TowerSquare { 
-    public: 
-    SuppTowerSquare(int x, int y, Tower* tower) : TowerSquare(x, y, tower) {} 
-    ~SuppTowerSquare(){} 
-    virtual bool free() const { return false; } 
-    virtual bool occupied() const { return true; } 
-    virtual std::string type() const { return "support"; };
-
-    Tower* GetTower() { return tower_; } 
-    bool ContainsTower(Tower* tower) {
-        if(tower_ == tower) return true;
-        else return false;
-    }
+    
+    private:
+    Tower* tower_;
 }; 
 
 class EnemySquare : public MapSquare { 

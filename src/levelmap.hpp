@@ -66,7 +66,7 @@ class LevelMap {
   std::vector<Projectile*> GetProjectiles();
   MapSquare* GetProjStartSquare(Tower* t_square, Enemy* enemy);
   void PlaceProjectile(Projectile* projec);
-  void ShootProjectile(Tower* sender);
+  void ShootProjectile(AttackTower* sender);
   void RemoveProjectile(Projectile* projec);
   void ScanProjectiles();
   void MoveProjectiles();

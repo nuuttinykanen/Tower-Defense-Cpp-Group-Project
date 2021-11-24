@@ -1,5 +1,11 @@
 #include "projectile.hpp"
 #include <cmath>
+
+void Projectile::Initialize(MapSquare* start_loc, Enemy* target) {
+    location_ = start_loc;
+    target_ = target;
+}
+
 MapSquare* Projectile::GetLocation() { return location_; }
 
 void Projectile::ChangeLocation(MapSquare* square) {
@@ -20,7 +26,6 @@ bool Projectile::ToBeRemoved() { return to_be_removed_; }
 
 void BombProjectile::Effect(EnemySquare* enemy) {
     if(enemy == nullptr) return;
-    std::cout << "EFFECT" << std::endl;
     for(auto en : enemy->GetEnemies()) {
         en->ChangeHealth(-1 * this->GetStrength());
     }
@@ -43,6 +48,16 @@ void BombProjectile::Effect(EnemySquare* enemy) {
         }
     }
     this->to_be_removed_ = true;
+}
+
+void BulletProjectile::Effect(EnemySquare* enemy) {
+    if(enemy == nullptr) return;
+    if(this->GetTarget() != nullptr) {
+        Enemy* target = enemy->GetEnemy(this->GetTarget());
+        if(target != nullptr) {
+            target->ChangeHealth(-1 * this->GetStrength());
+        }
+    }
 }
 
 

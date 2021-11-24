@@ -141,6 +141,7 @@ bool LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
       auto h = *it;
       if(h.first.first == x && h.first.second == y) {
         h.second->AddEnemy(enemy);
+        enemy->SetOnMap();
         return true;
       }
     }
@@ -189,6 +190,7 @@ void LevelMap::MoveEnemies() {
     for(auto et = enemies.begin(); et != enemies.end(); et++) {
       auto e = *et;
       if(e->GetHealth() < 1) {
+        e->RemoveFromMap();
         this->EraseEnemy(e);
       }
       else {
@@ -204,6 +206,7 @@ void LevelMap::MoveEnemies() {
         }
         if(end) {
           this->EraseEnemy(e);
+          e->RemoveFromMap();
           this->enemies_passed_ += 1;
         } else {
           this->MoveEnemy(e, h.second, destination);
@@ -303,7 +306,6 @@ MapSquare* LevelMap::GetNextMoveSquare(MapSquare* start, MapSquare* end) {
     return new_square;
 }
 
-
 MapSquare* LevelMap::GetProjStartSquare(Tower* tower, Enemy* enemy) {
   TowerSquare* sender = this->FindTower(tower);
   EnemySquare* target = this->FindEnemy(enemy);
@@ -344,14 +346,14 @@ std::vector<EnemySquare*> LevelMap::EnemiesInRange(Tower* tower) {
   return list;
 }
 
-
-void LevelMap::ShootProjectile(Tower* sender) {
+void LevelMap::ShootProjectile(AttackTower* sender) {
   EnemySquare* target_s = this->GetFarthestEnemy(EnemiesInRange(sender));
   if(target_s == nullptr) return;
   Enemy* target = *(target_s->GetEnemies().begin());
   MapSquare* start = this->GetProjStartSquare(sender, target);
   if(start == nullptr) return;
-  Projectile* new_projec = new BombProjectile(sender, start, target);
+  Projectile* new_projec = sender->GetProjectile();
+  new_projec->Initialize(start, target);
   projectiles_.push_back(new_projec);
 }
 
@@ -391,14 +393,15 @@ void LevelMap::MoveProjectile(Projectile* proj) {
     if(new_square == nullptr) return;
     proj->ChangeLocation(new_square);
 
-    if(ProjDistanceToTarget(proj) <= 2) {
+    if(ProjDistanceToTarget(proj) <= 1) {
       proj->Effect(this->GetTargetSquare(proj));
     }
 }
 
 void LevelMap::MoveProjectiles() {
   for(auto it : projectiles_) {
-    this->MoveProjectile(it);
+    if(it->GetTarget()->OnMap()) this->MoveProjectile(it);
+    else it->SetRemovalTrue();
   }
   this->ScanProjectiles();
 }

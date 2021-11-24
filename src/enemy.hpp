@@ -4,7 +4,9 @@
 class Enemy {
     public:
     Enemy(std::string name, int health, int attack, int speed, int bounty) : 
-    name_(name), maxHealth_(health), currentHealth_(health), attack_(attack), speed_(speed), currentBounty_(bounty) {}
+    name_(name), maxHealth_(health), currentHealth_(health), attack_(attack), speed_(speed), currentBounty_(bounty) {
+        on_map_ = false;
+    }
 
     ~Enemy(){}
 
@@ -14,6 +16,10 @@ class Enemy {
     int GetAttack();
     int GetBounty();
     int GetSpeed();
+
+    bool OnMap();
+    void SetOnMap();
+    void RemoveFromMap();
 
     double HealthPercentage();
 
@@ -26,6 +32,7 @@ class Enemy {
     int attack_;
     int speed_;
     int currentBounty_;
+    bool on_map_;
 };
 
 class Zombie : public Enemy {
@@ -44,7 +51,7 @@ class ZombieHorde : public Enemy {
 
 class MichaelMyers : public Enemy {
     public:
-    MichaelMyers(int health = 80, int attack = 5, int speed = 3, int bounty = 100) : 
+    MichaelMyers(int health = 80, int attack = 5, int speed = 1, int bounty = 100) : 
     Enemy("Michael Myers", health, attack, speed, bounty) {}
     ~MichaelMyers(){}
 };

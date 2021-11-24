@@ -44,3 +44,13 @@
     }
 
     std::string AttackTower::GetType() const { return "attack"; }
+
+    Projectile* Bomber::GetProjectile() {
+        Projectile* projec = new BombProjectile(this);
+        return projec;
+    }
+
+    Projectile* Gunner::GetProjectile() {
+        Projectile* projec = new BulletProjectile(this);
+        return projec;
+    }

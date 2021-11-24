@@ -13,6 +13,12 @@
 
     int Enemy::GetBounty() { return currentBounty_; }
 
+    bool Enemy::OnMap() { return on_map_; }
+
+    void Enemy::SetOnMap() { on_map_ = true; }
+
+    void Enemy::RemoveFromMap() { on_map_ = false; }
+
     double Enemy::HealthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
 
     void Enemy::ChangeHealth(int amount) { 

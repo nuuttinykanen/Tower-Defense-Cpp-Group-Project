@@ -28,6 +28,8 @@ class AttackTower : public Tower {
 
     unsigned int GetCurrentRange() const;
 
+    virtual Projectile* GetProjectile() = 0; 
+
     private:
     unsigned int cooldown_;
     unsigned int cooldownModifiers_;
@@ -43,4 +45,12 @@ class Bomber : public AttackTower {
     public:
     Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 3, 10, 500, nullptr) { }
     ~Bomber(){}
+    virtual Projectile* GetProjectile(); 
+};
+
+class Gunner : public AttackTower {
+    public:
+    Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 3, 10, 500, nullptr) { }
+    ~Gunner(){}
+    virtual Projectile* GetProjectile(); 
 };

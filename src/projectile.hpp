@@ -6,11 +6,14 @@
 #include "tower.hpp"
 class Projectile {
     public:
-    Projectile(Tower* sender, MapSquare* start_loc, Enemy* target) : sender_(sender), location_(start_loc), target_(target) {
+    Projectile(Tower* sender) : sender_(sender) {
+        location_ = nullptr;
+        target_ = nullptr;
         strength_ = sender->GetStrength();
         to_be_removed_ = false;
     }
     ~Projectile(){}
+    void Initialize(MapSquare* start_loc, Enemy* target);
     Tower* GetSender();
     MapSquare* GetLocation();
     Enemy* GetTarget();
@@ -32,13 +35,18 @@ class Projectile {
 
 class BombProjectile : public Projectile {
     public:
-    BombProjectile(Tower* sender, MapSquare* start_loc, Enemy* target) : Projectile(sender, start_loc, target) {
+    BombProjectile(Tower* sender) : Projectile(sender) {
         bomb_radius_ = 2;
     }
     void Effect(EnemySquare* enemy);
     private: 
-    unsigned int strength_;
     unsigned int bomb_radius_;
+};
+
+class BulletProjectile : public Projectile {
+    public:
+    BulletProjectile(Tower* sender) : Projectile(sender) { }
+    void Effect(EnemySquare* enemy);
 };
 
 #endif

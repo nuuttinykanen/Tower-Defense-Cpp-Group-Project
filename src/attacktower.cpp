@@ -27,7 +27,7 @@
     }
 
     unsigned int AttackTower::GetCurrentRange() const {
-        return rangeModifiers_;
+        return range_ + rangeModifiers_;
     }
 
     void AttackTower::AddCooldownModifier(int amount) {

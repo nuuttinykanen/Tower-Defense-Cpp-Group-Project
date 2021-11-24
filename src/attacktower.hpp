@@ -41,6 +41,6 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 500, 3, 10, 500, nullptr) { }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 3, 10, 500, nullptr) { }
     ~Bomber(){}
 };

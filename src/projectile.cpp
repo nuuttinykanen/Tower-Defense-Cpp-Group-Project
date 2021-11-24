@@ -19,28 +19,23 @@ unsigned int Projectile::GetStrength() { return strength_; }
 bool Projectile::ToBeRemoved() { return to_be_removed_; }
 
 void BombProjectile::Effect(EnemySquare* enemy) {
-    std::cout << "----------------------" << std::endl;
-    std::cout << "BombProjectile attacks square " << enemy->GetX() << " " << enemy->GetY() << "with range " << this->bomb_radius_ << std::endl;
-
     EnemySquare* prev = enemy->GetPrevious();
     EnemySquare* next = enemy->GetNext();
     for(unsigned int i = 0; i < this->bomb_radius_; i++) {
         if(prev != nullptr) {
             for(auto it : prev->GetEnemies()) {
-                std::cout << it->GetName() << " at " << prev->GetX()  << " " << prev->GetY() << " via PREVIOUS" << std::endl;
-                it->ChangeHealth(-1);
+                it->ChangeHealth(-1 * this->GetStrength());
             }
             prev = prev->GetPrevious();
         }
         if(next != nullptr) {
             for(auto it : next->GetEnemies()) {
-                std::cout << it->GetName() << " at " << next->GetX()  << " " << next->GetY() << " via NEXT" << std::endl;
-                it->ChangeHealth(-1);
+                it->ChangeHealth(-1 * this->GetStrength());
             }
             next = next->GetNext();
         }
     }
-    std::cout << "----------------------" << std::endl;
+    this->to_be_removed_ = true;
 }
 
 

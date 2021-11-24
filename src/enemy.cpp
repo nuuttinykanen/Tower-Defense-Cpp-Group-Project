@@ -15,4 +15,7 @@
 
     double Enemy::HealthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
 
-    void Enemy::ChangeHealth(int amount) { currentHealth_ += amount; }
+    void Enemy::ChangeHealth(int amount) { 
+        if(currentHealth_ + amount < 0) currentHealth_ = 0;
+        else currentHealth_ += amount; 
+    }

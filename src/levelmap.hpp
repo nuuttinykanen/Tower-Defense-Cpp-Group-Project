@@ -17,6 +17,7 @@ class LevelMap {
     towers_ = std::vector<Tower*>();
     enemies_ = std::vector<Enemy*>();
     squares_ = std::map<std::pair<int, int>, MapSquare*>();
+    enemies_passed_ = 0;
 
     for(unsigned int i = 0; i < size; i++) {
       for(unsigned int j = 0; j < size; j++) {
@@ -69,6 +70,8 @@ class LevelMap {
   double ProjDistanceToTarget(Projectile* proj);
   void MoveProjectile(Projectile* proj); 
 
+  unsigned int GetEnemiesPassed();
+
   private:
   size_t size_;
   std::map<std::pair<int, int>, MapSquare*> squares_;
@@ -76,6 +79,7 @@ class LevelMap {
   std::vector<Tower*> towers_;
   std::vector<Enemy*> enemies_;
   std::vector<Projectile*> projectiles_;
+  unsigned int enemies_passed_;
 };
 
 #endif

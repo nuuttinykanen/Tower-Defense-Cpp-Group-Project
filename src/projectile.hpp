@@ -26,6 +26,7 @@ class Projectile {
     MapSquare* location_;
     Enemy* target_;
     unsigned int strength_;
+    protected:
     bool to_be_removed_;
 };
 

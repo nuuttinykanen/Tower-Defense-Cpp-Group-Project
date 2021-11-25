@@ -2,6 +2,7 @@
 #define TOWER_DEFENSE_12_GUI_H
 
 #include <SFML/Graphics.hpp>
+#include "gui_elements/GlobalObjects.h"
 
 class WindowState;
 class MenuState;
@@ -21,9 +22,13 @@ public:
     int get_screen_width() const { return screen_width_;}
     int get_screen_height() const { return screen_height_;}
 
+    GlobalObjects* getGlobalObjects() { return globalObjects_; };
+
 private:
     sf::RenderWindow window_;
     WindowState* current_state_;
+    GlobalObjects* globalObjects_;
+
     int screen_width_;
     int screen_height_;
 };

@@ -3,22 +3,31 @@
 #include "window_state.h"
 #include "SFML/Graphics.hpp"
 #include <iostream>
-// #include "../Gui.h"
+
+enum MenuButtonTarget {StartGame, StartLevelSelect, Quit};
+
 
 class MenuState: public WindowState {
 public:
     MenuState(sf::RenderWindow& window, Gui* gui);
 
-
-    ~MenuState() override = default;
+    ~MenuState();
 
     void advance_state() override;
 
     void draw_current_state() override;
 
+    void poll_events() override;
 
+    void start_game();
+
+    void startLevelSelect();
+
+    void quit();
 
 private:
+    int count_ = 0;
+    std::map<MenuButtonTarget, Button*> buttons_;
 
 };
 #endif //TOWER_DEFENSE_12_MENU_STATE_H

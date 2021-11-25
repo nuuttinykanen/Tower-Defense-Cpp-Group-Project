@@ -15,3 +15,7 @@ void WindowState::draw_window() {
 
     window_.display();
 }
+
+sf::Font& WindowState::getFont() {
+    return gui_->getGlobalObjects()->getFont();
+}

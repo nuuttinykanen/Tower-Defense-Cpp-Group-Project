@@ -9,6 +9,8 @@
 #include "tower.hpp"
 #include "enemy.hpp"
 #include "projectile.hpp"
+#include "attacktower.hpp"
+#include "supporttower.hpp"
 class LevelMap {
 
   public:
@@ -17,6 +19,7 @@ class LevelMap {
     towers_ = std::vector<Tower*>();
     enemies_ = std::vector<Enemy*>();
     squares_ = std::map<std::pair<int, int>, MapSquare*>();
+    enemies_passed_ = 0;
 
     for(unsigned int i = 0; i < size; i++) {
       for(unsigned int j = 0; j < size; j++) {
@@ -36,6 +39,8 @@ class LevelMap {
   const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
   const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
   const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
+  std::vector<AttackTower*> GetAttackTowers();
+  std::vector<SupportTower*> GetSupportTowers();
 
   /*
   const std::map<std::pair<int, int>, EnemySquare*> GetPathStart() const;
@@ -50,22 +55,27 @@ class LevelMap {
   bool EraseEnemy(Enemy* enemy);
   bool PlaceEnemy(int x, int y, Enemy* enemy);
   EnemySquare* FindEnemy(Enemy* enemy);
-  Enemy* GetFarthestEnemy();
+  EnemySquare* GetFarthestEnemy(std::vector<EnemySquare*> list);
+  std::vector<EnemySquare*> EnemiesInRange(Tower* tower);
+  MapSquare* GetNextMoveSquare(MapSquare* start, MapSquare* end);
 
   bool PlaceTower(int x, int y, Tower* tower);
   bool EraseTower(Tower* tower);
   TowerSquare* FindTower(Tower* tower);
 
   std::vector<Projectile*> GetProjectiles();
-  void SetProjStartSquare(Projectile* projec);
+  MapSquare* GetProjStartSquare(Tower* t_square, Enemy* enemy);
   void PlaceProjectile(Projectile* projec);
+  void ShootProjectile(AttackTower* sender);
   void RemoveProjectile(Projectile* projec);
   void ScanProjectiles();
   void MoveProjectiles();
 
-  EnemySquare* GetProjTargetSquare(Projectile* proj);
+  EnemySquare* GetTargetSquare(Projectile* proj);
   double ProjDistanceToTarget(Projectile* proj);
   void MoveProjectile(Projectile* proj); 
+
+  unsigned int GetEnemiesPassed();
 
   private:
   size_t size_;
@@ -74,6 +84,7 @@ class LevelMap {
   std::vector<Tower*> towers_;
   std::vector<Enemy*> enemies_;
   std::vector<Projectile*> projectiles_;
+  unsigned int enemies_passed_;
 };
 
 #endif

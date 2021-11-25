@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TOWER_HPP
+#define TOWER_HPP
 #include <iostream>
 #include <vector>
 class Tower {
@@ -21,11 +22,15 @@ class Tower {
 
     bool HasUpgrade() const;
 
+    virtual std::string GetType() const = 0;
+
     private:
     std::string name_;
     std::string description_;    
     unsigned int strength_;
-    unsigned int range_;
     unsigned int price_;
     Tower* upgrade_;
+    protected:
+    unsigned int range_;
 };
+#endif

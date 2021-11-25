@@ -20,13 +20,15 @@ class AttackTower : public Tower {
 
     void Reload();
 
-    unsigned int GetRange() const;
-
     void AddCooldownModifier(int amount);
 
     void AddRangeModifier(int amount);
 
     void RemoveModifiers();
+
+    unsigned int GetCurrentRange() const;
+
+    virtual Projectile* GetProjectile() = 0; 
 
     private:
     unsigned int cooldown_;
@@ -35,15 +37,20 @@ class AttackTower : public Tower {
     unsigned int rangeModifiers_;
 
     unsigned int CurrentRange() const;
+
+    virtual std::string GetType() const;
 };
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 10, 4, 10, 500, nullptr) {        
-        projectile_ = new BombProjectile(this);
-    }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 3, 10, 500, nullptr) { }
     ~Bomber(){}
+    virtual Projectile* GetProjectile(); 
+};
 
-    private:
-    Projectile* projectile_;
+class Gunner : public AttackTower {
+    public:
+    Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 3, 10, 500, nullptr) { }
+    ~Gunner(){}
+    virtual Projectile* GetProjectile(); 
 };

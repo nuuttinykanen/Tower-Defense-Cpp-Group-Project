@@ -26,8 +26,8 @@
         if(attackCounter_ > 0) attackCounter_ -= 1;
     }
 
-    unsigned int AttackTower::GetRange() const {
-        return this->GetRange() + rangeModifiers_;
+    unsigned int AttackTower::GetCurrentRange() const {
+        return range_ + rangeModifiers_;
     }
 
     void AttackTower::AddCooldownModifier(int amount) {
@@ -43,6 +43,14 @@
         rangeModifiers_ = 0;
     }
 
-    unsigned int AttackTower::CurrentRange() const {
-        return this->GetRange() + rangeModifiers_;
+    std::string AttackTower::GetType() const { return "attack"; }
+
+    Projectile* Bomber::GetProjectile() {
+        Projectile* projec = new BombProjectile(this);
+        return projec;
+    }
+
+    Projectile* Gunner::GetProjectile() {
+        Projectile* projec = new BulletProjectile(this);
+        return projec;
     }

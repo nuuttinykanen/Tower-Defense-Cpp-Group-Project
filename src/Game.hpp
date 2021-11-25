@@ -2,7 +2,7 @@
 #include <vector>
 #include "player.hpp"
 #include "Wave.hpp"
-
+#include "projectile.hpp"
 class Game {
 
     public:
@@ -11,8 +11,8 @@ class Game {
     , enemyWaves_(waves){
 
         this->towers_ = player_.GetTowers();
-
-
+        this->enemies_ = map_.GetEnemies();
+        this->projectiles_ = map_.GetProjectiles();
     };
 
 
@@ -23,6 +23,10 @@ class Game {
 
     void SpawnTower(Tower* tower, double x, double y);
 
+    void KillEnemy(Enemy* enemy);
+
+    void SellTower(Tower* tower);
+
     void StartWave(Wave v);
 
 
@@ -31,6 +35,8 @@ class Game {
     LevelMap map_;
     std::vector<Wave*> enemyWaves_;
     std::vector<Tower*> towers_;
+    std::vector<Enemy*> enemies_;
+    std::vector<Projectile*> projectiles_;
     Player player_;
 
 

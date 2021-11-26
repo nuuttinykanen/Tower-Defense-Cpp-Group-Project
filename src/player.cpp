@@ -13,6 +13,10 @@ void Player::GiveMoney(double amount) {
     this->money_ += amount;
 }
 
+void Player::TakeMoney(double amount) {
+    this->money_ -= amount;
+}
+
 void Player::RemoveTower(Tower *tower) {
 
     this->playerTowers_.erase(std::remove(this->playerTowers_.begin(), this->playerTowers_.end(), tower), this->playerTowers_.end());
@@ -23,6 +27,10 @@ void Player::SellTower(Tower *tower) {
     this->GiveMoney(0.5 * tower->GetPrice());
     this->RemoveTower(tower);
 
+}
 
+void Player::BuyTower(Tower *tower) {
+    this->TakeMoney(tower->GetPrice());
+    this->playerTowers_.push_back(tower);
 }
 

@@ -8,15 +8,18 @@ void Game::SpawnEnemy(Enemy* enemy) {
 }
 
 void Game::SpawnTower(Tower* tower, double x, double y) {
-
+    this->player_.BuyTower(tower);
     this->map_.PlaceTower(x, y, tower);
     towers_.push_back(tower);
 }
 
+
 void Game::KillEnemy(Enemy *enemy) {
     this->map_.EraseEnemy(enemy);
     this->player_.GiveMoney(enemy->GetBounty());
+    // Remove projectile
 }
+
 
 void Game::SellTower(Tower* tower) {
     this->player_.SellTower(tower);

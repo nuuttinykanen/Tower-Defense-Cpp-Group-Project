@@ -11,6 +11,8 @@ class Wave {
         WaveEnemies_(WaveEnemies){};
 
         void AddEnemyToWave(Enemy* enemy);
+        void RemoveEnemyFromWave(Enemy* enemy);
+
 
     private:
         std::vector<Enemy*> WaveEnemies_;

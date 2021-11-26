@@ -127,6 +127,58 @@ Working gui elements should be soon implemented to check other classes functiona
 -	TowerStore - class first version	
 
 
+# Meeting 26.11.2021 16:00
+**Participants**:
+1. Tino Korpelainen
+2. Nuutti Nykänen
+3. Patrik Ahola
+4. Elias Kauranen
+
+# Summary of works
+
+1.	Patrik Ahola
+-	Further Game, player and wave class implementations and refactoring
+-	Logic for selling and buying player’s towers and managing money
+-	Removing enemies from waves
+-	KillEnemy in Game class
+-	Added projectiles and the logic for buying and selling player’s towers in game	
+
+
+2.	Nuutti Nykänen & Elias Kauranen
+- Further implementation and debugging of enemy movement and projectile interaction
+- Different projectile types and effects 
+  - BombProjectile hits multiple enemies on hit 
+  - Easily can create more projectiles
+- Different support towers
+
+3. Tino Korpelainen
+-  Implemented working buttons, hit detection, global object, text
+- Added a global font object
+- Separated event polling to each of the states.
+- Working state changes through buttons 
+
+## Project status
+The interaction between projectiles, towers and enemies (LevelMap) is generally functional, but it still needs heavy testing etc. 
+For the testing it’s critical that we get GUI elements so we can visually confirm that everything is working.
+
+
+
+## TODOs
+Patrik
+- Implementing further functionality to Game, Wave and Player classes. Hopefully, if possible, to test these with a prototype map/level (Enemies moving or dying/taking damage from projectiles, towers shooting etc..).
+- I’ll implement at least a prototype of the Game’s UpdateState function to get a basic working function to update all the elements in the map and ensure a working game logic.
+
+Nuutti & Elias
+- Heavy testing 
+- More different projectiles
+- More different towers
+- Checking path validity in enemy path construction
+- Sprites for GUI
+
+Tino
+- Buttons with sprites for buying different towers, upgrade buttons.
+- Gui elements for different objects in the game.
+- Saving and loading levels (maybe should be pushed back until more urgent tasks are done)
 
 
 

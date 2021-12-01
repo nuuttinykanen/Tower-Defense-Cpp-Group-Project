@@ -1,5 +1,12 @@
 #include "Wave.hpp"
 
+Wave::~Wave() {
+    for(auto w : WaveEnemies_) {
+        delete(w);
+    }
+    WaveEnemies_.clear();
+}
+
 void Wave::AddEnemyToWave(Enemy *enemy) {
 
     this->WaveEnemies_.push_back(enemy);

@@ -1,6 +1,14 @@
 #include "Game.hpp"
 
 
+Game::~Game(){
+    for(auto w : enemyWaves_) {
+        delete(w);
+    }
+    enemyWaves_.clear();
+
+}
+
 void Game::SpawnEnemy(Enemy* enemy) {
     this->map_.PlaceEnemy(0, 0 ,enemy);
     enemies_.push_back(enemy);

@@ -22,7 +22,21 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, g
     auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie()});
 
 
-    buttons_[GameButtonTarget::QuitToMenu] = startButton;
+
+    std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> coords = std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>();
+    std::pair<int, int> start = std::make_pair(2, 4);
+    std::pair<int, int> middle = std::make_pair(2, 9);
+    std::pair<int, int> end1 = std::make_pair(10, 9);
+    std::pair<int, int> end2 = std::make_pair(10, 14);
+    std::pair<int, int> end3 = std::make_pair(15, 14);
+    coords.emplace_back(start, middle);
+    coords.emplace_back(middle, end1);
+    coords.emplace_back(end1, end2);
+    coords.emplace_back(end2, end3);
+    levelMap_ = new LevelMap(100);
+    levelMap_->InitializePath(coords);
+    auto p = Player();
+    game_ = new Game( *levelMap_, p, {wave});
 }
 GameState::~GameState() {
     for (auto b : buttons_) {

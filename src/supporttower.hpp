@@ -3,6 +3,7 @@
 #include "tower.hpp"
 #include <string>
 #include "mapsquare.hpp"
+#include "attacktower.hpp"
 class SupportTower : public Tower {
     public:
     SupportTower(std::string name, std::string description, int strength, int range, int cost, Tower* upgrade):

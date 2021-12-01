@@ -7,7 +7,7 @@ class Game {
 
     public:
 
-    Game(map = LevelMap(20), player = Player(), std::vector<Wave*> waves = std::vector<Wave*>()) : map_(map), player_(player)
+    Game(LevelMap& map, Player& player, std::vector<Wave*> waves) : map_(map), player_(player)
     , enemyWaves_(waves){
 
         this->towers_ = player_.GetTowers();
@@ -20,7 +20,6 @@ class Game {
     LevelMap& GetMap();
 
     void UpdateState();
-
 
     void SpawnEnemy(Enemy* enemy);
 
@@ -35,12 +34,13 @@ class Game {
     int GetWaveCount() { return enemyWaves_.size(); };
 
     private:
-    LevelMap map_;
+    LevelMap& map_;
+    Player& player_;
     std::vector<Wave*> enemyWaves_;
     std::vector<Tower*> towers_;
     std::vector<Enemy*> enemies_;
     std::vector<Projectile*> projectiles_;
-    Player player_;
+
 
 
 };

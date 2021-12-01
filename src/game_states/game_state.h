@@ -3,8 +3,8 @@
 
 #include "window_state.h"
 #include <iostream>
-
-enum GameButtonTarget {QuitToMenu};
+#include "../Game.hpp"
+enum GameButtonTarget {QuitToMenu, StartWave, SellTower, UpgradeTower};
 
 class GameState: public WindowState {
 public:
@@ -23,6 +23,8 @@ public:
     void startWave();
 private:
     std::map<GameButtonTarget, Button*> buttons_;
+    Game* game_;
+    LevelMap* levelMap_;
 
 };
 #endif //TOWER_DEFENSE_12_GAME_STATE_H

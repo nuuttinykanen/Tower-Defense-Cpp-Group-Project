@@ -15,6 +15,9 @@ class Game {
         this->projectiles_ = map_.GetProjectiles();
     };
 
+    ~Game();
+
+    LevelMap& GetMap();
 
     void UpdateState();
 
@@ -27,9 +30,9 @@ class Game {
 
     void SellTower(Tower* tower);
 
-    void StartWave(Wave v);
+    void StartWave();
 
-
+    int GetWaveCount() { return enemyWaves_.size(); };
 
     private:
     LevelMap map_;

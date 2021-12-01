@@ -4,8 +4,23 @@
 
 GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, gui) {
     // Generate buttons
-    auto startButton = new Button(sf::Vector2f (325, 50), sf::Vector2f(100, 200),
-                                  "Quit to menu",this->getFont(), 20);
+    auto startButton = new Button(sf::Vector2f (225, 50), sf::Vector2f(1050, 650),
+                                  "Quit game",this->getFont(), 20);
+    buttons_[GameButtonTarget::QuitToMenu] = startButton;
+    auto startWaveButton = new Button(sf::Vector2f(225, 50), sf::Vector2f(1050, 590),
+                                      "Start wave!", this->getFont(), 20);
+    buttons_[GameButtonTarget::StartWave] = startWaveButton;
+    auto upgradeTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750
+                                                                             , 590),
+                                      "Upgrade tower", this->getFont(), 20);
+    buttons_[GameButtonTarget::UpgradeTower] = upgradeTowerButton;
+
+    auto sellTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750, 650),
+                                      "Sell tower", this->getFont(), 20);
+    buttons_[GameButtonTarget::SellTower] = sellTowerButton;
+
+    auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie()});
+
 
     buttons_[GameButtonTarget::QuitToMenu] = startButton;
 }
@@ -16,14 +31,35 @@ GameState::~GameState() {
 }
 
 void GameState::advance_state() {
-
+    game_->UpdateState();
 }
 
 void GameState::draw_current_state() {
     for (auto b : buttons_) {
         b.second->draw(window_);
     }
+    auto globals = gui_->getGlobalObjects();
 
+    auto purpleSprite = globals->getPurpleEnemySprite();
+    purpleSprite.setScale(2, 2);
+    purpleSprite.setPosition(500, 500);
+    window_.draw(purpleSprite);
+    LevelMap& map = game_->GetMap();
+    for(auto it : map.GetFreeSquares()) {
+        auto freeSprite = globals->getFreeSquareSprite();
+        freeSprite.setPosition(it.second->GetX(), it.second->GetY());
+        window_.draw(freeSprite);
+    }
+    for(auto it : map.GetEnemySquares()) {
+        auto freeSprite = globals->getEnemySquareSprite();
+        freeSprite.setPosition(it.second->GetX(), it.second->GetY());
+        window_.draw(freeSprite);
+    }
+    for(auto it : map.GetTowerSquares()) {
+        auto freeSprite = globals->getTowerSquareSprite();
+        freeSprite.setPosition(it.second->GetX(), it.second->GetY());
+        window_.draw(freeSprite);
+    }
 }
 
 void GameState::poll_events() {
@@ -48,6 +84,13 @@ void GameState::poll_events() {
                         case QuitToMenu:
                             quitToMenu();
                             return;
+                        case StartWave:
+                            startWave();
+                            return;
+                        case SellTower:
+                            return;
+                        case UpgradeTower:
+                            return;
                     }
                 }
             } else if (event.mouseButton.button == 1) {
@@ -64,4 +107,17 @@ void GameState::poll_events() {
 void GameState::quitToMenu() {
     std::cout << "Quitting to menu!" << std::endl;
     gui_->change_game_state(new MenuState(window_, gui_));
+}
+
+void GameState::startWave() {
+    game_->StartWave();
+    if (game_->GetWaveCount() == 0) {
+        // Remove the start wave button
+        for (auto it = buttons_.begin(); it != buttons_.end(); it++) {
+            if (it->first == GameButtonTarget::StartWave) {
+                delete it->second;
+                buttons_.erase(it);
+            }
+        }
+    }
 }

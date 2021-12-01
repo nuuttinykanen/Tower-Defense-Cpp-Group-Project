@@ -1,5 +1,6 @@
 #ifndef Enemy_Class
 #define Enemy_Class
+#include <string>
 
 class Enemy {
     public:

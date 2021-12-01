@@ -19,6 +19,8 @@ public:
     void draw_current_state() override;
 
     void quitToMenu();
+
+    void startWave();
 private:
     std::map<GameButtonTarget, Button*> buttons_;
 

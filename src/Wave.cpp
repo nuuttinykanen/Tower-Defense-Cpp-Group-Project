@@ -5,8 +5,10 @@ void Wave::AddEnemyToWave(Enemy *enemy) {
     this->WaveEnemies_.push_back(enemy);
 }
 
-void Wave::RemoveEnemyFromWave(Enemy* enemy){
+void Wave::RemoveEnemyFromWave(Enemy* enemy) {
 
-    this->WaveEnemies_.erase(std::remove(this->WaveEnemies_.begin(), this->WaveEnemies_.end(), enemy), this->WaveEnemies_.end());
+    for (auto e = WaveEnemies_.begin(); e != WaveEnemies_.end(); e++) {
+        if (*e == enemy) WaveEnemies_.erase(e);
+    }
 }
 

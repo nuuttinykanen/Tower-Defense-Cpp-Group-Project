@@ -7,12 +7,13 @@
 
 Gui::Gui(int width, int height)
     : screen_width_(width), screen_height_(height),
-    window_(sf::RenderWindow(sf::VideoMode(width, height), GAME_TITLE)),
+    window_(sf::RenderWindow(sf::VideoMode(width, height), GAME_TITLE, sf::Style::Titlebar | sf::Style::Close)),
     current_state_(nullptr),
     globalObjects_(new GlobalObjects())
 {
     window_.setFramerateLimit(60);
     window_.setKeyRepeatEnabled(false);
+    ///window_.
     change_game_state(new MenuState(window_, this));
     start_main_loop();
 }

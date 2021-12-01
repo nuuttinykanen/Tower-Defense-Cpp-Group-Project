@@ -9,7 +9,8 @@ class Wave {
     public:
         Wave(std::vector<Enemy*> WaveEnemies = std::vector<Enemy*>()) :
         WaveEnemies_(WaveEnemies){};
-
+        ~Wave();
+        std::vector<Enemy*> getWaveEnemies() { return WaveEnemies_;};
         void AddEnemyToWave(Enemy* enemy);
         void RemoveEnemyFromWave(Enemy* enemy);
 

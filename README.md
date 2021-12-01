@@ -13,7 +13,7 @@ You can use Markdown language to render it as formatted **HTML** file.
 
 Instructions for windows with clion IDE:
 - Download SFML: https://www.sfml-dev.org/files/SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip
-- Extract SFML-2.5.1 folder to C:\
+- Extract SFML-2.5.1 folder to C:\ and rename it to SFML
 - Download MinGW 7.3.0 (64-bit): https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/7.3.0/threads-posix/seh/x86_64-7.3.0-release-posix-seh-rt_v5-rev0.7z/download
 - Extract MinGw to C:\
 - Install and open clion

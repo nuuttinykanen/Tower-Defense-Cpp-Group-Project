@@ -12,8 +12,8 @@ class Player {
 
         std::vector<Tower*> GetTowers() const;
         double GetMoney() const;
-        void GiveMoney();
-        void TakeMoney();
+        void GiveMoney(double amount);
+        void TakeMoney(double amount);
         void RemoveTower(Tower* tower);
         void SellTower(Tower* tower);
         void BuyTower(Tower* tower);

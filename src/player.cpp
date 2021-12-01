@@ -19,8 +19,10 @@ void Player::TakeMoney(double amount) {
 
 void Player::RemoveTower(Tower *tower) {
 
-    this->playerTowers_.erase(std::remove(this->playerTowers_.begin(), this->playerTowers_.end(), tower), this->playerTowers_.end());
-
+    for (auto t = playerTowers_.begin(); t != playerTowers_.end(); t++) {
+        if (*t == tower)
+            playerTowers_.erase(t);
+    }
 }
 
 void Player::SellTower(Tower *tower) {

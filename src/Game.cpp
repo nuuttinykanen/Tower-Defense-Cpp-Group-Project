@@ -10,8 +10,17 @@ Game::~Game(){
 }
 
 void Game::SpawnEnemy(Enemy* enemy) {
-    this->map_.PlaceEnemy(0, 0 ,enemy);
-    enemies_.push_back(enemy);
+    //Enemypath start square (spawn) coordinates
+    int x = this->map_.GetEnemySquares().begin()->first.first;
+    int y = this-> map_.GetEnemySquares().begin()->first.second;
+
+    if(this->map_.PlaceEnemy( x, y ,enemy)){
+        enemies_.push_back(enemy);
+    }
+
+
+
+
 }
 
 void Game::SpawnTower(Tower* tower, double x, double y) {
@@ -51,4 +60,8 @@ LevelMap &Game::GetMap() {
 
 void Game::UpdateState() {
 
+ 
 }
+
+
+

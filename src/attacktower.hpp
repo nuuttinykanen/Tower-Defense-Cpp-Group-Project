@@ -2,6 +2,7 @@
 #include "tower.hpp"
 #include <string>
 #include "enemy.hpp"
+#include "projectile.hpp"
 class AttackTower : public Tower {
     public:
     AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int cooldown, unsigned int cost, Tower* upgrade) : 

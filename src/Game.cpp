@@ -25,6 +25,7 @@ void Game::SpawnTower(Tower* tower, double x, double y) {
     this->player_.BuyTower(tower);
     this->map_.PlaceTower(x, y, tower);
     towers_.push_back(tower);
+
 }
 
 
@@ -40,6 +41,8 @@ void Game::SellTower(Tower* tower) {
     this->map_.EraseTower(tower);
 }
 
+
+
 // Start the first wave and then remove it from the vector
 void Game::StartWave() {
 
@@ -49,8 +52,12 @@ void Game::StartWave() {
     for(auto e : enemyWave){
         SpawnEnemy(e);
     }
+
 }
 
+void Game::EndGame() {
+    this->GameEnd_ = true;
+}
 
 LevelMap &Game::GetMap() {
     return map_;
@@ -59,12 +66,25 @@ LevelMap &Game::GetMap() {
 void Game::UpdateState() {
 
     //Print enemy locations and move enemies (after starting wave)
-    for(auto it: this->enemies_){
-        this->map_.FindEnemy(it)->PrintLocation();
+    if(!GameEnd_){
+        for(auto it: this->enemies_){
+            this->map_.FindEnemy(it)->PrintLocation();
+        }
+
+        this->map_.MoveEnemies();
+        if(this->map_.GetEnemiesPassed() > 0){
+            this->EndGame();
+        }
     }
-    this->map_.MoveEnemies();
+
+
+
+
+
 
 }
+
+
 
 
 

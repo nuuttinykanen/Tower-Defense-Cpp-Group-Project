@@ -11,8 +11,10 @@ class Game {
     , enemyWaves_(waves){
 
         this->towers_ = player_.GetTowers();
+        this->GameEnd_ = false;
         this->enemies_ = map_.GetEnemies();
         this->projectiles_ = map_.GetProjectiles();
+
     };
 
     ~Game();
@@ -20,6 +22,8 @@ class Game {
     LevelMap& GetMap();
 
     void UpdateState();
+
+    void EndGame();
 
     void SpawnEnemy(Enemy* enemy);
 
@@ -38,10 +42,11 @@ class Game {
     Player& player_;
     std::vector<Wave*> enemyWaves_;
     std::vector<Tower*> towers_;
+
     std::vector<Enemy*> enemies_;
     std::vector<Projectile*> projectiles_;
 
-
+    bool GameEnd_;
 
 };
 

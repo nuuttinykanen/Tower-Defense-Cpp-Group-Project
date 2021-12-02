@@ -142,8 +142,6 @@ bool LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
       if(h.first.first == x && h.first.second == y) {
         h.second->AddEnemy(enemy);
         enemy->SetOnMap();
-        //Add placed enemy to enemies_
-        enemies_.push_back(enemy);
         return true;
       }
     }

@@ -58,6 +58,11 @@ LevelMap &Game::GetMap() {
 
 void Game::UpdateState() {
 
+    //Print enemy locations and move enemies (after starting wave)
+    for(auto it: this->enemies_){
+        this->map_.FindEnemy(it)->PrintLocation();
+    }
+    this->map_.MoveEnemies();
 
 }
 

@@ -14,7 +14,7 @@ class Game {
         this->GameEnd_ = false;
         this->enemies_ = map_.GetEnemies();
         this->projectiles_ = map_.GetProjectiles();
-
+        this->WaveInProgress_ = false;
     };
 
     ~Game();
@@ -45,8 +45,8 @@ class Game {
 
     std::vector<Enemy*> enemies_;
     std::vector<Projectile*> projectiles_;
-
     bool GameEnd_;
+    bool WaveInProgress_;
 
 };
 

@@ -14,12 +14,10 @@ void Game::SpawnEnemy(Enemy* enemy) {
     int x = this->map_.GetEnemySquares().begin()->first.first;
     int y = this-> map_.GetEnemySquares().begin()->first.second;
 
+
     if(this->map_.PlaceEnemy( x, y ,enemy)){
         enemies_.push_back(enemy);
     }
-
-
-
 
 }
 
@@ -60,7 +58,7 @@ LevelMap &Game::GetMap() {
 
 void Game::UpdateState() {
 
- 
+
 }
 
 

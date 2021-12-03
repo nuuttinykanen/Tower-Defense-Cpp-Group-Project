@@ -181,6 +181,86 @@ Tino
 - Saving and loading levels (maybe should be pushed back until more urgent tasks are done)
 
 
+## Meeting 3.12.2021 13:00
+
+**Participants**:
+
+1. Tino Korpelainen
+
+2. Nuutti Nykänen
+
+3. Elias Kauranen
+
+4. Patrik Ahola
+
+## Summary of works
+
+1. Tino Korpelainen
+
+- Added temporary sprites to game objects
+
+- Added buttons for starting wave, upgrade tower, sell tower
+
+- Added buttons for buying different towers
+
+- Bugfixes
+
+
+
+2. Nuutti Nykänen & Elias Kauranen
+
+- Worked a little on GUI
+
+- Overall debugging of LevelMap
+
+- Validity checks for enemy path in LevelMap initialization
+
+
+
+3.    Patrik Ahola 
+
+- Prototype UpdateState function
+
+- Enemies move
+
+- Attacktowers shoot
+
+- Projectiles move
+
+- Game refactoring and debugging
+
+## Project status
+
+Due to time constraints the level editor will only be implemented as typing coordinates in to a text file. LevelMap is still needs heavy debugging and that will be a focus for the finish lap.
+
+## TODOs
+
+1. Tino Korpelainen
+
+- Add tooltip on hovering over tower buttons
+
+- Implement level loading from a file and saving
+
+- Make the current gui more pretty
+
+
+
+2. Nuutti Nykänen & Elias Kauranen
+
+- GUI work
+
+- More debugging of LevelMap
+
+- More Tower and Projectile subclasses
+
+3. Patrik Ahola
+
+- UpdateState completion (SupportTowers, anything that’s missing)
+
+- Game debugging and finishing, working UpdateState
+
+- Testing
+
 
 
 

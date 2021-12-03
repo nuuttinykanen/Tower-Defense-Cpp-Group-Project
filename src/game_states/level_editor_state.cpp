@@ -1,5 +1,6 @@
 #include "level_editor_state.h"
 
+
 LevelEditorState::LevelEditorState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
 
 }

@@ -17,6 +17,10 @@ public:
     GameState(sf::RenderWindow& window, Gui* gui);
     ~GameState();
 
+    void generateButtons();
+
+    void generateEnemies();
+
     void advance_state() override;
 
     void poll_events() override;
@@ -32,6 +36,6 @@ private:
     std::map<std::string, sf::Sprite> enemySprites_;
     Game* game_;
     LevelMap* levelMap_;
-
+    Player* player_;
 };
 #endif //TOWER_DEFENSE_12_GAME_STATE_H

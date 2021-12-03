@@ -21,8 +21,14 @@ class Player {
         void SellTower(Tower* tower);
         void BuyTower(Tower* tower);
 
+        unsigned int GetMaxHealth();
+        unsigned int GetHealth();
+        void ChangeHealth(int amount);
 
-    private :
+
+    private:
+        unsigned int maxHealth_;
+        unsigned int health_;
         double money_;
         std::vector<Tower*> playerTowers_;
 };

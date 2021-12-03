@@ -2,6 +2,10 @@
 #include "game_state.h"
 #include "menu_state.h"
 
+#define TOWER_BUTTON_GRID_START_X 1050
+#define TOWER_BUTTON_GRID_START_Y 75
+
+
 GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, gui) {
     // Generate buttons
     auto startButton = new Button(sf::Vector2f (225, 50), sf::Vector2f(1050, 650),
@@ -18,6 +22,32 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, g
     auto sellTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750, 650),
                                       "Sell tower", this->getFont(), 20);
     buttons_[GameButtonTarget::SellTower] = sellTowerButton;
+
+    // TODO: Add the correct sprites here when they are made
+    auto attack1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Attack1] = attack1Button;
+
+    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Attack2] = attack2Button;
+
+    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 100), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Attack3] = attack3Button;
+
+    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y + 100), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Attack4] = attack4Button;
+
+    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 200), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Support1] = support1Button;
+
+    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y + 200), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Support2] = support2Button;
+
+    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 300), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Support3] = support3Button;
+
+    auto support4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y + 300), gui_->getGlobalObjects()->getTowerSquareSprite());
+    towerButtons_[TowerSelectionTarget::Support4] = support4Button;
+
 
     auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie()});
 
@@ -51,6 +81,9 @@ void GameState::advance_state() {
 void GameState::draw_current_state() {
     for (auto b : buttons_) {
         b.second->draw(window_);
+    }
+    for (auto t : towerButtons_)  {
+        t.second->draw(window_);
     }
     auto globals = gui_->getGlobalObjects();
 
@@ -104,6 +137,36 @@ void GameState::poll_events() {
                         case SellTower:
                             return;
                         case UpgradeTower:
+                            return;
+                    }
+                }
+                for (auto t : towerButtons_) {
+                    if (!t.second->contains(mouse_pos)) continue;
+                    switch (t.first) {
+
+                        case Attack1:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Attack2:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Attack3:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Attack4:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Support1:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Support2:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Support3:
+                            std::cout << "Choosing tower!" << std::endl;
+                            return;
+                        case Support4:
+                            std::cout << "Choosing tower!" << std::endl;
                             return;
                     }
                 }

@@ -15,16 +15,19 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, g
     auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie(), new MichaelMyers, new Dracula, new Bat, new Zombie, new MichaelMyers});
 
     std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> coords = std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>();
-    std::pair<int, int> start = std::make_pair(2, 4);
+    std::pair<int, int> start = std::make_pair(2, 0);
     std::pair<int, int> middle = std::make_pair(2, 9);
     std::pair<int, int> end1 = std::make_pair(10, 9);
-    std::pair<int, int> end2 = std::make_pair(10, 14);
-    std::pair<int, int> end3 = std::make_pair(15, 14);
+    std::pair<int, int> end2 = std::make_pair(10, 13);
+    std::pair<int, int> end3 = std::make_pair(15, 13);
+    std::pair<int, int> end4 = std::make_pair(15, 14);
+
     coords.emplace_back(start, middle);
     coords.emplace_back(middle, end1);
     coords.emplace_back(end1, end2);
     coords.emplace_back(end2, end3);
-    levelMap_ = new LevelMap(100);
+    coords.emplace_back(end3, end4);
+    levelMap_ = new LevelMap(30, 15);
     levelMap_->InitializePath(coords);
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, {wave});
@@ -52,26 +55,25 @@ void GameState::draw_current_state() {
     }
     auto globals = gui_->getGlobalObjects();
 
-    auto purpleSprite = globals->getPurpleEnemySprite();
-    purpleSprite.setScale(2, 2);
-    purpleSprite.setPosition(500, 500);
-    window_.draw(purpleSprite);
     LevelMap& map = game_->GetMap();
     // Draw free squares
     for(auto it : map.GetFreeSquares()) {
         auto freeSprite = globals->getFreeSquareSprite();
-        freeSprite.setPosition(it.second->GetX(), it.second->GetY());
+        freeSprite.setScale(2, 2);
+        freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
     }
     // Draw enemies and path
     for(auto it : map.GetEnemySquares()) {
         auto freeSprite = globals->getEnemySquareSprite();
-        freeSprite.setPosition(it.second->GetX(), it.second->GetY());
+        freeSprite.setScale(2,2);
+        freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
         if(it.second->ContainsEnemies()) {
             for(Enemy* en : it.second->GetEnemies()) {
                sf::Sprite en_sprite = enemySprites_.at(en->GetName());
-               en_sprite.setPosition(it.second->GetX(), it.second->GetY());
+               en_sprite.setScale(2, 2);
+               en_sprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
                window_.draw(en_sprite);
             }
         }
@@ -80,7 +82,7 @@ void GameState::draw_current_state() {
         if(it.second->ContainsEnemies()) {
             for(Enemy* en : it.second->GetEnemies()) {
                 sf::Sprite en_sprite = enemySprites_.at(en->GetName());
-                en_sprite.setPosition(it.second->GetX(), it.second->GetY());
+                en_sprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
                 window_.draw(en_sprite);
             }
         }
@@ -88,14 +90,14 @@ void GameState::draw_current_state() {
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
         auto freeSprite = globals->getTowerSquareSprite();
-        freeSprite.setPosition(it.second->GetX(), it.second->GetY());
+        freeSprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
         window_.draw(freeSprite);
     }
     // Draw projectiles
     for(auto it : map.GetProjectiles()) {
         if(it->GetLocation() != nullptr) {
             auto freeSprite = globals->getProjectileSprite();
-            freeSprite.setPosition(it->GetLocation()->GetX(), it->GetLocation()->GetY());
+            freeSprite.setPosition(it->GetLocation()->GetX() * 35, it->GetLocation()->GetY()* 35);
             window_.draw(freeSprite);
         }
     }

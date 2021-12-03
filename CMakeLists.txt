@@ -1,6 +1,3 @@
-set(CMAKE_TOOLCHAIN_FILE libs/vcpkg/scripts/buildsystems/vcpkg.cmake
-        CACHE STRING "Vcpkg toolchain file")
-
 cmake_minimum_required(VERSION 3.20)
 project(tower-defense-12)
 set(CMAKE_CXX_STANDARD 17)

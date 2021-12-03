@@ -15,14 +15,14 @@ class LevelMap {
 
   public:
   // TODO: Path validity checks. 
-  LevelMap(unsigned int size): size_(size) {
+  LevelMap(unsigned int width, unsigned int height): width_(width), height_(height) {
     towers_ = std::vector<Tower*>();
     enemies_ = std::vector<Enemy*>();
     squares_ = std::map<std::pair<int, int>, MapSquare*>();
     enemies_passed_ = 0;
 
-    for(unsigned int i = 0; i < size; i++) {
-      for(unsigned int j = 0; j < size; j++) {
+    for(unsigned int i = 0; i < width; i++) {
+      for(unsigned int j = 0; j < height; j++) {
         std::pair<int, int> coords = std::make_pair(i, j);
         FreeSquare* new_square = new FreeSquare(i, j);
         std::pair<std::pair<int, int>, FreeSquare*> ins = std::make_pair(coords, new FreeSquare(i, j));
@@ -79,6 +79,8 @@ class LevelMap {
 
   private:
   size_t size_;
+  int width_;
+  int height_;
   std::map<std::pair<int, int>, MapSquare*> squares_;
   std::map<std::pair<int, int>, EnemySquare*> enemy_path_;
   std::vector<Tower*> towers_;

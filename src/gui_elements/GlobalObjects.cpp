@@ -34,5 +34,33 @@ GlobalObjects::GlobalObjects() {
     purpleEnemySprite_.setTexture(purpleEnemyTexture_);
     freeSquareSprite_.setTexture(freeSquareTexture_);
     enemySquareSprite_.setTexture(enemySquareTexture_);
-
+    towerSquareSprite_.setTexture(towerSquareTexture_);
 }
+
+
+sf::Sprite &GlobalObjects::getEnemySprite(float scaledBy) {
+    enemySprite_.scale(scaledBy, scaledBy);
+    return enemySprite_;
+}
+
+sf::Sprite &GlobalObjects::getPurpleEnemySprite(float scaledBy) {
+    purpleEnemySprite_.scale(scaledBy, scaledBy);
+    return purpleEnemySprite_;
+}
+
+sf::Sprite &GlobalObjects::getFreeSquareSprite(float scaledBy) {
+    freeSquareSprite_.scale(scaledBy, scaledBy);
+    return  freeSquareSprite_;
+}
+
+sf::Sprite &GlobalObjects::getEnemySquareSprite(float scaledBy) {
+    enemySquareSprite_.scale(scaledBy, scaledBy);
+    return  enemySquareSprite_;
+}
+
+sf::Sprite &GlobalObjects::getTowerSquareSprite(float scaledBy) {
+    towerSquareSprite_.scale(scaledBy, scaledBy);
+    return  towerSquareSprite_;
+}
+
+

@@ -7,11 +7,13 @@ class GlobalObjects {
 public:
     GlobalObjects();
     sf::Font& getFont() { return font_; };
-    sf::Sprite& getEnemySprite() { return enemySprite_;};
-    sf::Sprite& getPurpleEnemySprite() { return purpleEnemySprite_;};
-    sf::Sprite& getFreeSquareSprite() { return freeSquareSprite_; };
-    sf::Sprite& getEnemySquareSprite() { return enemySquareSprite_; };
-    sf::Sprite& getTowerSquareSprite() { return towerSquareSprite_; };
+
+    sf::Sprite& getEnemySprite(float scaledBy = 1);
+    sf::Sprite& getPurpleEnemySprite(float scaledBy = 1);
+
+    sf::Sprite& getFreeSquareSprite(float scaledBy = 1);
+    sf::Sprite& getEnemySquareSprite(float scaledBy = 1);
+    sf::Sprite& getTowerSquareSprite(float scaledBy = 1);
 
 private:
     sf::Font font_;

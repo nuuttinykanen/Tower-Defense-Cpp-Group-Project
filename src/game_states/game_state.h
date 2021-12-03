@@ -4,6 +4,7 @@
 #include "window_state.h"
 #include <iostream>
 #include "../Game.hpp"
+#include "../tower.hpp"
 #include "../gui_elements/TowerButton.h"
 #include "../gui_elements/EnemyGui.h"
 
@@ -30,6 +31,9 @@ public:
     void quitToMenu();
 
     void startWave();
+
+    void buyTower(Tower*);
+
 private:
     std::map<GameButtonTarget, Button*> buttons_;
     std::map<TowerSelectionTarget, TowerButton*> towerButtons_;

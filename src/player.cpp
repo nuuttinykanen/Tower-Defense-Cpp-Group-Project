@@ -1,5 +1,11 @@
 #include "player.hpp"
 
+Player::~Player() {
+    for(auto t : playerTowers_) {
+        delete (t);
+    }
+    playerTowers_.clear();
+}
 
 std::vector<Tower *> Player::GetTowers() const{
     return playerTowers_;
@@ -30,7 +36,7 @@ void Player::SellTower(Tower *tower) {
     this->RemoveTower(tower);
 }
 
-void Player::BuyTower(Tower *tower) {
+void Player::AddTower(Tower *tower) {
     this->TakeMoney(tower->GetPrice());
     this->playerTowers_.push_back(tower);
 }

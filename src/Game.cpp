@@ -21,7 +21,7 @@ void Game::SpawnEnemy(Enemy* enemy) {
 }
 
 void Game::SpawnTower(Tower* tower, double x, double y) {
-    this->player_.BuyTower(tower);
+    this->player_.AddTower(tower);
     this->map_.PlaceTower(x, y, tower);
     towers_.push_back(tower);
 

@@ -8,7 +8,10 @@
 class Player {
 
     public :
-        Player(int money = 100, std::vector<Tower*> towers = std::vector<Tower*>() ) : money_(money), playerTowers_(towers) {}
+        Player(unsigned int maxHealth, int money = 100, std::vector<Tower*> towers = std::vector<Tower*>() ) : maxHealth_(maxHealth), money_(money), playerTowers_(towers) {
+            health_ = maxHealth;
+        }
+        ~Player();
 
         std::vector<Tower*> GetTowers() const;
 
@@ -19,7 +22,7 @@ class Player {
         void TakeMoney(double amount);
         void RemoveTower(Tower* tower);
         void SellTower(Tower* tower);
-        void BuyTower(Tower* tower);
+        void AddTower(Tower* tower);
 
         unsigned int GetMaxHealth();
         unsigned int GetHealth();

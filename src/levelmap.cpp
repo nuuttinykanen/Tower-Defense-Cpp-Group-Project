@@ -3,6 +3,25 @@
 #include "levelmap.hpp"
 #include <cmath>
 void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path) {
+    // validity check
+    std::pair<std::pair<int, int>, std::pair<int, int>> previous_c = enemy_path.front();
+    bool first = true;
+    for(auto it : enemy_path) {
+        std::pair<int, int> start = it.first;
+        std::pair<int, int> end = it.second;
+        if(!first) {
+            std::pair<int, int> p_end = previous_c.second;
+            if (start.first != p_end.first || start.second != p_end.second) {
+                throw std::invalid_argument("The input path is not correct. Reason: input coordinates are not connected.");
+            }
+        }
+        if(!((start.first == end.first && start.second != end.second) || (start.first != end.first && start.second == end.second))) {
+            throw std::invalid_argument("The input path is not correct. Reason: input coordinates create a diagonal path.");
+        }
+        if(first) first = false;
+        previous_c = it;
+    }
+    //
     EnemySquare* previous = nullptr;
     for(auto it : enemy_path) {
       std::pair<int, int> first = it.first;
@@ -27,8 +46,8 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
           }
           // for ex. (2, 4) -> (9, 4)
           else {
-            if(first.first < second.first) first.first++;
-            else first.first--;
+              if (first.first < second.first) first.first++;
+              else first.first--;
           }
           previous = new_square;
       }

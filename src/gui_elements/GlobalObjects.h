@@ -14,6 +14,12 @@ public:
     sf::Sprite& getFreeSquareSprite(float scaledBy = 1);
     sf::Sprite& getEnemySquareSprite(float scaledBy = 1);
     sf::Sprite& getTowerSquareSprite(float scaledBy = 1);
+    sf::Sprite& getHordeSprite(float scaledBy = 1);
+    sf::Sprite& getZombieSprite(float scaledBy = 1);
+    sf::Sprite& getDraculaSprite(float scaledBy = 1);
+    sf::Sprite& getBatSprite(float scaledBy = 1);
+    sf::Sprite& getMichaelSprite(float scaledBy = 1);
+    sf::Sprite& getProjectileSprite(float scaleBy = 1);
 
 private:
     sf::Font font_;
@@ -22,11 +28,23 @@ private:
     sf::Texture freeSquareTexture_;
     sf::Texture enemySquareTexture_;
     sf::Texture towerSquareTexture_;
+    sf::Texture hordeTexture_;
+    sf::Texture zombieTexture_;
+    sf::Texture draculaTexture_;
+    sf::Texture batTexture_;
+    sf::Texture michaelTexture_;
+    sf::Texture projectileTexture_;
     sf::Sprite enemySprite_;
     sf::Sprite purpleEnemySprite_;
     sf::Sprite freeSquareSprite_;
     sf::Sprite enemySquareSprite_;
     sf::Sprite towerSquareSprite_;
+    sf::Sprite hordeSprite_;
+    sf::Sprite zombieSprite_;
+    sf::Sprite draculaSprite_;
+    sf::Sprite batSprite_;
+    sf::Sprite michaelSprite_;
+    sf::Sprite projectileSprite_;
 };
 
 

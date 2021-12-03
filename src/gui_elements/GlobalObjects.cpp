@@ -30,11 +30,43 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
+    if(!hordeTexture_.loadFromFile("../src/assets/enemies/Horde.png")) {
+        std::cout << "Error retrieving Horde sprite" << std::endl;
+        return;
+    }
+
+    if(!zombieTexture_.loadFromFile("../src/assets/enemies/Zombie.png")) {
+        std::cout << "Error retrieving Zombie sprite" << std::endl;
+        return;
+    }
+    if(!draculaTexture_.loadFromFile("../src/assets/enemies/Dracula.png")) {
+        std::cout << "Error retrieving Dracula sprite" << std::endl;
+        return;
+    }
+    if(!michaelTexture_.loadFromFile("../src/assets/enemies/Michael.png")) {
+        std::cout << "Error retrieving Michael sprite" << std::endl;
+        return;
+    }
+    if(!batTexture_.loadFromFile("../src/assets/enemies/Bat.png")) {
+        std::cout << "Error retrieving Bat sprite" << std::endl;
+        return;
+    }
+
+    if(!projectileTexture_.loadFromFile("../src/assets/projectiles/ProjectileSprite.png")) {
+        std::cout << "Error retrieving projectile sprite" << std::endl;
+        return;
+    }
+
     enemySprite_.setTexture(enemyTexture_);
     purpleEnemySprite_.setTexture(purpleEnemyTexture_);
     freeSquareSprite_.setTexture(freeSquareTexture_);
     enemySquareSprite_.setTexture(enemySquareTexture_);
     towerSquareSprite_.setTexture(towerSquareTexture_);
+    hordeSprite_.setTexture(hordeTexture_);
+    zombieSprite_.setTexture(zombieTexture_);
+    draculaSprite_.setTexture(draculaTexture_);
+    batSprite_.setTexture(batTexture_);
+    michaelSprite_.setTexture(michaelTexture_);
 }
 
 
@@ -62,5 +94,33 @@ sf::Sprite &GlobalObjects::getTowerSquareSprite(float scaledBy) {
     towerSquareSprite_.scale(scaledBy, scaledBy);
     return  towerSquareSprite_;
 }
+
+sf::Sprite &GlobalObjects::getDraculaSprite(float scaledBy) {
+    draculaSprite_.scale(scaledBy, scaledBy);
+    return  draculaSprite_;
+}
+sf::Sprite &GlobalObjects::getZombieSprite(float scaledBy) {
+    zombieSprite_.scale(scaledBy, scaledBy);
+    return  zombieSprite_;
+}
+sf::Sprite &GlobalObjects::getHordeSprite(float scaledBy) {
+    hordeSprite_.scale(scaledBy, scaledBy);
+    return  hordeSprite_;
+}
+sf::Sprite &GlobalObjects::getBatSprite(float scaledBy) {
+    batSprite_.scale(scaledBy, scaledBy);
+    return  batSprite_;
+}
+
+sf::Sprite &GlobalObjects::getMichaelSprite(float scaledBy) {
+    michaelSprite_.scale(scaledBy, scaledBy);
+    return  michaelSprite_;
+}
+
+sf::Sprite &GlobalObjects::getProjectileSprite(float scaledBy) {
+    projectileSprite_.scale(scaledBy, scaledBy);
+    return  projectileSprite_;
+}
+
 
 

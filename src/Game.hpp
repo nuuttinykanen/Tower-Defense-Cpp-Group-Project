@@ -15,6 +15,7 @@ class Game {
         this->enemies_ = map_.GetEnemies();
         this->projectiles_ = map_.GetProjectiles();
         this->WaveInProgress_ = false;
+        this->waveNum_ = 1;
     };
 
     ~Game();
@@ -35,12 +36,17 @@ class Game {
 
     void StartWave();
 
-    int GetWaveCount() { return enemyWaves_.size(); };
+    void EndWave();
+
+    unsigned int GetWaveCount();
+
+    Wave* GetCurrentWave();
 
     private:
     LevelMap& map_;
     Player& player_;
     std::vector<Wave*> enemyWaves_;
+    unsigned int waveNum_;
     std::vector<Tower*> towers_;
 
     std::vector<Enemy*> enemies_;

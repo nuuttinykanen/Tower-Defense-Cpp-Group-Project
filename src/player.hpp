@@ -11,6 +11,9 @@ class Player {
         Player(int money = 100, std::vector<Tower*> towers = std::vector<Tower*>() ) : money_(money), playerTowers_(towers) {}
 
         std::vector<Tower*> GetTowers() const;
+
+
+
         double GetMoney() const;
         void GiveMoney(double amount);
         void TakeMoney(double amount);

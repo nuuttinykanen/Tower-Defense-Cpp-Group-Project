@@ -54,6 +54,23 @@ void Game::StartWave() {
     }
 
 }
+void Game::EndWave() {
+    if(this->WaveInProgress_) {
+        this->WaveInProgress_ = false;
+        this->waveNum_ += 1;
+        if(waveNum_ > this->GetWaveCount()) {
+            this->EndGame();
+        }
+    }
+}
+
+Wave* Game::GetCurrentWave() {
+    return this->enemyWaves_[this->waveNum_ - 1];
+}
+
+unsigned int Game::GetWaveCount() {
+    return this->enemyWaves_.size();
+}
 
 void Game::EndGame() {
     this->GameEnd_ = true;
@@ -69,20 +86,20 @@ void Game::UpdateState() {
     if(!this->GameEnd_){
 
         if(this->WaveInProgress_){
-            //Print enemy locations
+            //Print enemy location
             for(auto it: this->enemies_){
                 this->map_.FindEnemy(it)->PrintLocation();
             }
             //Move enemies, end game if any passes
             this->map_.MoveEnemies();
-            if(this->map_.GetEnemiesPassed() > 0){
+            if(this->player_.GetHealth() < 1 || this->waveNum_ >= this->GetWaveCount()) {
                 this->EndGame();
             }
 
             //Move Projectiles
             this->map_.MoveProjectiles();
 
-            //Attacktowers shoot or reload
+            // Attack towers shoot or reload
             for(auto it : this->map_.GetAttackTowers()){
                 if(it->CanAttack()){
                     this->map_.ShootProjectile(it);

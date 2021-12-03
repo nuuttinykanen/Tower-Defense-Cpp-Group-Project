@@ -49,9 +49,7 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, g
     towerButtons_[TowerSelectionTarget::Support4] = support4Button;
 
 
-    auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie()});
-
-
+    auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie(), new MichaelMyers, new Dracula, new Bat, new Zombie, new MichaelMyers});
 
     std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> coords = std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>();
     std::pair<int, int> start = std::make_pair(2, 4);
@@ -92,21 +90,49 @@ void GameState::draw_current_state() {
     purpleSprite.setPosition(500, 500);
     window_.draw(purpleSprite);
     LevelMap& map = game_->GetMap();
+    // Draw free squares
     for(auto it : map.GetFreeSquares()) {
         auto freeSprite = globals->getFreeSquareSprite();
         freeSprite.setPosition(it.second->GetX(), it.second->GetY());
         window_.draw(freeSprite);
     }
+    // Draw enemies and path
     for(auto it : map.GetEnemySquares()) {
         auto freeSprite = globals->getEnemySquareSprite();
         freeSprite.setPosition(it.second->GetX(), it.second->GetY());
         window_.draw(freeSprite);
+        if(it.second->ContainsEnemies()) {
+            for(Enemy* en : it.second->GetEnemies()) {
+               sf::Sprite en_sprite = enemySprites_.at(en->GetName());
+               en_sprite.setPosition(it.second->GetX(), it.second->GetY());
+               window_.draw(en_sprite);
+            }
+        }
     }
+    for(auto it : map.GetEnemySquares()) {
+        if(it.second->ContainsEnemies()) {
+            for(Enemy* en : it.second->GetEnemies()) {
+                sf::Sprite en_sprite = enemySprites_.at(en->GetName());
+                en_sprite.setPosition(it.second->GetX(), it.second->GetY());
+                window_.draw(en_sprite);
+            }
+        }
+    }
+    // Draw towers
     for(auto it : map.GetTowerSquares()) {
         auto freeSprite = globals->getTowerSquareSprite();
         freeSprite.setPosition(it.second->GetX(), it.second->GetY());
         window_.draw(freeSprite);
     }
+    // Draw projectiles
+    for(auto it : map.GetProjectiles()) {
+        if(it->GetLocation() != nullptr) {
+            auto freeSprite = globals->getProjectileSprite();
+            freeSprite.setPosition(it->GetLocation()->GetX(), it->GetLocation()->GetY());
+            window_.draw(freeSprite);
+        }
+    }
+
 }
 
 void GameState::poll_events() {

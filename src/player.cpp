@@ -28,7 +28,6 @@ void Player::RemoveTower(Tower *tower) {
 void Player::SellTower(Tower *tower) {
     this->GiveMoney(0.5 * tower->GetPrice());
     this->RemoveTower(tower);
-
 }
 
 void Player::BuyTower(Tower *tower) {
@@ -36,3 +35,14 @@ void Player::BuyTower(Tower *tower) {
     this->playerTowers_.push_back(tower);
 }
 
+unsigned int Player::GetMaxHealth() {
+    return maxHealth_;
+}
+
+unsigned int Player::GetHealth() {
+    return health_;
+}
+
+void Player::ChangeHealth(int amount) {
+    this->health_ += amount;
+}

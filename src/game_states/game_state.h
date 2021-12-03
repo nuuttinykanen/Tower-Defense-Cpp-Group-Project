@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../Game.hpp"
 #include "../gui_elements/TowerButton.h"
+#include "../gui_elements/EnemyGui.h"
 
 enum GameButtonTarget {QuitToMenu, StartWave, SellTower, UpgradeTower};
 
@@ -28,6 +29,7 @@ public:
 private:
     std::map<GameButtonTarget, Button*> buttons_;
     std::map<TowerSelectionTarget, TowerButton*> towerButtons_;
+    std::map<std::string, sf::Sprite> enemySprites_;
     Game* game_;
     LevelMap* levelMap_;
 

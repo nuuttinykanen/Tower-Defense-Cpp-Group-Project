@@ -3,6 +3,7 @@
 
 #include "window_state.h"
 #include <iostream>
+#include "../utils/json_driver.h"
 // #include "../Gui.h"
 
 
@@ -12,6 +13,8 @@ public:
     ~LevelSelectState() override = default;
 
     void advance_state() override;
+
+    void poll_events() override;
 
     void draw_current_state() override;
 private:

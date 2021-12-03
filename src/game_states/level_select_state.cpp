@@ -1,7 +1,8 @@
 #include "level_select_state.h"
 
-LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
 
+LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
+    JSON::test();
 }
 
 void LevelSelectState::advance_state() {
@@ -22,4 +23,29 @@ void LevelSelectState::draw_current_state() {
     text.setFillColor(sf::Color::White);
     window_.draw(text);
 
+}
+
+void LevelSelectState::poll_events() {
+    sf::Event event{};
+
+
+    while (window_.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+            window_.close();
+
+        // 0 -> primary click, 1-> secondary
+        if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == 0) {
+                auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
+
+            } else if (event.mouseButton.button == 1) {
+
+            }
+
+        }
+
+
+
+    }
 }

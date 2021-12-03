@@ -1,15 +1,21 @@
 #include "menu_state.h"
 #include "../Gui.h"
 #include "game_state.h"
+#include "level_select_state.h"
 
 MenuState::MenuState(sf::RenderWindow& window, Gui* gui) : WindowState(window, gui) {
 
     // Generate buttons
     auto size = window_.getSize();
-    auto startButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 200),
+    auto startButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 100),
                                   "Start a new game",this->getFont(), 20);
 
     buttons_[MenuButtonTarget::StartGame] = startButton;
+
+    auto levelSelectButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 200),
+                                  "Level selector",this->getFont(), 20);
+
+    buttons_[MenuButtonTarget::StartLevelSelect] = levelSelectButton;
 
     auto quitButton = new Button(sf::Vector2f (325, 50), sf::Vector2f(500, 300),
                                   "Quit the game",this->getFont(), 20);
@@ -82,6 +88,7 @@ void MenuState::start_game() {
 
 void MenuState::startLevelSelect() {
     std::cout << "Starting level select!" << std::endl;
+    gui_->change_game_state(new LevelSelectState(window_, gui_));
 }
 
 void MenuState::quit() {

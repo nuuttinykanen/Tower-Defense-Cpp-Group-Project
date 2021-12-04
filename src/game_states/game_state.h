@@ -7,6 +7,7 @@
 #include "../tower.hpp"
 #include "../gui_elements/TowerButton.h"
 #include "../gui_elements/EnemyGui.h"
+#include "../utils/json_driver.h"
 
 enum GameButtonTarget {QuitToMenu, StartWave, SellTower, UpgradeTower};
 

@@ -2,7 +2,7 @@
 
 
 LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
-    JSON::test();
+    JSON::loadLevelMap(1);
 }
 
 void LevelSelectState::advance_state() {

@@ -83,7 +83,7 @@ void MenuState::poll_events() {
 
 void MenuState::start_game() {
     std::cout << "Starting the game!" << std::endl;
-    gui_->change_game_state(new GameState(window_, gui_));
+    gui_->change_game_state(new GameState(window_, gui_, 1));
 }
 
 void MenuState::startLevelSelect() {

@@ -1,8 +1,15 @@
 #include "json_driver.h"
+
+// Maps each map index to a save file name
 std::map<int, std::string> indexToFile {
         make_pair(0, "latest_save/test.json"),
         make_pair(1, "level1.json"),
-        make_pair(2, "level2.json")
+        make_pair(2, "level2.json"),
+        make_pair(3, "level3.json"),
+        make_pair(4, "level4.json"),
+        make_pair(5, "level5.json")
+
+
 };
 
 
@@ -55,4 +62,8 @@ LevelMap* JSON::loadLevelMap(int index) {
     auto levelMap = new LevelMap(width, height);
     levelMap->InitializePath(coords);
     return levelMap;
+}
+
+int JSON::getNumberOfLevels() {
+    return indexToFile.size() - 1;
 }

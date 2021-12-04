@@ -11,13 +11,13 @@
 using std::make_pair;
 using std::pair;
 
-// Maps each map index to a save file name
 
 class JSON {
 public:
     static void test();
-
+    static int getNumberOfLevels();
     static LevelMap* loadLevelMap(int index);
+
 };
 
 

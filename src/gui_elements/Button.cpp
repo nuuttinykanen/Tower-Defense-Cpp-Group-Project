@@ -1,7 +1,7 @@
 #include "Button.h"
 
 Button::Button(Vector2f size, Vector2f pos, string text, sf::Font& font, int fontsize,
-        Color boxColor, Color textColor)
+        float textOffsetX, float textOffsetY, Color boxColor, Color textColor)
 : size_(size), pos_(pos), boxColor_(boxColor), textColor_(textColor),
 box_(RectangleShape(size)){
     box_.setPosition(pos);
@@ -11,7 +11,7 @@ box_(RectangleShape(size)){
     text_.setString(text);
     text_.setFillColor(textColor);
     text_.setString(text);
-    text_.setPosition(pos.x, pos.y + 10);
+    text_.setPosition(pos.x + textOffsetX, pos.y + textOffsetY);
 }
 
 void Button::draw(sf::RenderWindow &window) {

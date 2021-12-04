@@ -16,7 +16,7 @@ enum TowerSelectionTarget {Attack1, Attack2, Attack3, Attack4, Support1, Support
 class GameState: public WindowState {
 public:
     // TODO: Specify which level to start
-    GameState(sf::RenderWindow& window, Gui* gui);
+    GameState(sf::RenderWindow& window, Gui* gui, int levelNumber);
     ~GameState();
 
     void generateButtons();
@@ -41,6 +41,7 @@ private:
     std::map<std::string, sf::Sprite> enemySprites_;
     Game* game_;
     LevelMap* levelMap_;
+    int levelNumber_;
     Player* player_;
 };
 #endif //TOWER_DEFENSE_12_GAME_STATE_H

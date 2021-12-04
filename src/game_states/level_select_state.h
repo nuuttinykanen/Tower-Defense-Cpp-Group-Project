@@ -4,8 +4,9 @@
 #include "window_state.h"
 #include <iostream>
 #include "../utils/json_driver.h"
+#include "game_state.h"
+#include "../Gui.h"
 // #include "../Gui.h"
-
 
 class LevelSelectState: public WindowState {
 public:
@@ -17,7 +18,11 @@ public:
     void poll_events() override;
 
     void draw_current_state() override;
+
+    void generateButtons();
 private:
+    std::map<int, Button*> buttons_;
+
 };
 
 

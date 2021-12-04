@@ -2,7 +2,21 @@
 
 
 LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
+    generateButtons();
     JSON::loadLevelMap(1);
+    int y = 0;
+    int x = 0;
+    // Draw buttons in a 4xX grid
+    for (int i = 1; i <= JSON::getNumberOfLevels() ; i++) {
+        auto button = new Button(sf::Vector2f(50, 50), sf::Vector2f(475 + 100 * x, 200 + 100 * y),
+                                 std::to_string(i), this->getFont(), 20, 15);
+        buttons_[i] = button;
+        x++;
+        if (i % 4 == 0)  {
+            y++;
+            x = 0;
+        }
+    }
 }
 
 void LevelSelectState::advance_state() {
@@ -10,19 +24,9 @@ void LevelSelectState::advance_state() {
 }
 
 void LevelSelectState::draw_current_state() {
-    // TODO: This should come from some global object.
-    sf::Font font;
-    // Relative path from the cmake executable
-    if (!font.loadFromFile("../src/assets/AtariClassicChunky-PxXP.ttf")) {
-        //Error
-        std::cout << "Error retrieving font file" << std::endl;
+    for (auto b : buttons_) {
+        b.second->draw(window_);
     }
-    sf::Text text;
-    text.setFont(font);
-    text.setString("TODO: Level selector");
-    text.setFillColor(sf::Color::White);
-    window_.draw(text);
-
 }
 
 void LevelSelectState::poll_events() {
@@ -39,6 +43,21 @@ void LevelSelectState::poll_events() {
             if (event.mouseButton.button == 0) {
                 auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
 
+                for (auto b : buttons_) {
+                    if (!b.second->contains(mouse_pos)) continue;
+
+                    switch (b.first) {
+                        case 0: {
+                            std::cout << "Switching to previous save" << std::endl;
+                            return;
+                        }
+                        default: {
+                            auto game = new GameState(window_, gui_, b.first);
+                            gui_->change_game_state(game);
+                        }
+                    }
+                }
+
             } else if (event.mouseButton.button == 1) {
 
             }
@@ -48,4 +67,8 @@ void LevelSelectState::poll_events() {
 
 
     }
+}
+
+void LevelSelectState::generateButtons() {
+
 }

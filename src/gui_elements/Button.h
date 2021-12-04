@@ -13,11 +13,10 @@ using sf::Text;
 using std::string;
 
 // Generic button with text inside it
-// Should be extended for buttons with icons in them
-// TODO: Add buttons which can have sprites in them.
 class Button {
 public:
     Button(Vector2f size, Vector2f pos, string text, sf::Font& font, int fontsize,
+           float textOffsetX = 0, float textOffsetY = 10,
            Color boxColor = Color::White,
            Color textColor = Color::Black);
     ~Button() = default;

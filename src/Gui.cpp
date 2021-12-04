@@ -33,3 +33,4 @@ void Gui::change_game_state(WindowState* new_state) {
     delete current_state_;
     current_state_ = new_state;
 }
+

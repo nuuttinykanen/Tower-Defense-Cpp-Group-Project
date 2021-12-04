@@ -7,14 +7,15 @@
 #define TOWER_BUTTON_GRID_START_Y 75
 
 
-GameState::GameState(sf::RenderWindow &window, Gui* gui) : WindowState(window, gui) {
+GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
+: levelNumber_(levelNumber), WindowState(window, gui) {
 
     generateButtons();
     generateEnemies();
 
     auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie(), new MichaelMyers, new Dracula, new Bat, new Zombie, new MichaelMyers});
 
-    levelMap_ = JSON::loadLevelMap(1);
+    levelMap_ = JSON::loadLevelMap(levelNumber);
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, {wave});
     auto towerShop_ = std::vector<Tower*>();

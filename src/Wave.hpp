@@ -7,16 +7,16 @@
 class Wave {
 
     public:
-        Wave(std::vector<Enemy*> WaveEnemies = std::vector<Enemy*>()) :
-        WaveEnemies_(WaveEnemies){};
+        Wave(std::vector<Enemy*> waveEnemies = std::vector<Enemy*>()) :waveEnemies_(waveEnemies){};
         ~Wave();
-        std::vector<Enemy*> getWaveEnemies() { return WaveEnemies_;};
+        std::vector<Enemy*> getWaveEnemies() { return waveEnemies_;};
         void AddEnemyToWave(Enemy* enemy);
         void RemoveEnemyFromWave(Enemy* enemy);
-
+        Enemy& PopNext();
+        bool isEmpty();
 
     private:
-        std::vector<Enemy*> WaveEnemies_;
+        std::vector<Enemy*> waveEnemies_;
 };
 
 

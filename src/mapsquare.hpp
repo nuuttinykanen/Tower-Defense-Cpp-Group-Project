@@ -9,14 +9,13 @@ class MapSquare {
     MapSquare(int x, int y) : x_(x), y_(y) { }
     ~MapSquare(){} 
     virtual bool free() const = 0;
-    virtual bool occupied() const = 0;
     virtual std::string GetType() const = 0;
-    int GetX() { return x_; }
-    int GetY() { return y_; }
+    [[nodiscard]] int GetX() const { return x_; }
+    [[nodiscard]] int GetY() const { return y_; }
     void PrintLocation() { std::cout << "(" << this->GetX() << ", " << this->GetY() << ")" << std::endl; }
     private: 
-    int x_;
-    int y_;
+    int const x_;
+    int const y_;
 };
 
 class FreeSquare : public MapSquare { 
@@ -24,8 +23,7 @@ class FreeSquare : public MapSquare {
     public: 
     FreeSquare(int x, int y) : MapSquare(x, y){} 
     ~FreeSquare(){} 
-    virtual bool free() const { return true; } 
-    virtual bool occupied() const { return false; }
+    virtual bool free() const { return true; }
     virtual std::string GetType() const { return "free"; } 
 }; 
 
@@ -33,8 +31,7 @@ class TowerSquare : public MapSquare {
     public: 
     TowerSquare(int x, int y, Tower* tower) : MapSquare(x, y), tower_(tower) {} 
     ~TowerSquare(){} 
-    virtual bool free() const { return false; } 
-    virtual bool occupied() const { return true; } 
+    virtual bool free() const { return false; }
     virtual std::string GetType() const { return "tower"; }
 
     Tower* GetTower() { return tower_; } 
@@ -56,8 +53,7 @@ class EnemySquare : public MapSquare {
         number_ = -1;
     } 
     ~EnemySquare(){} 
-    virtual bool free() const { return false; } 
-    virtual bool occupied() const { return true; } 
+    virtual bool free() const { return false; }
     virtual std::string GetType() const { return "enemy"; }
     std::vector<Enemy*> GetEnemies() { return enemies_; }
     void SetNext(EnemySquare* e_square) { next_ = e_square; }

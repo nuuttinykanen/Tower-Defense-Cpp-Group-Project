@@ -1,20 +1,39 @@
 #include "Wave.hpp"
-
+#include <stdexcept>
+#include <iostream>
 Wave::~Wave() {
-    for(auto w : WaveEnemies_) {
+    for(auto w : waveEnemies_) {
         delete(w);
     }
-    WaveEnemies_.clear();
+    waveEnemies_.clear();
 }
 
 void Wave::AddEnemyToWave(Enemy *enemy) {
-    this->WaveEnemies_.push_back(enemy);
+    this->waveEnemies_.push_back(enemy);
 }
 
 void Wave::RemoveEnemyFromWave(Enemy* enemy) {
-
-    for (auto e = WaveEnemies_.begin(); e != WaveEnemies_.end(); e++) {
-        if (*e == enemy) WaveEnemies_.erase(e);
+    for (auto e = waveEnemies_.begin(); e != waveEnemies_.end(); e++) {
+        if(*e == enemy) {
+            waveEnemies_.erase(e);
+            break;
+        }
     }
 }
 
+Enemy& Wave::PopNext() {
+    auto h = this->waveEnemies_.begin();
+    if(h == this->waveEnemies_.end()) {
+        throw std::invalid_argument("No next enemy found in wave!");
+    };
+    Enemy& en = *(*h);
+    if(*h != nullptr) {
+        this->RemoveEnemyFromWave(*h);
+    }
+    return en;
+}
+
+bool Wave::isEmpty() {
+    if(this->waveEnemies_.empty()) return true;
+    else return false;
+}

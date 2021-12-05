@@ -11,11 +11,13 @@ class Game {
     , enemyWaves_(waves){
 
         this->towers_ = player_.GetTowers();
-        this->GameEnd_ = false;
+        this->gameEnd_ = false;
         this->enemies_ = map_.GetEnemies();
         this->projectiles_ = map_.GetProjectiles();
-        this->WaveInProgress_ = false;
+        this->waveInProgress_ = false;
         this->waveNum_ = 1;
+        this->moveCounter_ = 0;
+        this->moveLimit_ = 10;
     };
 
     ~Game();
@@ -38,21 +40,27 @@ class Game {
 
     void EndWave();
 
-    unsigned int GetWaveCount();
+    unsigned int GetTotalWaveCount();
+
+    bool ifWaveInProgress();
 
     Wave* GetCurrentWave();
+
+    void ProcessEnemies();
 
     private:
     LevelMap& map_;
     Player& player_;
     std::vector<Wave*> enemyWaves_;
     unsigned int waveNum_;
+    unsigned int moveCounter_;
+    unsigned int moveLimit_;
     std::vector<Tower*> towers_;
 
     std::vector<Enemy*> enemies_;
     std::vector<Projectile*> projectiles_;
-    bool GameEnd_;
-    bool WaveInProgress_;
+    bool gameEnd_;
+    bool waveInProgress_;
 
 };
 

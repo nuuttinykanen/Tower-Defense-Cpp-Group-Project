@@ -21,20 +21,23 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
         if(first) first = false;
         previous_c = it;
     }
-    //
+
     EnemySquare* previous = nullptr;
     for(auto it : enemy_path) {
       std::pair<int, int> first = it.first;
       std::pair<int, int> second = it.second;
       while(first != second) {
           std::pair<int, int> ins = std::make_pair(first.first, first.second);
-          EnemySquare* new_square = new EnemySquare(ins.first, ins.second);
+          auto* new_square = new EnemySquare(ins.first, ins.second);
 
           if(previous != nullptr) {
             new_square->SetPrevious(previous);
             previous->SetNext(new_square);
             new_square->SetNumber(previous->GetNumber());
-          } else new_square->SetNumber(0);
+          } else {
+              new_square->SetNumber(0);
+              this->start_square_ = new_square;
+          }
 
           ChangeSquare(ins.first, ins.second, new_square);
           enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
@@ -57,6 +60,7 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
     if(previous != nullptr) {
       new_square->SetPrevious(previous);
       previous->SetNext(new_square);
+      this->end_square_ = new_square;
     }
     ChangeSquare(last.first, last.second, new_square);
     this->enemy_path_.insert(std::make_pair(std::make_pair(last.first, last.second), new_square));
@@ -142,6 +146,10 @@ std::vector<Enemy*> LevelMap::EnemiesAt(int x, int y) {
     return std::vector<Enemy*>();
 }
 
+unsigned int LevelMap::GetEnemyAmount() {
+    return enemy_count_;
+}
+
 Tower* LevelMap::TowerAt(int x, int y) {
     const MapSquare* square = this->GetSquare(x, y);
     for(auto it : this->GetTowerSquares()) {
@@ -154,13 +162,22 @@ void LevelMap::ChangeSquare(int x, int y, MapSquare* new_square) {
     squares_.at(std::make_pair(x, y)) = new_square;
 }
 
-bool LevelMap::PlaceEnemy(int x, int y, Enemy* enemy) {
+const MapSquare* LevelMap::GetStartSquare() {
+    return this->start_square_;
+}
+
+const MapSquare* LevelMap::GetEndSquare() {
+    return this->end_square_;
+}
+
+bool LevelMap::PlaceEnemy(int x, int y, Enemy& enemy) {
     auto e_squares = this->GetEnemySquares();
     for(auto it = e_squares.begin(); it != e_squares.end(); it++) {
       auto h = *it;
       if(h.first.first == x && h.first.second == y) {
-        h.second->AddEnemy(enemy);
-        enemy->SetOnMap();
+        h.second->AddEnemy(&enemy);
+        enemy.SetOnMap();
+        this->enemy_count_ += 1;
         return true;
       }
     }
@@ -173,6 +190,7 @@ bool LevelMap::EraseEnemy(Enemy* enemy) {
     auto h = *it;
     if(h.second->ContainsEnemy(enemy)) {
       h.second->RemoveEnemy(enemy);
+        this->enemy_count_ -= 1;
       return true;
     }
   }

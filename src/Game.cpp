@@ -14,7 +14,7 @@ void Game::SpawnEnemy(Enemy* enemy) {
     int y = this-> map_.GetEnemySquares().begin()->first.second;
 
 
-    if(this->map_.PlaceEnemy( x, y ,enemy)){
+    if(this->map_.PlaceEnemy(x, y, *enemy)){
         enemies_.push_back(enemy);
     }
 
@@ -45,20 +45,17 @@ void Game::SellTower(Tower* tower) {
 // Start the first wave and then remove it from the vector
 void Game::StartWave() {
 
-    this->WaveInProgress_ = true;
-    auto wave = enemyWaves_[0];
+    this->waveInProgress_ = true;
+    auto wave = enemyWaves_[this->waveNum_ - 1];
     auto enemyWave = wave->getWaveEnemies();
     enemyWaves_.erase(enemyWaves_.begin());
-    for(auto e : enemyWave){
-        SpawnEnemy(e);
-    }
 
 }
 void Game::EndWave() {
-    if(this->WaveInProgress_) {
-        this->WaveInProgress_ = false;
+    if(this->waveInProgress_) {
+        this->waveInProgress_ = false;
         this->waveNum_ += 1;
-        if(waveNum_ > this->GetWaveCount()) {
+        if(waveNum_ > this->GetTotalWaveCount()) {
             this->EndGame();
         }
     }
@@ -68,34 +65,47 @@ Wave* Game::GetCurrentWave() {
     return this->enemyWaves_[this->waveNum_ - 1];
 }
 
-unsigned int Game::GetWaveCount() {
+unsigned int Game::GetTotalWaveCount() {
     return this->enemyWaves_.size();
 }
 
+bool Game::ifWaveInProgress() {
+    return this->waveInProgress_;
+}
+
 void Game::EndGame() {
-    this->GameEnd_ = true;
+    this->gameEnd_ = true;
 }
 
 LevelMap &Game::GetMap() {
     return map_;
 }
 
+void Game::ProcessEnemies() {
+    if(this->moveCounter_ < 1) {
+        this->map_.MoveEnemies();
+        // Place next enemy
+        if(this->GetCurrentWave() != nullptr && map_.GetStartSquare() != nullptr && !this->GetCurrentWave()->isEmpty()) {
+            auto start_sq = map_.GetStartSquare();
+            this->map_.PlaceEnemy(start_sq->GetX(), start_sq->GetY(), this->GetCurrentWave()->PopNext());
+        }
+        this->moveCounter_ = moveLimit_;
+    }
+    this->moveCounter_ -= 1;
+}
+
 void Game::UpdateState() {
-
-
-    if(!this->GameEnd_){
-
-        if(this->WaveInProgress_){
-            //Print enemy location
-            for(auto it: this->enemies_){
-                this->map_.FindEnemy(it)->PrintLocation();
-            }
-            //Move enemies, end game if any passes
-            this->map_.MoveEnemies();
-            if(this->player_.GetHealth() < 1 || this->waveNum_ >= this->GetWaveCount()) {
+    if(!this->gameEnd_) {
+        if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {
+            this->waveInProgress_ = false;
+            return;
+        }
+        if(this->waveInProgress_) {
+            this->ProcessEnemies();
+            if(this->player_.GetHealth() < 1) {
+                std::cout << "ENDING GAME" << std::endl;
                 this->EndGame();
             }
-
             //Move Projectiles
             this->map_.MoveProjectiles();
 

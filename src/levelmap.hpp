@@ -20,6 +20,9 @@ class LevelMap {
     enemies_ = std::vector<Enemy*>();
     squares_ = std::map<std::pair<int, int>, MapSquare*>();
     enemies_passed_ = 0;
+    enemy_count_ = 0;
+    start_square_ = nullptr;
+    end_square_ = nullptr;
 
     for(unsigned int i = 0; i < width; i++) {
       for(unsigned int j = 0; j < height; j++) {
@@ -29,9 +32,12 @@ class LevelMap {
         squares_.insert(ins); 
       }
     }
+
   }
 
   void InitializePath(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path);
+  const MapSquare* GetStartSquare();
+  const MapSquare* GetEndSquare();
   const std::map<std::pair<int, int>, MapSquare*>& GetSquares();
   const std::vector<Tower*>& GetTowers();
   const std::vector<Enemy*>& GetEnemies();
@@ -42,10 +48,6 @@ class LevelMap {
   std::vector<AttackTower*> GetAttackTowers();
   std::vector<SupportTower*> GetSupportTowers();
 
-  /*
-  const std::map<std::pair<int, int>, EnemySquare*> GetPathStart() const;
-  const std::map<std::pair<int, int>, EnemySquare*> GetPathEnd() const;
-  */
 
   std::vector<Enemy*> EnemiesAt(int x, int y);
   Tower* TowerAt(int x, int y);
@@ -53,11 +55,12 @@ class LevelMap {
   void MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destination);
   void MoveEnemies();
   bool EraseEnemy(Enemy* enemy);
-  bool PlaceEnemy(int x, int y, Enemy* enemy);
+  bool PlaceEnemy(int x, int y, Enemy& enemy);
   EnemySquare* FindEnemy(Enemy* enemy);
   EnemySquare* GetFarthestEnemy(std::vector<EnemySquare*> list);
   std::vector<EnemySquare*> EnemiesInRange(Tower* tower);
   MapSquare* GetNextMoveSquare(MapSquare* start, MapSquare* end);
+  unsigned int GetEnemyAmount();
 
   bool PlaceTower(int x, int y, Tower* tower);
   bool EraseTower(Tower* tower);
@@ -86,7 +89,10 @@ class LevelMap {
   std::vector<Tower*> towers_;
   std::vector<Enemy*> enemies_;
   std::vector<Projectile*> projectiles_;
+  unsigned int enemy_count_;
   unsigned int enemies_passed_;
+  const MapSquare* start_square_;
+  const MapSquare* end_square_;
 };
 
 #endif

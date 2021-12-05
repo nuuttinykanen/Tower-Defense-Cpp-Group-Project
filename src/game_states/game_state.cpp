@@ -234,7 +234,7 @@ void GameState::quitToMenu() {
 
 void GameState::startWave() {
     game_->StartWave();
-    if (game_->GetWaveCount() == 0) {
+    if (!game_->ifWaveInProgress()) {
         // Remove the start wave button
         for (auto it = buttons_.begin(); it != buttons_.end(); it++) {
             if (it->first == GameButtonTarget::StartWave) {

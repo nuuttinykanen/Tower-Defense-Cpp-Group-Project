@@ -15,7 +15,7 @@
     }
 
     bool AttackTower::CanAttack() const {
-        return attackCounter_ == 0;
+        return attackCounter_ <= 0;
     }
 
     void AttackTower::RestartCooldown() {

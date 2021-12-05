@@ -45,8 +45,8 @@ class LevelMap {
   const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
   const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
   const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
-  std::vector<AttackTower*> GetAttackTowers();
-  std::vector<SupportTower*> GetSupportTowers();
+  std::vector<TowerSquare*> GetAttackTowers();
+  std::vector<TowerSquare*> GetSupportTowers();
 
 
   std::vector<Enemy*> EnemiesAt(int x, int y);
@@ -58,7 +58,6 @@ class LevelMap {
   bool PlaceEnemy(int x, int y, Enemy& enemy);
   EnemySquare* FindEnemy(Enemy* enemy);
   EnemySquare* GetFarthestEnemy(std::vector<EnemySquare*> list);
-  std::vector<EnemySquare*> EnemiesInRange(Tower* tower);
   MapSquare* GetNextMoveSquare(MapSquare* start, MapSquare* end);
   unsigned int GetEnemyAmount();
 
@@ -67,9 +66,9 @@ class LevelMap {
   TowerSquare* FindTower(Tower* tower);
 
   std::vector<Projectile*> GetProjectiles();
-  MapSquare* GetProjStartSquare(Tower* t_square, Enemy* enemy);
+  MapSquare* GetProjStartSquare(TowerSquare* t_square, Enemy* enemy);
   void PlaceProjectile(Projectile* projec);
-  void ShootProjectile(AttackTower* sender);
+  void ShootProjectile(TowerSquare* sender);
   void RemoveProjectile(Projectile* projec);
   void ScanProjectiles();
   void MoveProjectiles();

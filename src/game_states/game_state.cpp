@@ -16,6 +16,8 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie(), new MichaelMyers, new Dracula, new Bat, new Zombie, new MichaelMyers});
 
     levelMap_ = JSON::loadLevelMap(levelNumber);
+    Bomber* b = new Bomber();
+    levelMap_->PlaceTower(11, 6, b);
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, {wave});
     auto towerShop_ = std::vector<Tower*>();
@@ -77,18 +79,19 @@ void GameState::draw_current_state() {
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
         auto freeSprite = globals->getTowerSquareSprite();
+        freeSprite.setScale(2,2);
         freeSprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
         window_.draw(freeSprite);
     }
     // Draw projectiles
     for(auto it : map.GetProjectiles()) {
         if(it->GetLocation() != nullptr) {
-            auto freeSprite = globals->getProjectileSprite();
+            auto freeSprite = globals->getTowerSquareSprite();
+            freeSprite.setScale(2,2);
             freeSprite.setPosition(it->GetLocation()->GetX() * 35, it->GetLocation()->GetY()* 35);
             window_.draw(freeSprite);
         }
     }
-
 }
 
 void GameState::poll_events() {

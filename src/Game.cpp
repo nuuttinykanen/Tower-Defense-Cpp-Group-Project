@@ -108,13 +108,14 @@ void Game::UpdateState() {
             }
             //Move Projectiles
             this->map_.MoveProjectiles();
-
+            this->map_.MoveProjectiles();
             // Attack towers shoot or reload
             for(auto it : this->map_.GetAttackTowers()){
-                if(it->CanAttack()){
+                auto att = (AttackTower*)it->GetTower();
+                if(att->CanAttack()) {
                     this->map_.ShootProjectile(it);
-                } else{
-                    it->Reload();
+                } else {
+                    att->Reload();
                 }
             }
         }

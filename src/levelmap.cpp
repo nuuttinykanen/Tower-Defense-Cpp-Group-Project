@@ -104,27 +104,25 @@ const std::map<std::pair<int, int>, TowerSquare*> LevelMap::GetTowerSquares() {
     return list;
 }
 
-  std::vector<AttackTower*> LevelMap::GetAttackTowers() {
-    std::vector<AttackTower*> list;
+  std::vector<TowerSquare*> LevelMap::GetAttackTowers() {
+    std::vector<TowerSquare*> list;
     for(auto it : this->GetTowerSquares()) {
-      if(it.second->GetType() == "attack") {
-        AttackTower* att = (AttackTower*)it.second;
-        list.push_back(att);
+      if(it.second->GetTower()->GetType() == "attack") {
+        list.push_back(it.second);
       }
     }
     return list;
   }
 
-  std::vector<SupportTower*> LevelMap::GetSupportTowers() {
-    std::vector<SupportTower*> list;
+  std::vector<TowerSquare*> LevelMap::GetSupportTowers() {
+    std::vector<TowerSquare*> list;
     for(auto it : this->GetTowerSquares()) {
-      if(it.second->GetType() == "support") {
-        SupportTower* att = (SupportTower*)it.second;
-        list.push_back(att);
-      }
+        if(it.second->GetTower()->GetType() == "support") {
+            list.push_back(it.second);
+        }
     }
     return list;
-  }
+}
 
 const std::map<std::pair<int, int>, EnemySquare*> LevelMap::GetEnemySquares() {
     std::map<std::pair<int, int>, EnemySquare*> list;
@@ -271,6 +269,16 @@ bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
       if(h.first.first == x && h.first.second == y) {
         TowerSquare* t_square;
         t_square = new TowerSquare(x, y, tower);
+
+        // Scan for enemy squares in range
+        Tower* tower = t_square->GetTower();
+        unsigned int range = tower->GetRange();
+        for(auto en : this->GetEnemySquares()) {
+            double dist = sqrt(pow(en.second->GetX() - t_square->GetX(), 2.0) + pow(en.second->GetY() - t_square->GetY(), 2.0));
+            if(dist <= (double)range) {
+                t_square->AddToEnemiesInRange(en.second);
+            }
+        }
         this->ChangeSquare(x, y, t_square);
         return true;
       }
@@ -343,55 +351,36 @@ MapSquare* LevelMap::GetNextMoveSquare(MapSquare* start, MapSquare* end) {
     return new_square;
 }
 
-MapSquare* LevelMap::GetProjStartSquare(Tower* tower, Enemy* enemy) {
-  TowerSquare* sender = this->FindTower(tower);
+MapSquare* LevelMap::GetProjStartSquare(TowerSquare* tower, Enemy* enemy) {
   EnemySquare* target = this->FindEnemy(enemy);
-  return this->GetNextMoveSquare(sender, target);
+  return this->GetNextMoveSquare(tower, target);
 }
 
 EnemySquare* LevelMap::GetFarthestEnemy(std::vector<EnemySquare*> list) {
-  EnemySquare* farthest;
-  bool first = true;
-  for(auto es : list) {
-    if(!first) {
-      if(farthest->ContainsEnemies() && farthest->GetNumber() < es->GetNumber()) {
-        farthest = es;
-      }   
-    } 
-    else if(es->ContainsEnemies()) {
-      farthest = es;
-      first = false;
+    for(auto it = list.rbegin(); it != list.rend(); it++) {
+        auto es = *it;
+        if (es->ContainsEnemies()) {
+            return es;
+        }
     }
-  }
-  if(farthest != nullptr && farthest->ContainsEnemies()) {
-    return farthest;
-  }
-  return nullptr;
+    return nullptr;
 }
 
-std::vector<EnemySquare*> LevelMap::EnemiesInRange(Tower* tower) {
-  TowerSquare* t_square = this->FindTower(tower);
-  unsigned int range = tower->GetRange();
-  std::vector<EnemySquare*> list;
-  for(auto en : this->GetEnemySquares()) {
-    double dist = sqrt(pow(en.second->GetX() - t_square->GetX(), 2.0) + pow(en.second->GetY() - t_square->GetY(), 2.0));
-  
-    if(dist <= (double)range) {
-      list.push_back(en.second);
-    }
-  }
-  return list;
-}
+void LevelMap::ShootProjectile(TowerSquare* sender) {
+    Tower* tower = sender->GetTower();
+    if(tower->GetType() != "attack") return;
 
-void LevelMap::ShootProjectile(AttackTower* sender) {
-  EnemySquare* target_s = this->GetFarthestEnemy(EnemiesInRange(sender));
-  if(target_s == nullptr) return;
-  Enemy* target = *(target_s->GetEnemies().begin());
-  MapSquare* start = this->GetProjStartSquare(sender, target);
-  if(start == nullptr) return;
-  Projectile* new_projec = sender->GetProjectile();
-  new_projec->Initialize(start, target);
-  projectiles_.push_back(new_projec);
+    EnemySquare* target_s = this->GetFarthestEnemy(sender->EnemySquaresInRange());
+    if(target_s == nullptr || !target_s->ContainsEnemies()) return;
+    Enemy* target = *(target_s->GetEnemies().begin());
+    MapSquare* start = this->GetProjStartSquare(sender, target);
+    if(start == nullptr) return;
+
+    auto att_tower = (AttackTower*)tower;
+    Projectile* new_projec = att_tower->GetProjectile();
+    new_projec->Initialize(start, target);
+    projectiles_.push_back(new_projec);
+    att_tower->RestartCooldown();
 }
 
 

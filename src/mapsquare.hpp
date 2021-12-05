@@ -10,8 +10,8 @@ class MapSquare {
     ~MapSquare(){} 
     virtual bool free() const = 0;
     virtual std::string GetType() const = 0;
-    [[nodiscard]] int GetX() const { return x_; }
-    [[nodiscard]] int GetY() const { return y_; }
+    int GetX() const { return x_; }
+    int GetY() const { return y_; }
     void PrintLocation() { std::cout << "(" << this->GetX() << ", " << this->GetY() << ")" << std::endl; }
     private: 
     int const x_;
@@ -25,24 +25,7 @@ class FreeSquare : public MapSquare {
     ~FreeSquare(){} 
     virtual bool free() const { return true; }
     virtual std::string GetType() const { return "free"; } 
-}; 
-
-class TowerSquare : public MapSquare { 
-    public: 
-    TowerSquare(int x, int y, Tower* tower) : MapSquare(x, y), tower_(tower) {} 
-    ~TowerSquare(){} 
-    virtual bool free() const { return false; }
-    virtual std::string GetType() const { return "tower"; }
-
-    Tower* GetTower() { return tower_; } 
-    bool ContainsTower(Tower* tower) {
-        if(tower_ == tower) return true;
-        else return false;
-    }
-    
-    private:
-    Tower* tower_;
-}; 
+};
 
 class EnemySquare : public MapSquare { 
     public: 
@@ -105,5 +88,27 @@ class EnemySquare : public MapSquare {
     EnemySquare* next_; 
     EnemySquare* previous_;
     unsigned int number_;
+};
+
+class TowerSquare : public MapSquare {
+public:
+    TowerSquare(int x, int y, Tower* tower) : MapSquare(x, y), tower_(tower) {
+        enemySquaresInRange_ = std::vector<EnemySquare*>();
+    }
+    ~TowerSquare(){}
+    virtual bool free() const { return false; }
+    virtual std::string GetType() const { return "tower"; }
+
+    Tower* GetTower() { return tower_; }
+    bool ContainsTower(Tower* tower) {
+        if(tower_ == tower) return true;
+        else return false;
+    }
+    std::vector<EnemySquare*> EnemySquaresInRange() { return enemySquaresInRange_; }
+    void AddToEnemiesInRange(EnemySquare* es) { enemySquaresInRange_.push_back(es); }
+
+private:
+    Tower* tower_;
+    std::vector<EnemySquare*> enemySquaresInRange_;
 };
 #endif

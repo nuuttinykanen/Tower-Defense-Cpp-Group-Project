@@ -34,14 +34,12 @@ void BombProjectile::Effect(EnemySquare* enemy) {
     for(unsigned int i = 0; i < this->bomb_radius_; i++) {
         if(prev != nullptr) {
             for(auto it : prev->GetEnemies()) {
-                std::cout << "hit" << std::endl;
                 it->ChangeHealth(-1 * this->GetStrength());
             }
             prev = prev->GetPrevious();
         }
         if(next != nullptr) {
             for(auto it : next->GetEnemies()) {
-                std::cout << "hit" << std::endl;
                 it->ChangeHealth(-1 * this->GetStrength());
             }
             next = next->GetNext();

@@ -10,21 +10,19 @@ class MapSquare {
     virtual ~MapSquare() = default;
     virtual bool free() const = 0;
     virtual std::string GetType() const = 0;
-    int GetX() const { return x_; }
-    int GetY() const { return y_; }
-    void PrintLocation() { std::cout << "(" << this->GetX() << ", " << this->GetY() << ")" << std::endl; }
+    int GetX() const;
+    int GetY() const;
     private: 
     int const x_;
     int const y_;
 };
 
-class FreeSquare : public MapSquare { 
-
+class FreeSquare : public MapSquare {
     public: 
     FreeSquare(int x, int y) : MapSquare(x, y){} 
     ~FreeSquare(){} 
-    virtual bool free() const { return true; }
-    virtual std::string GetType() const { return "free"; } 
+    virtual bool free() const;
+    virtual std::string GetType() const;
 };
 
 class EnemySquare : public MapSquare { 
@@ -42,52 +40,23 @@ class EnemySquare : public MapSquare {
         }
     }
 
-    virtual bool free() const { return false; }
-    virtual std::string GetType() const { return "enemy"; }
-    std::vector<Enemy*> GetEnemies() { return enemies_; }
-    void SetNext(EnemySquare* e_square) { next_ = e_square; }
-    bool HasNext() { 
-        if(this->next_ != nullptr) return true;
-        else return false;
-    }
-    EnemySquare* GetNext() { return next_; }
-    void SetPrevious(EnemySquare* e_square) { previous_ = e_square; }
-    EnemySquare* GetPrevious() { return previous_; }
-    bool HasPrevious() {
-        if(this->previous_ != nullptr) return true;
-        else return false;
-    }
-    void AddEnemy(Enemy* enemy) {
-        enemies_.push_back(enemy);
-    }
-    bool RemoveEnemy(Enemy* enemy) {
-        for(auto it = enemies_.begin(); it != enemies_.end(); it++) {
-            if(*it == enemy) {
-                this->enemies_.erase(it);
-                return true;
-            }
-        }
-        return false;
-    }
-    bool ContainsEnemies() const {
-        if(enemies_.empty()) return false;
-        else return true;
-    }
-    Enemy* GetEnemy(Enemy* enemy) const {
-        for(auto it : enemies_) {
-            if(it == enemy) {
-                return it;
-            }
-        }
-        return nullptr;
-    }
+    virtual bool free() const;
+    virtual std::string GetType() const;
+    std::vector<Enemy*> GetEnemies();
+    void SetNext(EnemySquare* e_square);
+    bool HasNext();
+    EnemySquare* GetNext();
+    void SetPrevious(EnemySquare* e_square);
+    EnemySquare* GetPrevious();
+    bool HasPrevious();
+    void AddEnemy(Enemy* enemy);
+    bool RemoveEnemy(Enemy* enemy);
+    bool ContainsEnemies() const;
+    Enemy* GetEnemy(Enemy* enemy) const;
 
-    bool ContainsEnemy(Enemy* enemy) const {
-        if(this->GetEnemy(enemy) != nullptr) return true;
-        else return false;
-    }
-    unsigned int GetNumber() { return number_; }
-    void SetNumber(unsigned int number) { number_ = number; }
+    bool ContainsEnemy(Enemy* enemy) const;
+    unsigned int GetNumber();
+    void SetNumber(unsigned int number);
 
     private:
     std::vector<Enemy*> enemies_;
@@ -102,16 +71,13 @@ public:
         enemySquaresInRange_ = std::vector<EnemySquare*>();
     }
     ~TowerSquare(){}
-    virtual bool free() const { return false; }
-    virtual std::string GetType() const { return "tower"; }
+    virtual bool free() const;
+    virtual std::string GetType() const;
 
-    Tower* GetTower() { return tower_; }
-    bool ContainsTower(Tower* tower) {
-        if(tower_ == tower) return true;
-        else return false;
-    }
-    std::vector<EnemySquare*> EnemySquaresInRange() { return enemySquaresInRange_; }
-    void AddToEnemiesInRange(EnemySquare* es) { enemySquaresInRange_.push_back(es); }
+    Tower* GetTower();
+    bool ContainsTower(Tower* tower);
+    std::vector<EnemySquare*> EnemySquaresInRange();
+    void AddToEnemiesInRange(EnemySquare* es);
 
 private:
     Tower* tower_;

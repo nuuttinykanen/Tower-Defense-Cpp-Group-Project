@@ -50,6 +50,8 @@ class Game {
 
     void ProcessAttackTowers();
 
+    void TakeDamage(Enemy* enemy);
+
     private:
     LevelMap& map_;
     Player& player_;

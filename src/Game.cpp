@@ -35,9 +35,23 @@ void Game::KillEnemy(Enemy *enemy) {
         }
     }
     this->player_.GiveMoney(enemy->GetBounty());
-
 }
 
+//Deals enemy attack's worth of damage to player
+void Game::TakeDamage(Enemy *enemy){
+    this->player_.ChangeHealth(-enemy->GetAttack());
+    for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); it++){
+        if(*it == enemy){
+            if(enemies_.size()==1){
+                enemies_.pop_back();
+                it--;
+            }
+            else{
+                enemies_.erase(it);
+            }
+        }
+    }
+}
 
 void Game::SellTower(Tower* tower) {
     this->player_.SellTower(tower);
@@ -87,14 +101,6 @@ LevelMap &Game::GetMap() {
 }
 
 void Game::ProcessEnemies() {
-
-    //Removes killed enemies locally, gives corresponding bounty to player
-    for(auto e: this->enemies_){
-        if(e->GetHealth() <= 0){
-            this->KillEnemy(e);
-        }
-    }
-
     if(this->moveCounter_ < 1) {
         this->map_.MoveEnemies();
         // Place next enemy
@@ -105,6 +111,17 @@ void Game::ProcessEnemies() {
         this->moveCounter_ = moveLimit_;
     }
     this->moveCounter_ -= 1;
+
+    //Removes killed and passed enemies locally, gives corresponding bounty
+    // or damage to player
+    for(auto e: this->enemies_){
+        if(e->GetHealth() <= 0){
+            this->KillEnemy(e);
+        }
+        else if(e->GetHealth() > 0 and !e->OnMap() and this->map_.GetEnemiesPassed() > 0){
+            this->TakeDamage(e);
+        }
+    }
 }
 
 void Game::ProcessAttackTowers() {
@@ -123,18 +140,21 @@ void Game::UpdateState() {
     std::cout << "Player health: " << this->player_.GetHealth() << std::endl;
     std::cout << "Player money: " << this->player_.GetMoney() << std::endl;
 
-
     if(!this->gameEnd_) {
         if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {
             this->waveInProgress_ = false;
             return;
         }
+
         if(this->waveInProgress_) {
+
+
             this->ProcessEnemies();
             if(this->player_.GetHealth() < 1) {
                 std::cout << "ENDING GAME" << std::endl;
                 this->EndGame();
             }
+
             //Move Projectiles
             this->map_.MoveProjectiles();
             this->map_.MoveProjectiles();

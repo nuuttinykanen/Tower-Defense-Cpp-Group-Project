@@ -20,7 +20,10 @@ public:
     sf::Sprite& getBatSprite(float scaledBy = 1);
     sf::Sprite& getMichaelSprite(float scaledBy = 1);
     sf::Sprite& getProjectileSprite(float scaleBy = 1);
-
+    sf::Sprite& getBomberSprite(float scaleBy = 1);
+    sf::Sprite& getGunnerSprite(float scaleBy = 1);
+    sf::Sprite& getBombProjecSprite(float scaleBy = 1);
+    sf::Sprite& getGunProjecSprite(float scaleBy = 1);
 private:
     sf::Font font_;
     sf::Texture enemyTexture_;
@@ -33,7 +36,11 @@ private:
     sf::Texture draculaTexture_;
     sf::Texture batTexture_;
     sf::Texture michaelTexture_;
-    sf::Texture projectileTexture_;
+    sf::Texture bomberTexture_;
+    sf::Texture gunnerTexture_;
+    sf::Texture bombProjecTexture_;
+    sf::Texture gunProjecTexture_;
+
     sf::Sprite enemySprite_;
     sf::Sprite purpleEnemySprite_;
     sf::Sprite freeSquareSprite_;
@@ -44,7 +51,10 @@ private:
     sf::Sprite draculaSprite_;
     sf::Sprite batSprite_;
     sf::Sprite michaelSprite_;
-    sf::Sprite projectileSprite_;
+    sf::Sprite bomberSprite_;
+    sf::Sprite gunnerSprite_;
+    sf::Sprite bombProjecSprite_;
+    sf::Sprite gunProjecSprite_;
 };
 
 

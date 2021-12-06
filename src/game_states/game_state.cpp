@@ -12,6 +12,8 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
 
     generateButtons();
     generateEnemies();
+    generateTowers();
+    generateProjectiles();
 
     auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie(), new MichaelMyers, new Dracula, new Bat, new Zombie, new MichaelMyers});
 
@@ -78,18 +80,22 @@ void GameState::draw_current_state() {
     }
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
-        auto freeSprite = globals->getTowerSquareSprite();
-        freeSprite.setScale(2,2);
-        freeSprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
+        auto freeSprite = globals->getFreeSquareSprite();
+        freeSprite.setScale(1.85, 1.85);
+        freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
+        sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
+        tow_sprite.setScale(1.3,1.3);
+        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
+        window_.draw(tow_sprite);
     }
     // Draw projectiles
     for(auto it : map.GetProjectiles()) {
-        if(it->GetLocation() != nullptr) {
-            auto freeSprite = globals->getTowerSquareSprite();
-            freeSprite.setScale(2,2);
-            freeSprite.setPosition(it->GetLocation()->GetX() * 35, it->GetLocation()->GetY()* 35);
-            window_.draw(freeSprite);
+        if(it->GetLocation() != nullptr && it->GetSender() != nullptr) {
+            auto projSprite = projectileSprites_.at(it->GetSender()->GetName());
+            projSprite.setScale(1.5,1.5);
+            projSprite.setPosition(it->GetLocation()->GetX() * 35.5, it->GetLocation()->GetY()* 35.5);
+            window_.draw(projSprite);
         }
     }
 }
@@ -303,3 +309,12 @@ void GameState::generateEnemies() {
     enemySprites_["Bat"] = gui_->getGlobalObjects()->getBatSprite();
 }
 
+void GameState::generateTowers() {
+    towerSprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
+    towerSprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
+}
+
+void GameState::generateProjectiles() {
+    projectileSprites_["Bomber"] = gui_->getGlobalObjects()->getBombProjecSprite();
+    projectileSprites_["Gunner"] = gui_->getGlobalObjects()->getGunProjecSprite();
+}

@@ -52,8 +52,23 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
-    if(!projectileTexture_.loadFromFile("../src/assets/projectiles/ProjectileSprite.png")) {
-        std::cout << "Error retrieving projectile sprite" << std::endl;
+    if(!bomberTexture_.loadFromFile("../src/assets/towers/Bomber.png")) {
+        std::cout << "Error retrieving bomber sprite" << std::endl;
+        return;
+    }
+
+    if(!gunnerTexture_.loadFromFile("../src/assets/towers/Gunner.png")) {
+        std::cout << "Error retrieving gunner sprite" << std::endl;
+        return;
+    }
+
+    if(!bombProjecTexture_.loadFromFile("../src/assets/projectiles/bombProjec.png")) {
+        std::cout << "Error retrieving bomb projectile sprite" << std::endl;
+        return;
+    }
+
+    if(!gunProjecTexture_.loadFromFile("../src/assets/projectiles/gunProjec.png")) {
+        std::cout << "Error retrieving gun projectile sprite" << std::endl;
         return;
     }
 
@@ -67,17 +82,10 @@ GlobalObjects::GlobalObjects() {
     draculaSprite_.setTexture(draculaTexture_);
     batSprite_.setTexture(batTexture_);
     michaelSprite_.setTexture(michaelTexture_);
-}
-
-
-sf::Sprite &GlobalObjects::getEnemySprite(float scaledBy) {
-    enemySprite_.scale(scaledBy, scaledBy);
-    return enemySprite_;
-}
-
-sf::Sprite &GlobalObjects::getPurpleEnemySprite(float scaledBy) {
-    purpleEnemySprite_.scale(scaledBy, scaledBy);
-    return purpleEnemySprite_;
+    bomberSprite_.setTexture(bomberTexture_);
+    gunnerSprite_.setTexture(gunnerTexture_);
+    bombProjecSprite_.setTexture(bombProjecTexture_);
+    gunProjecSprite_.setTexture(gunProjecTexture_);
 }
 
 sf::Sprite &GlobalObjects::getFreeSquareSprite(float scaledBy) {
@@ -117,10 +125,24 @@ sf::Sprite &GlobalObjects::getMichaelSprite(float scaledBy) {
     return  michaelSprite_;
 }
 
-sf::Sprite &GlobalObjects::getProjectileSprite(float scaledBy) {
-    projectileSprite_.scale(scaledBy, scaledBy);
-    return  projectileSprite_;
+sf::Sprite &GlobalObjects::getBomberSprite(float scaledBy) {
+    bomberSprite_.scale(scaledBy, scaledBy);
+    return bomberSprite_;
 }
 
+sf::Sprite &GlobalObjects::getGunnerSprite(float scaledBy) {
+    gunnerSprite_.scale(scaledBy, scaledBy);
+    return gunnerSprite_;
+}
+
+sf::Sprite &GlobalObjects::getBombProjecSprite(float scaledBy) {
+    bombProjecSprite_.scale(scaledBy, scaledBy);
+    return bombProjecSprite_;
+}
+
+sf::Sprite &GlobalObjects::getGunProjecSprite(float scaledBy) {
+    gunProjecSprite_.scale(scaledBy, scaledBy);
+    return gunProjecSprite_;
+}
 
 

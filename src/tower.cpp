@@ -1,8 +1,6 @@
 #include "tower.hpp"
 
-    Tower::~Tower() {
-        delete upgrade_;
-    }
+    Tower::~Tower() { }
 
     std::string Tower::GetName() const { return name_; }
 
@@ -14,9 +12,9 @@
 
     unsigned int Tower::GetPrice() const { return price_; }
 
-    Tower* Tower::GetUpgrade() const { return upgrade_; }
+    std::string Tower::GetUpgrade() const { return upgrade_; }
     
     bool Tower::HasUpgrade() const { 
-        if(upgrade_ == nullptr) return false;
-        else return true;
+        if(this->GetUpgrade() != "") return true;
+        else return false;
     }

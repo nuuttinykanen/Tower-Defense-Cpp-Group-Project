@@ -50,7 +50,27 @@
         return projec;
     }
 
+    Tower* Bomber::Upgrade() {
+        auto upgrade = new SuperBomber();
+        return upgrade;
+    }
+
+    Projectile* SuperBomber::GetProjectile() {
+        Projectile* projec = new BombProjectile(this);
+        return projec;
+    }
+
+    Tower* SuperBomber::Upgrade() {
+        std::cout << "No upgrade for SuperBomber" << std::endl;
+        return nullptr;
+    }
+
     Projectile* Gunner::GetProjectile() {
         Projectile* projec = new BulletProjectile(this);
         return projec;
+    }
+
+    Tower* Gunner::Upgrade() {
+        std::cout << "No upgrade for SuperBomber" << std::endl;
+        return nullptr;
     }

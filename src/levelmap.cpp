@@ -72,14 +72,6 @@ LevelMap::~LevelMap() {
     }
 }
 
-const std::map<std::pair<int, int>, MapSquare*>& LevelMap::GetSquares() {
-    return squares_;
-}
-
-const std::vector<Tower*>& LevelMap::GetTowers() { 
-    return towers_; 
-}
-
 const std::vector<Enemy*>& LevelMap::GetEnemies() { 
     return enemies_; 
 }
@@ -166,8 +158,9 @@ void LevelMap::ChangeSquare(int x, int y, MapSquare& new_square) {
     auto pair = std::make_pair(x, y);
     auto target = squares_.find(pair);
     if(target != squares_.end()) {
-        delete(target->second);
-        squares_.at(std::make_pair(x, y)) = &new_square;
+        auto removal = target->second;
+        target->second = &new_square;
+        delete(removal);
     }
 }
 
@@ -320,6 +313,15 @@ TowerSquare* LevelMap::FindTower(Tower* tower) {
   return nullptr;
 }
 
+void LevelMap::UpgradeTowerSquare(TowerSquare *tsq) {
+    auto upgrade = tsq->GetTower()->Upgrade();
+    if(upgrade == nullptr) return;
+    int x = tsq->GetX();
+    int y = tsq->GetY();
+    MapSquare* new_square = new TowerSquare(x, y, upgrade);
+    this->ChangeSquare(x, y, *new_square);
+}
+
 std::vector<Projectile*> LevelMap::GetProjectiles() { return projectiles_; }
 
 MapSquare* LevelMap::GetNextMoveSquare(MapSquare* start, MapSquare* end) {
@@ -399,6 +401,7 @@ void LevelMap::ScanProjectiles() {
     Projectile* h = *it;
     if(h != nullptr && h->ToBeRemoved()) {
       projectiles_.erase(it);
+      delete(h);
       it--;
     }
   }
@@ -407,7 +410,6 @@ void LevelMap::ScanProjectiles() {
 EnemySquare* LevelMap::GetTargetSquare(Projectile* proj) {
     if(proj->GetTarget() != nullptr) {
       Enemy* targ = proj->GetTarget();
-      EnemySquare* sq = this->FindEnemy(targ);
       return this->FindEnemy(targ);
     }
     else {

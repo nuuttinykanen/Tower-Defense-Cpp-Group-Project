@@ -12,7 +12,7 @@ class Projectile {
         strength_ = sender->GetStrength();
         to_be_removed_ = false;
     }
-    ~Projectile(){}
+    virtual ~Projectile() = default;
     void Initialize(MapSquare* start_loc, Enemy* target);
     Tower* GetSender();
     MapSquare* GetLocation();
@@ -38,6 +38,7 @@ class BombProjectile : public Projectile {
     BombProjectile(Tower* sender) : Projectile(sender) {
         bomb_radius_ = 2;
     }
+    ~BombProjectile() override { }
     void Effect(EnemySquare* enemy);
     private: 
     unsigned int bomb_radius_;
@@ -46,6 +47,7 @@ class BombProjectile : public Projectile {
 class BulletProjectile : public Projectile {
     public:
     BulletProjectile(Tower* sender) : Projectile(sender) { }
+    ~BulletProjectile() override { }
     void Effect(EnemySquare* enemy);
 };
 

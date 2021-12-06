@@ -19,7 +19,10 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
 
     levelMap_ = JSON::loadLevelMap(levelNumber);
     Bomber* b = new Bomber();
+    Gunner* g = new Gunner();
     levelMap_->PlaceTower(11, 6, b);
+    levelMap_->PlaceTower(4, 7, g);
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(b));
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, {wave});
     auto towerShop_ = std::vector<Tower*>();
@@ -311,9 +314,11 @@ void GameState::generateEnemies() {
 void GameState::generateTowers() {
     towerSprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
     towerSprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
+    towerSprites_["Super Bomber"] = gui_->getGlobalObjects()->getGunProjecSprite();
 }
 
 void GameState::generateProjectiles() {
     projectileSprites_["Bomber"] = gui_->getGlobalObjects()->getBombProjecSprite();
     projectileSprites_["Gunner"] = gui_->getGlobalObjects()->getGunProjecSprite();
+    projectileSprites_["Super Bomber"] = gui_->getGlobalObjects()->getGunProjecSprite();
 }

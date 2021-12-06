@@ -15,8 +15,6 @@ class Player {
 
         std::vector<Tower*> GetTowers() const;
 
-
-
         double GetMoney() const;
         void GiveMoney(double amount);
         void TakeMoney(double amount);

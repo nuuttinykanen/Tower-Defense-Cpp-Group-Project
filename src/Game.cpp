@@ -32,6 +32,7 @@ void Game::KillEnemy(Enemy *enemy) {
     for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); it++){
         if(*it == enemy){
             enemies_.erase(it);
+            break;
         }
     }
     this->player_.GiveMoney(enemy->GetBounty());
@@ -147,8 +148,6 @@ void Game::UpdateState() {
         }
 
         if(this->waveInProgress_) {
-
-
             this->ProcessEnemies();
             if(this->player_.GetHealth() < 1) {
                 std::cout << "ENDING GAME" << std::endl;
@@ -156,7 +155,6 @@ void Game::UpdateState() {
             }
 
             //Move Projectiles
-            this->map_.MoveProjectiles();
             this->map_.MoveProjectiles();
             // Attack towers shoot or reload
             this->ProcessAttackTowers();

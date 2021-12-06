@@ -27,11 +27,15 @@ void Game::SpawnTower(Tower* tower, double x, double y) {
 
 }
 
-
+//Kills enemy locally, gives money to player
 void Game::KillEnemy(Enemy *enemy) {
-    this->map_.EraseEnemy(enemy);
+    for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); it++){
+        if(*it == enemy){
+            enemies_.erase(it);
+        }
+    }
     this->player_.GiveMoney(enemy->GetBounty());
-    // Remove projectile
+
 }
 
 
@@ -48,6 +52,7 @@ void Game::StartWave() {
     this->waveInProgress_ = true;
     auto wave = enemyWaves_[this->waveNum_ - 1];
     auto enemyWave = wave->getWaveEnemies();
+    this->enemies_ = wave->getWaveEnemies();
     enemyWaves_.erase(enemyWaves_.begin());
 
 }
@@ -82,6 +87,14 @@ LevelMap &Game::GetMap() {
 }
 
 void Game::ProcessEnemies() {
+
+    //Removes killed enemies locally, gives corresponding bounty to player
+    for(auto e: this->enemies_){
+        if(e->GetHealth() <= 0){
+            this->KillEnemy(e);
+        }
+    }
+
     if(this->moveCounter_ < 1) {
         this->map_.MoveEnemies();
         // Place next enemy
@@ -107,9 +120,9 @@ void Game::ProcessAttackTowers() {
 
 void Game::UpdateState() {
 
-    /*std::cout << "Player health: " << this->player_.GetHealth() << std::endl;
+    std::cout << "Player health: " << this->player_.GetHealth() << std::endl;
     std::cout << "Player money: " << this->player_.GetMoney() << std::endl;
-    */
+
 
     if(!this->gameEnd_) {
         if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {

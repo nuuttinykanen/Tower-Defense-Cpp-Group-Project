@@ -48,6 +48,8 @@ class Game {
 
     void ProcessEnemies();
 
+    void ProcessAttackTowers();
+
     private:
     LevelMap& map_;
     Player& player_;

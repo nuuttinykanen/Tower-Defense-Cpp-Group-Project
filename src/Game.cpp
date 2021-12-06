@@ -94,7 +94,23 @@ void Game::ProcessEnemies() {
     this->moveCounter_ -= 1;
 }
 
+void Game::ProcessAttackTowers() {
+    for(auto it : this->map_.GetAttackTowers()){
+        auto att = (AttackTower*)it->GetTower();
+        if(att->CanAttack()) {
+            this->map_.ShootProjectile(it);
+        } else {
+            att->Reload();
+        }
+    }
+}
+
 void Game::UpdateState() {
+
+    /*std::cout << "Player health: " << this->player_.GetHealth() << std::endl;
+    std::cout << "Player money: " << this->player_.GetMoney() << std::endl;
+    */
+
     if(!this->gameEnd_) {
         if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {
             this->waveInProgress_ = false;
@@ -110,14 +126,7 @@ void Game::UpdateState() {
             this->map_.MoveProjectiles();
             this->map_.MoveProjectiles();
             // Attack towers shoot or reload
-            for(auto it : this->map_.GetAttackTowers()){
-                auto att = (AttackTower*)it->GetTower();
-                if(att->CanAttack()) {
-                    this->map_.ShootProjectile(it);
-                } else {
-                    att->Reload();
-                }
-            }
+            this->ProcessAttackTowers();
         }
     }
 }

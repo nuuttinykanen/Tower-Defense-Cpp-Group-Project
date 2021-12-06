@@ -7,7 +7,7 @@
 class MapSquare {
     public:
     MapSquare(int x, int y) : x_(x), y_(y) { }
-    ~MapSquare(){} 
+    virtual ~MapSquare() = default;
     virtual bool free() const = 0;
     virtual std::string GetType() const = 0;
     int GetX() const { return x_; }
@@ -34,8 +34,14 @@ class EnemySquare : public MapSquare {
         next_ = nullptr;
         previous_ = nullptr;
         number_ = -1;
-    } 
-    ~EnemySquare(){} 
+    }
+
+    ~EnemySquare(){
+        for(auto en : enemies_) {
+            delete(en);
+        }
+    }
+
     virtual bool free() const { return false; }
     virtual std::string GetType() const { return "enemy"; }
     std::vector<Enemy*> GetEnemies() { return enemies_; }
@@ -47,7 +53,7 @@ class EnemySquare : public MapSquare {
     EnemySquare* GetNext() { return next_; }
     void SetPrevious(EnemySquare* e_square) { previous_ = e_square; }
     EnemySquare* GetPrevious() { return previous_; }
-    bool HasPrevious() { 
+    bool HasPrevious() {
         if(this->previous_ != nullptr) return true;
         else return false;
     }

@@ -34,7 +34,7 @@ class LevelMap {
     }
 
   }
-
+  ~LevelMap();
   void InitializePath(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path);
   const MapSquare* GetStartSquare();
   const MapSquare* GetEndSquare();
@@ -51,7 +51,7 @@ class LevelMap {
 
   std::vector<Enemy*> EnemiesAt(int x, int y);
   Tower* TowerAt(int x, int y);
-  void ChangeSquare(int x, int y, MapSquare* new_square);
+  void ChangeSquare(int x, int y, MapSquare& new_square);
   void MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destination);
   void MoveEnemies();
   bool EraseEnemy(Enemy* enemy);

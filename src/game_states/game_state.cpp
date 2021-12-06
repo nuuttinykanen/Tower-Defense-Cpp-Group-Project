@@ -103,7 +103,6 @@ void GameState::draw_current_state() {
 void GameState::poll_events() {
     sf::Event event{};
 
-
     while (window_.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)

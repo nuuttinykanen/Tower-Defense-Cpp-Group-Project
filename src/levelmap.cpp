@@ -39,7 +39,7 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
               this->start_square_ = new_square;
           }
 
-          ChangeSquare(ins.first, ins.second, new_square);
+          ChangeSquare(ins.first, ins.second, *new_square);
           enemy_path_.insert(std::make_pair(std::make_pair(ins.first, ins.second), new_square));
 
           // for ex. (2, 4) -> (2, 9)
@@ -62,8 +62,14 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
       previous->SetNext(new_square);
       this->end_square_ = new_square;
     }
-    ChangeSquare(last.first, last.second, new_square);
+    ChangeSquare(last.first, last.second, *new_square);
     this->enemy_path_.insert(std::make_pair(std::make_pair(last.first, last.second), new_square));
+}
+
+LevelMap::~LevelMap() {
+    for(auto it : squares_) {
+        delete(it.second);
+    }
 }
 
 const std::map<std::pair<int, int>, MapSquare*>& LevelMap::GetSquares() {
@@ -156,8 +162,13 @@ Tower* LevelMap::TowerAt(int x, int y) {
     throw std::invalid_argument("No tower found!");
 }
 
-void LevelMap::ChangeSquare(int x, int y, MapSquare* new_square) {
-    squares_.at(std::make_pair(x, y)) = new_square;
+void LevelMap::ChangeSquare(int x, int y, MapSquare& new_square) {
+    auto pair = std::make_pair(x, y);
+    auto target = squares_.find(pair);
+    if(target != squares_.end()) {
+        delete(target->second);
+        squares_.at(std::make_pair(x, y)) = &new_square;
+    }
 }
 
 const MapSquare* LevelMap::GetStartSquare() {
@@ -170,8 +181,7 @@ const MapSquare* LevelMap::GetEndSquare() {
 
 bool LevelMap::PlaceEnemy(int x, int y, Enemy& enemy) {
     auto e_squares = this->GetEnemySquares();
-    for(auto it = e_squares.begin(); it != e_squares.end(); it++) {
-      auto h = *it;
+    for(auto h : e_squares) {
       if(h.first.first == x && h.first.second == y) {
         h.second->AddEnemy(&enemy);
         enemy.SetOnMap();
@@ -279,7 +289,7 @@ bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
                 t_square->AddToEnemiesInRange(en.second);
             }
         }
-        this->ChangeSquare(x, y, t_square);
+        this->ChangeSquare(x, y, *t_square);
         return true;
       }
     }
@@ -292,7 +302,7 @@ bool LevelMap::EraseTower(Tower* tower) {
     auto h = *it;
     if(h.second->ContainsTower(tower)) { 
         FreeSquare* f_square = new FreeSquare(h.second->GetX(), h.second->GetY());
-        this->ChangeSquare(h.second->GetX(), h.second->GetY(), f_square);
+        this->ChangeSquare(h.second->GetX(), h.second->GetY(), *f_square);
         return true;
     }
   }

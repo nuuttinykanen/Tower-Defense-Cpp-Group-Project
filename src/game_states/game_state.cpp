@@ -15,14 +15,13 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     generateTowers();
     generateProjectiles();
 
-    auto wave = new Wave({new Zombie(), new ZombieHorde(), new Zombie(), new MichaelMyers, new Dracula, new Bat, new Zombie, new MichaelMyers});
-
+    auto waves = JSON::loadWaves(levelNumber);
     levelMap_ = JSON::loadLevelMap(levelNumber);
     Bomber* b = new Bomber();
     Gunner* g = new Gunner();
     levelMap_->PlaceTower(9, 8, b);
     player_ = new Player(100);
-    game_ = new Game( *levelMap_, *player_, {wave});
+    game_ = new Game( *levelMap_, *player_, waves);
     auto towerShop_ = std::vector<Tower*>();
 }
 GameState::~GameState() {

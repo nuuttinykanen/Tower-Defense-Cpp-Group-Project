@@ -21,6 +21,13 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     Gunner* g = new Gunner();
     levelMap_->PlaceTower(9, 8, b);
     levelMap_->PlaceTower(11, 3, g);
+
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(11, 3)));
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(11, 3)));
+
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, waves);
     auto towerShop_ = std::vector<Tower*>();
@@ -346,11 +353,13 @@ void GameState::generateTowers() {
     towerSprites_["Clock Blocker"]  = gui_->getGlobalObjects()->getClockBlockerSprite();
     towerSprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
     towerSprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
-
 }
 
 void GameState::generateProjectiles() {
-    projectileSprites_["Bomber"] = gui_->getGlobalObjects()->getBombProjecSprite();
-    projectileSprites_["Gunner"] = gui_->getGlobalObjects()->getGunProjecSprite();
-    projectileSprites_["Super Bomber"] = gui_->getGlobalObjects()->getGunProjecSprite();
+    projectileSprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
+    projectileSprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
+    projectileSprites_["Super Bomber"] = gui_->getGlobalObjects()->getSuperBomberSprite();
+    projectileSprites_["Ultra Bomber"]  = gui_->getGlobalObjects()->getUltraBomberSprite();
+    projectileSprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
+    projectileSprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
 }

@@ -49,6 +49,7 @@ void Game::TakeDamage(Enemy *enemy){
             }
             else{
                 enemies_.erase(it);
+                it--;
             }
         }
     }
@@ -141,6 +142,10 @@ void Game::UpdateState() {
         if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {
             this->waveInProgress_ = false;
             return;
+        }
+
+        for(auto it : this->map_.GetAttackTowers()) {
+            std::cout << it->GetTower()->GetName() << std::endl;
         }
 
         if(this->waveInProgress_) {

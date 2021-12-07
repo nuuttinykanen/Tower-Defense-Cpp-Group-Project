@@ -81,6 +81,26 @@
     }
 
     Tower* Gunner::Upgrade() {
-        std::cout << "No upgrade for SuperBomber" << std::endl;
+        auto upgrade = new Multigunner();
+        return upgrade;
+    }
+
+    Projectile* Multigunner::GetProjectile() {
+        Projectile* projec = new BulletProjectile(this);
+        return projec;
+    }
+
+    Tower* Multigunner::Upgrade() {
+        auto upgrade = new GunFiend();
+        return upgrade;
+    }
+
+    Projectile* GunFiend::GetProjectile() {
+        Projectile* projec = new BulletProjectile(this);
+        return projec;
+    }
+
+    Tower* GunFiend::Upgrade() {
         return nullptr;
     }
+

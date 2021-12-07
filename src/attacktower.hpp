@@ -71,3 +71,19 @@ class Gunner : public AttackTower {
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();
 };
+
+class Multigunner : public AttackTower {
+    public:
+    Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 1, 5, 20, 500) { }
+    ~Multigunner(){}
+    virtual Projectile* GetProjectile();
+    virtual Tower* Upgrade();
+};
+
+class GunFiend : public AttackTower {
+    public:
+    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 1, 5, 20, 500) { }
+    ~GunFiend(){}
+    virtual Projectile* GetProjectile();
+    virtual Tower* Upgrade();
+};

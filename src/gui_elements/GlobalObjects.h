@@ -26,6 +26,18 @@ public:
     sf::Sprite& getGunnerSprite(float scaleBy = 1);
     sf::Sprite& getBombProjecSprite(float scaleBy = 1);
     sf::Sprite& getGunProjecSprite(float scaleBy = 1);
+
+    sf::Sprite& getSuperBomberSprite(float scaledBy = 1);
+    sf::Sprite& getUltraBomberSprite(float scaledBy = 1);
+    sf::Sprite& getClockerSprite(float scaledBy = 1);
+    sf::Sprite& getClockBlockerSprite(float scaledBy = 1);
+    sf::Sprite& getSeerSprite(float scaledBy = 1);
+    sf::Sprite& getMotherBrainSprite(float scaledBy = 1);
+    sf::Sprite& getMultigunnerSprite(float scaledBy = 1);
+    sf::Sprite& getGunFiendSprite(float scaledBy = 1);
+    sf::Sprite& getStereoDudeSprite(float scaledBy = 1);
+    sf::Sprite& getDJDudeSprite(float scaledBy = 1);
+
 private:
     sf::Font font_;
     sf::Texture enemyTexture_;
@@ -34,6 +46,17 @@ private:
     sf::Texture enemySquareTexture_;
     sf::Texture towerSquareTexture_;
     sf::Texture rangeTexture_;
+
+    sf::Texture superBomberTexture_;
+    sf::Texture ultraBomberTexture_;
+    sf::Texture clockerTexture_;
+    sf::Texture clockBlockerTexture_;
+    sf::Texture seerTexture_;
+    sf::Texture motherBrainTexture_;
+    sf::Texture multigunnerTexture_;
+    sf::Texture gunFiendTexture_;
+    sf::Texture stereoDudeTexture_;
+    sf::Texture djDudeTexture_;
 
     sf::Texture hordeTexture_;
     sf::Texture zombieTexture_;
@@ -51,6 +74,17 @@ private:
     sf::Sprite enemySquareSprite_;
     sf::Sprite towerSquareSprite_;
     sf::Sprite rangeSprite_;
+
+    sf::Sprite superBomberSprite_;
+    sf::Sprite ultraBomberSprite_;
+    sf::Sprite clockerSprite_;
+    sf::Sprite clockBlockerSprite_;
+    sf::Sprite seerSprite_;
+    sf::Sprite motherBrainSprite_;
+    sf::Sprite multigunnerSprite_;
+    sf::Sprite gunFiendSprite_;
+    sf::Sprite stereoDudeSprite_;
+    sf::Sprite djDudeSprite_;
 
     sf::Sprite hordeSprite_;
     sf::Sprite zombieSprite_;

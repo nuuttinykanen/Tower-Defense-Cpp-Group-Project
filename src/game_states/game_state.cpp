@@ -98,7 +98,7 @@ void GameState::draw_current_state() {
 
         draw_tower_range(it.second);
         sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
-        tow_sprite.setScale(1.1,1.1);
+        tow_sprite.setScale(1.9,1.9);
         tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
         window_.draw(tow_sprite);
 
@@ -336,7 +336,17 @@ void GameState::generateEnemies() {
 void GameState::generateTowers() {
     towerSprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
     towerSprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
-    towerSprites_["Super Bomber"] = gui_->getGlobalObjects()->getGunnerSprite();
+    towerSprites_["Super Bomber"] = gui_->getGlobalObjects()->getSuperBomberSprite();
+    towerSprites_["Ultra Bomber"]  = gui_->getGlobalObjects()->getUltraBomberSprite();
+    towerSprites_["Stereo Dude"]  = gui_->getGlobalObjects()->getStereoDudeSprite();
+    towerSprites_["DJ Dude"]  = gui_->getGlobalObjects()->getDJDudeSprite();
+    towerSprites_["Seer"]  = gui_->getGlobalObjects()->getSeerSprite();
+    towerSprites_["Mother Brain"]  = gui_->getGlobalObjects()->getMotherBrainSprite();
+    towerSprites_["Clocker"]  = gui_->getGlobalObjects()->getClockerSprite();
+    towerSprites_["Clock Blocker"]  = gui_->getGlobalObjects()->getClockBlockerSprite();
+    towerSprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
+    towerSprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
+
 }
 
 void GameState::generateProjectiles() {

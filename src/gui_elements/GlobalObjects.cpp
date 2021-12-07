@@ -77,6 +77,56 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
+    if(!superBomberTexture_.loadFromFile("../src/assets/towers/SuperBomber.png")) {
+        std::cout << "Error retrieving super bomber sprite" << std::endl;
+        return;
+    }
+
+    if(!ultraBomberTexture_.loadFromFile("../src/assets/towers/UltraBomber.png")) {
+        std::cout << "Error retrieving ultra bomber sprite" << std::endl;
+        return;
+    }
+
+    if(!clockerTexture_.loadFromFile("../src/assets/towers/Clocker.png")) {
+        std::cout << "Error retrieving clocker sprite" << std::endl;
+        return;
+    }
+
+    if(!clockBlockerTexture_.loadFromFile("../src/assets/towers/ClockBlocker.png")) {
+        std::cout << "Error retrieving clock blockers sprite" << std::endl;
+        return;
+    }
+
+    if(!seerTexture_.loadFromFile("../src/assets/towers/Seer.png")) {
+        std::cout << "Error retrieving seer sprite" << std::endl;
+        return;
+    }
+
+    if(!motherBrainTexture_.loadFromFile("../src/assets/towers/MotherBrain.png")) {
+        std::cout << "Error retrieving mother brain sprite" << std::endl;
+        return;
+    }
+
+    if(!multigunnerTexture_.loadFromFile("../src/assets/towers/Multigunner.png")) {
+        std::cout << "Error retrieving multigunner sprite" << std::endl;
+        return;
+    }
+
+    if(!gunFiendTexture_.loadFromFile("../src/assets/towers/GunFiend.png")) {
+        std::cout << "Error retrieving gun fiend sprite" << std::endl;
+        return;
+    }
+
+    if(!stereoDudeTexture_.loadFromFile("../src/assets/towers/StereoDude.png")) {
+        std::cout << "Error retrieving stereo dude sprite" << std::endl;
+        return;
+    }
+
+    if(!djDudeTexture_.loadFromFile("../src/assets/towers/DJDude.png")) {
+        std::cout << "Error retrieving DJ dude sprite" << std::endl;
+        return;
+    }
+
     enemySprite_.setTexture(enemyTexture_);
     purpleEnemySprite_.setTexture(purpleEnemyTexture_);
     freeSquareSprite_.setTexture(freeSquareTexture_);
@@ -89,7 +139,21 @@ GlobalObjects::GlobalObjects() {
     batSprite_.setTexture(batTexture_);
     michaelSprite_.setTexture(michaelTexture_);
     bomberSprite_.setTexture(bomberTexture_);
+    superBomberSprite_.setTexture(superBomberTexture_);
+    ultraBomberSprite_.setTexture(ultraBomberTexture_);
+    clockerSprite_.setTexture(clockerTexture_);
+    clockBlockerSprite_.setTexture(clockBlockerTexture_);
+    seerSprite_.setTexture(seerTexture_);
+    motherBrainSprite_.setTexture(motherBrainTexture_);
+
     gunnerSprite_.setTexture(gunnerTexture_);
+    multigunnerSprite_.setTexture(multigunnerTexture_);
+    gunFiendSprite_.setTexture(gunFiendTexture_);
+
+    stereoDudeSprite_.setTexture(stereoDudeTexture_);
+    djDudeSprite_.setTexture(djDudeTexture_);
+
+
     bombProjecSprite_.setTexture(bombProjecTexture_);
     gunProjecSprite_.setTexture(gunProjecTexture_);
 }
@@ -154,6 +218,56 @@ sf::Sprite &GlobalObjects::getBombProjecSprite(float scaledBy) {
 sf::Sprite &GlobalObjects::getGunProjecSprite(float scaledBy) {
     gunProjecSprite_.scale(scaledBy, scaledBy);
     return gunProjecSprite_;
+}
+
+sf::Sprite &GlobalObjects::getSuperBomberSprite(float scaledBy) {
+    superBomberSprite_.scale(scaledBy, scaledBy);
+    return superBomberSprite_;
+}
+
+sf::Sprite &GlobalObjects::getUltraBomberSprite(float scaledBy) {
+    ultraBomberSprite_.scale(scaledBy, scaledBy);
+    return ultraBomberSprite_;
+}
+
+sf::Sprite &GlobalObjects::getClockerSprite(float scaledBy) {
+    clockerSprite_.scale(scaledBy, scaledBy);
+    return clockerSprite_;
+}
+
+sf::Sprite &GlobalObjects::getClockBlockerSprite(float scaledBy) {
+    clockBlockerSprite_.scale(scaledBy, scaledBy);
+    return clockBlockerSprite_;
+}
+
+sf::Sprite &GlobalObjects::getSeerSprite(float scaledBy) {
+    seerSprite_.scale(scaledBy, scaledBy);
+    return seerSprite_;
+}
+
+sf::Sprite &GlobalObjects::getMultigunnerSprite(float scaledBy) {
+    multigunnerSprite_.scale(scaledBy, scaledBy);
+    return multigunnerSprite_;
+}
+
+sf::Sprite &GlobalObjects::getMotherBrainSprite(float scaledBy) {
+    motherBrainSprite_.scale(scaledBy, scaledBy);
+    return motherBrainSprite_;
+}
+
+sf::Sprite &GlobalObjects::getGunFiendSprite(float scaledBy) {
+    gunFiendSprite_.scale(scaledBy, scaledBy);
+    return gunFiendSprite_;
+}
+
+sf::Sprite &GlobalObjects::getStereoDudeSprite(float scaledBy) {
+    stereoDudeSprite_.scale(scaledBy, scaledBy);
+    return stereoDudeSprite_;
+}
+
+sf::Sprite &GlobalObjects::getDJDudeSprite(float scaledBy) {
+    djDudeSprite_.scale(scaledBy, scaledBy);
+    return djDudeSprite_;
 }
 
 

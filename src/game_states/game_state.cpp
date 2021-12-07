@@ -20,6 +20,7 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     Bomber* b = new Bomber();
     Gunner* g = new Gunner();
     levelMap_->PlaceTower(9, 8, b);
+    levelMap_->PlaceTower(11, 3, g);
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, waves);
     auto towerShop_ = std::vector<Tower*>();
@@ -44,6 +45,10 @@ void GameState::draw_tower_range(TowerSquare* tsq) {
     sf::CircleShape shape(35);
     sf::Color color = sf::Color::White;
     color.a = 50;
+    shape.setOutlineThickness(1);
+    sf::Color outline_color = sf::Color::Black;
+    outline_color.a = 60;
+    shape.setOutlineColor(outline_color);
     shape.setScale(tow->GetRange(), tow->GetRange());
     shape.setFillColor(color);
     shape.setPosition((tsq->GetX() - tow->GetRange() + 0.5) * 35, (tsq->GetY() - tow->GetRange() + 0.5) * 35);
@@ -60,13 +65,7 @@ void GameState::draw_current_state() {
     auto globals = gui_->getGlobalObjects();
 
     LevelMap& map = game_->GetMap();
-    // Draw free squares
-    for(auto it : map.GetFreeSquares()) {
-        auto freeSprite = globals->getFreeSquareSprite();
-        freeSprite.setScale(2, 2);
-        freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
-        window_.draw(freeSprite);
-    }
+
     // Draw enemies and path
     for(auto it : map.GetEnemySquares()) {
         auto freeSprite = globals->getEnemySquareSprite();
@@ -74,6 +73,14 @@ void GameState::draw_current_state() {
         freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
     }
+    // Draw free squares
+    for(auto it : map.GetFreeSquares()) {
+        auto freeSprite = globals->getFreeSquareSprite();
+        freeSprite.setScale(2, 2);
+        freeSprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
+        window_.draw(freeSprite);
+    }
+
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
 
@@ -91,8 +98,8 @@ void GameState::draw_current_state() {
 
         draw_tower_range(it.second);
         sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
-        tow_sprite.setScale(1.3,1.3);
-        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
+        tow_sprite.setScale(1.1,1.1);
+        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
         window_.draw(tow_sprite);
 
     }

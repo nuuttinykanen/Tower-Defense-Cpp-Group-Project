@@ -57,6 +57,13 @@ class SuperBomber : public AttackTower {
     virtual Tower* Upgrade();
 };
 
+class UltraBomber : public AttackTower {
+    public:
+    UltraBomber() : AttackTower("Ultra Bomber", "Ultra bombs enemies", 2, 10, 15, 510) { }
+    virtual Projectile* GetProjectile();
+    virtual Tower* Upgrade();
+};
+
 class Gunner : public AttackTower {
     public:
     Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 5, 20, 500) { }

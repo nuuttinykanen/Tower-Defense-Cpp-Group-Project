@@ -1,7 +1,7 @@
 #include "../Gui.h"
 #include "game_state.h"
 #include "menu_state.h"
-
+#include <cmath>
 
 #define TOWER_BUTTON_GRID_START_X 1050
 #define TOWER_BUTTON_GRID_START_Y 75
@@ -45,11 +45,11 @@ void GameState::advance_state() {
     game_->UpdateState();
 }
 
-void GameState::draw_tower_range(TowerSquare* tsq) {
+void GameState::draw_tower_range(LevelMap* map, TowerSquare* tsq) {
     Tower* tow = tsq->GetTower();
     if(tow == nullptr) return;
 
-    sf::CircleShape shape(35);
+    /*sf::CircleShape shape(35);
     sf::Color color = sf::Color::White;
     color.a = 50;
     shape.setOutlineThickness(1);
@@ -59,7 +59,26 @@ void GameState::draw_tower_range(TowerSquare* tsq) {
     shape.setScale(tow->GetRange(), tow->GetRange());
     shape.setFillColor(color);
     shape.setPosition((tsq->GetX() - tow->GetRange() + 0.5) * 35, (tsq->GetY() - tow->GetRange() + 0.5) * 35);
-    window_.draw(shape);
+    std::cout << "Drawing at " << tsq->GetX() << " " << tsq->GetY() << std::endl;
+    window_.draw(shape);*/
+
+    for(auto it : map->GetSquares()) {
+        double tx = tsq->GetX();
+        double ty = tsq->GetY();
+        double x = it.first.first;
+        double y = it.first.second;
+        if(sqrt(pow(tx - x, 2.0) + pow(ty - y, 2.0)) <= tsq->GetTower()->GetRange()) {
+            sf::RectangleShape rectangle(sf::Vector2f(1, 1));
+            rectangle.setSize(sf::Vector2f(35, 35));
+            rectangle.setPosition(x * 35, y * 35);
+            rectangle.setOutlineThickness(1);
+            rectangle.setOutlineColor(sf::Color::Black);
+            sf::Color color = sf::Color::White;
+            color.a = 90;
+            rectangle.setFillColor(color);
+            window_.draw(rectangle);
+        }
+    }
 }
 
 void GameState::draw_current_state() {
@@ -103,10 +122,11 @@ void GameState::draw_current_state() {
             window_.draw(r_sprite);
         }
 
-        draw_tower_range(it.second);
+
         sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
         tow_sprite.setScale(1.9,1.9);
         tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
+        draw_tower_range(levelMap_, it.second);
         window_.draw(tow_sprite);
 
     }

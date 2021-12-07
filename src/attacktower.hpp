@@ -44,7 +44,7 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 4, 20, 500) { }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 2, 20, 500) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();
@@ -52,14 +52,14 @@ class Bomber : public AttackTower {
 
 class SuperBomber : public AttackTower {
     public:
-    SuperBomber() : AttackTower("Super Bomber", "Super bombs enemies", 2, 10, 15, 510) { }
+    SuperBomber() : AttackTower("Super Bomber", "Super bombs enemies", 2, 3, 15, 510) { }
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();
 };
 
 class UltraBomber : public AttackTower {
     public:
-    UltraBomber() : AttackTower("Ultra Bomber", "Ultra bombs enemies", 2, 10, 15, 510) { }
+    UltraBomber() : AttackTower("Ultra Bomber", "Ultra bombs enemies", 2, 4, 15, 510) { }
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();
 };
@@ -82,7 +82,7 @@ class Multigunner : public AttackTower {
 
 class GunFiend : public AttackTower {
     public:
-    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 1, 5, 20, 500) { }
+    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 1, 2, 20, 500) { }
     ~GunFiend(){}
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();

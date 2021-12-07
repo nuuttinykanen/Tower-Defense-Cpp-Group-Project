@@ -452,5 +452,9 @@ unsigned int LevelMap::GetEnemiesPassed() {
   return this->enemies_passed_;
 }
 
+const std::map<std::pair<int, int>, MapSquare *> &LevelMap::GetSquares() {
+    return squares_;
+}
+
 
 #endif

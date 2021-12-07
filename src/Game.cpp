@@ -144,10 +144,6 @@ void Game::UpdateState() {
             return;
         }
 
-        for(auto it : this->map_.GetAttackTowers()) {
-            std::cout << it->GetTower()->GetName() << std::endl;
-        }
-
         if(this->waveInProgress_) {
             this->ProcessEnemies();
             if(this->player_.GetHealth() < 1) {

@@ -20,9 +20,7 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     levelMap_ = JSON::loadLevelMap(levelNumber);
     Bomber* b = new Bomber();
     Gunner* g = new Gunner();
-    levelMap_->PlaceTower(11, 6, b);
-    levelMap_->PlaceTower(4, 7, g);
-    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(b));
+    levelMap_->PlaceTower(9, 8, b);
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, {wave});
     auto towerShop_ = std::vector<Tower*>();
@@ -63,34 +61,34 @@ void GameState::draw_current_state() {
         freeSprite.setScale(2,2);
         freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
-        if(it.second->ContainsEnemies()) {
-            for(Enemy* en : it.second->GetEnemies()) {
-               sf::Sprite en_sprite = enemySprites_.at(en->GetName());
-               en_sprite.setScale(2, 2);
-               en_sprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
-               window_.draw(en_sprite);
-            }
+    }
+    // Draw towers
+    for(auto it : map.GetTowerSquares()) {
+        auto freeSprite = globals->getFreeSquareSprite();
+        freeSprite.setScale(2, 2);
+        freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
+        window_.draw(freeSprite);
+
+        sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
+        tow_sprite.setScale(1.3,1.3);
+        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
+        window_.draw(tow_sprite);
+        for(auto sq : it.second->EnemySquaresInRange()) {
+            sf::Sprite r_sprite = globals->getRangeSprite();
+            r_sprite.setScale(2,2);
+            r_sprite.setPosition(sq->GetX() * 35, sq->GetY()* 35);
+            window_.draw(r_sprite);
         }
     }
     for(auto it : map.GetEnemySquares()) {
         if(it.second->ContainsEnemies()) {
             for(Enemy* en : it.second->GetEnemies()) {
                 sf::Sprite en_sprite = enemySprites_.at(en->GetName());
+                en_sprite.setScale(2, 2);
                 en_sprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
                 window_.draw(en_sprite);
             }
         }
-    }
-    // Draw towers
-    for(auto it : map.GetTowerSquares()) {
-        auto freeSprite = globals->getFreeSquareSprite();
-        freeSprite.setScale(1.85, 1.85);
-        freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
-        window_.draw(freeSprite);
-        sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
-        tow_sprite.setScale(1.3,1.3);
-        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
-        window_.draw(tow_sprite);
     }
     // Draw projectiles
     for(auto it : map.GetProjectiles()) {
@@ -314,7 +312,7 @@ void GameState::generateEnemies() {
 void GameState::generateTowers() {
     towerSprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
     towerSprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
-    towerSprites_["Super Bomber"] = gui_->getGlobalObjects()->getGunProjecSprite();
+    towerSprites_["Super Bomber"] = gui_->getGlobalObjects()->getGunnerSprite();
 }
 
 void GameState::generateProjectiles() {

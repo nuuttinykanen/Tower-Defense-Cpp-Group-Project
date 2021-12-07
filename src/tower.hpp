@@ -4,7 +4,7 @@
 #include <vector>
 class Tower {
     public:
-    Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price, std::string upgrade) : name_(name), strength_(strength), range_(range), price_(price), upgrade_(upgrade) { }
+    Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(name), strength_(strength), range_(range), price_(price) { }
     
     ~Tower();
 
@@ -18,10 +18,6 @@ class Tower {
 
     unsigned int GetPrice() const;
 
-    std::string GetUpgrade() const;
-
-    bool HasUpgrade() const;
-
     virtual std::string GetType() const = 0;
 
     virtual Tower* Upgrade() = 0;
@@ -31,7 +27,6 @@ class Tower {
     std::string description_;    
     unsigned int strength_;
     unsigned int price_;
-    std::string upgrade_;
     protected:
     unsigned int range_;
 };

@@ -420,9 +420,12 @@ EnemySquare* LevelMap::GetTargetSquare(Projectile* proj) {
 double LevelMap::ProjDistanceToTarget(Projectile* proj) {
     EnemySquare* t_location = this->GetTargetSquare(proj);
     if(t_location != nullptr) {
-      return sqrt( pow(proj->GetLocation()->GetY() - t_location->GetY(), 2.0) + pow(proj->GetLocation()->GetX() - t_location->GetX(), 2.0) );
+        double ydiff = (double)proj->GetLocation()->GetY() - (double)t_location->GetY();
+        double xdiff = (double)proj->GetLocation()->GetX() - (double)t_location->GetX();
+        double dist = (double)sqrt((double)pow(ydiff, 2.0) + (double)pow(xdiff, 2.0) );
+        return dist;
     }
-    else return -1;
+    else return -1.0;
 }
 
 void LevelMap::MoveProjectile(Projectile* proj) {
@@ -430,7 +433,7 @@ void LevelMap::MoveProjectile(Projectile* proj) {
     MapSquare* new_square = this->GetNextMoveSquare(proj->GetLocation(), target_s);
     if(new_square == nullptr) return;
     proj->ChangeLocation(new_square);
-
+    std::cout << (double)ProjDistanceToTarget(proj) << std::endl;
     if(ProjDistanceToTarget(proj) <= 1) {
       proj->Effect(this->GetTargetSquare(proj));
     }

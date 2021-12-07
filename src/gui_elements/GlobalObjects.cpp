@@ -30,6 +30,11 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
+    if(!rangeTexture_.loadFromFile("../src/assets/squares/RangeSprite.png")) {
+        std::cout << "Error retrieving range sprite" << std::endl;
+        return;
+    }
+
     if(!hordeTexture_.loadFromFile("../src/assets/enemies/Horde.png")) {
         std::cout << "Error retrieving Horde sprite" << std::endl;
         return;
@@ -77,6 +82,7 @@ GlobalObjects::GlobalObjects() {
     freeSquareSprite_.setTexture(freeSquareTexture_);
     enemySquareSprite_.setTexture(enemySquareTexture_);
     towerSquareSprite_.setTexture(towerSquareTexture_);
+    rangeSprite_.setTexture(rangeTexture_);
     hordeSprite_.setTexture(hordeTexture_);
     zombieSprite_.setTexture(zombieTexture_);
     draculaSprite_.setTexture(draculaTexture_);
@@ -101,6 +107,11 @@ sf::Sprite &GlobalObjects::getEnemySquareSprite(float scaledBy) {
 sf::Sprite &GlobalObjects::getTowerSquareSprite(float scaledBy) {
     towerSquareSprite_.scale(scaledBy, scaledBy);
     return  towerSquareSprite_;
+}
+
+sf::Sprite &GlobalObjects::getRangeSprite(float scaledBy) {
+    rangeSprite_.scale(scaledBy, scaledBy);
+    return  rangeSprite_;
 }
 
 sf::Sprite &GlobalObjects::getDraculaSprite(float scaledBy) {

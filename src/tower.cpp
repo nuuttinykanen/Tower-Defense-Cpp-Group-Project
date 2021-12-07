@@ -11,10 +11,3 @@
     unsigned int Tower::GetRange() const { return range_; }
 
     unsigned int Tower::GetPrice() const { return price_; }
-
-    std::string Tower::GetUpgrade() const { return upgrade_; }
-    
-    bool Tower::HasUpgrade() const { 
-        if(this->GetUpgrade() != "") return true;
-        else return false;
-    }

@@ -14,6 +14,8 @@ public:
     sf::Sprite& getFreeSquareSprite(float scaledBy = 1);
     sf::Sprite& getEnemySquareSprite(float scaledBy = 1);
     sf::Sprite& getTowerSquareSprite(float scaledBy = 1);
+    sf::Sprite& getRangeSprite(float scaledBy = 1);
+
     sf::Sprite& getHordeSprite(float scaledBy = 1);
     sf::Sprite& getZombieSprite(float scaledBy = 1);
     sf::Sprite& getDraculaSprite(float scaledBy = 1);
@@ -31,6 +33,8 @@ private:
     sf::Texture freeSquareTexture_;
     sf::Texture enemySquareTexture_;
     sf::Texture towerSquareTexture_;
+    sf::Texture rangeTexture_;
+
     sf::Texture hordeTexture_;
     sf::Texture zombieTexture_;
     sf::Texture draculaTexture_;
@@ -46,6 +50,8 @@ private:
     sf::Sprite freeSquareSprite_;
     sf::Sprite enemySquareSprite_;
     sf::Sprite towerSquareSprite_;
+    sf::Sprite rangeSprite_;
+
     sf::Sprite hordeSprite_;
     sf::Sprite zombieSprite_;
     sf::Sprite draculaSprite_;

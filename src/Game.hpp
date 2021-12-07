@@ -16,8 +16,10 @@ class Game {
         this->projectiles_ = map_.GetProjectiles();
         this->waveInProgress_ = false;
         this->waveNum_ = 1;
-        this->moveCounter_ = 0;
-        this->moveLimit_ = 10;
+        this->enemyMoveCounter_ = 0;
+        this->projectileMoveCounter_ = 0;
+        this->enemyMoveLimit_ = 10;
+        this->projectileMoveLimit_ = 3;
     };
 
     ~Game();
@@ -57,8 +59,10 @@ class Game {
     Player& player_;
     std::vector<Wave*> enemyWaves_;
     unsigned int waveNum_;
-    unsigned int moveCounter_;
-    unsigned int moveLimit_;
+    unsigned int enemyMoveCounter_;
+    unsigned int enemyMoveLimit_;
+    unsigned int projectileMoveCounter_;
+    unsigned int projectileMoveLimit_;
     std::vector<Tower*> towers_;
 
     std::vector<Enemy*> enemies_;

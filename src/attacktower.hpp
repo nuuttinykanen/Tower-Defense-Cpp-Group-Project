@@ -5,8 +5,8 @@
 #include "projectile.hpp"
 class AttackTower : public Tower {
     public:
-    AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int cooldown, unsigned int cost, std::string upgrade) :
-    Tower(name, description, strength, range, cost, std::move(upgrade)),
+    AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int cooldown, unsigned int cost) :
+    Tower(name, description, strength, range, cost),
     cooldown_(cooldown), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
     ~AttackTower(){};
@@ -42,16 +42,9 @@ class AttackTower : public Tower {
     virtual std::string GetType() const;
 };
 
-template<class T>
-T* GetUpgradeClass()
-{
-    T* tmp = new T();
-    return tmp;
-}
-
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 10, 20, 500, "Gunner") { }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 10, 20, 500) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();
@@ -59,14 +52,14 @@ class Bomber : public AttackTower {
 
 class SuperBomber : public AttackTower {
     public:
-    SuperBomber() : AttackTower("Super Bomber", "Super bombs enemies", 2, 10, 15, 510, "") { }
+    SuperBomber() : AttackTower("Super Bomber", "Super bombs enemies", 2, 10, 15, 510) { }
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();
 };
 
 class Gunner : public AttackTower {
     public:
-    Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 3, 20, 500, "") { }
+    Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 5, 20, 500) { }
     ~Gunner(){}
     virtual Projectile* GetProjectile();
     virtual Tower* Upgrade();

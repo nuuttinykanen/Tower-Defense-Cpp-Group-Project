@@ -102,16 +102,16 @@ LevelMap &Game::GetMap() {
 }
 
 void Game::ProcessEnemies() {
-    if(this->moveCounter_ < 1) {
+    if(this->enemyMoveCounter_ < 1) {
         this->map_.MoveEnemies();
         // Place next enemy
         if(this->GetCurrentWave() != nullptr && map_.GetStartSquare() != nullptr && !this->GetCurrentWave()->isEmpty()) {
             auto start_sq = map_.GetStartSquare();
             this->map_.PlaceEnemy(start_sq->GetX(), start_sq->GetY(), this->GetCurrentWave()->PopNext());
         }
-        this->moveCounter_ = moveLimit_;
+        this->enemyMoveCounter_ = enemyMoveLimit_;
     }
-    this->moveCounter_ -= 1;
+    this->enemyMoveCounter_ -= 1;
 
     //Removes killed and passed enemies locally, gives corresponding bounty
     // or damage to player
@@ -137,10 +137,6 @@ void Game::ProcessAttackTowers() {
 }
 
 void Game::UpdateState() {
-
-    std::cout << "Player health: " << this->player_.GetHealth() << std::endl;
-    std::cout << "Player money: " << this->player_.GetMoney() << std::endl;
-
     if(!this->gameEnd_) {
         if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {
             this->waveInProgress_ = false;
@@ -154,8 +150,11 @@ void Game::UpdateState() {
                 this->EndGame();
             }
 
-            //Move Projectiles
-            this->map_.MoveProjectiles();
+            if(projectileMoveCounter_ < 1) {
+                this->map_.MoveProjectiles();
+                projectileMoveCounter_ = projectileMoveLimit_;
+            }
+            else projectileMoveCounter_ -= 1;
             // Attack towers shoot or reload
             this->ProcessAttackTowers();
         }

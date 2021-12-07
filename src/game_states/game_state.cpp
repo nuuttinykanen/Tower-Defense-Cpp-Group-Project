@@ -37,6 +37,19 @@ void GameState::advance_state() {
     game_->UpdateState();
 }
 
+void GameState::draw_tower_range(TowerSquare* tsq) {
+    Tower* tow = tsq->GetTower();
+    if(tow == nullptr) return;
+
+    sf::CircleShape shape(35);
+    sf::Color color = sf::Color::White;
+    color.a = 50;
+    shape.setScale(tow->GetRange(), tow->GetRange());
+    shape.setFillColor(color);
+    shape.setPosition((tsq->GetX() - tow->GetRange() + 0.5) * 35, (tsq->GetY() - tow->GetRange() + 0.5) * 35);
+    window_.draw(shape);
+}
+
 void GameState::draw_current_state() {
     for (auto b : buttons_) {
         b.second->draw(window_);
@@ -63,21 +76,25 @@ void GameState::draw_current_state() {
     }
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
+
         auto freeSprite = globals->getFreeSquareSprite();
         freeSprite.setScale(2, 2);
         freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
 
-        sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
-        tow_sprite.setScale(1.3,1.3);
-        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
-        window_.draw(tow_sprite);
         for(auto sq : it.second->EnemySquaresInRange()) {
             sf::Sprite r_sprite = globals->getRangeSprite();
             r_sprite.setScale(2,2);
             r_sprite.setPosition(sq->GetX() * 35, sq->GetY()* 35);
             window_.draw(r_sprite);
         }
+
+        draw_tower_range(it.second);
+        sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
+        tow_sprite.setScale(1.3,1.3);
+        tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY()* 35);
+        window_.draw(tow_sprite);
+
     }
     for(auto it : map.GetEnemySquares()) {
         if(it.second->ContainsEnemies()) {
@@ -89,6 +106,7 @@ void GameState::draw_current_state() {
             }
         }
     }
+
     // Draw projectiles
     for(auto it : map.GetProjectiles()) {
         if(it->GetLocation() != nullptr && it->GetSender() != nullptr) {

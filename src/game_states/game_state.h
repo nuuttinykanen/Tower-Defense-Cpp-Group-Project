@@ -31,6 +31,8 @@ public:
 
     void poll_events() override;
 
+    void draw_tower_range(TowerSquare* tsq);
+
     void draw_current_state() override;
 
     void quitToMenu();

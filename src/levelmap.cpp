@@ -232,7 +232,21 @@ void LevelMap::MoveEnemies() {
         this->EraseEnemy(e);
       }
       else {
-        EnemySquare* destination = h.second->GetNext();
+          e->ProgressCooldown();
+        if(e->GetCooldown() <= 0) {
+            if(!h.second->HasNext()) {
+                this->EraseEnemy(e);
+                e->RemoveFromMap();
+                this->enemies_passed_ += 1;
+            }
+            else {
+                this->MoveEnemy(e, h.second, h.second->GetNext());
+                e->ResetCooldownModifier();
+                e->ChangeCooldown(e->GetSpeed());
+            }
+        }
+
+        /*EnemySquare* destination = h.second->GetNext();
         bool end = false;
         if(destination == nullptr) end = true;
         for(int i = 1; i < e->GetSpeed(); i++) {
@@ -248,7 +262,7 @@ void LevelMap::MoveEnemies() {
           this->enemies_passed_ += 1;
         } else {
           this->MoveEnemy(e, h.second, destination);
-        }
+        }*/
       }
     }
   } 

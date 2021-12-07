@@ -157,6 +157,7 @@ void Game::UpdateState() {
         }
 
         if(this->waveInProgress_) {
+            this->ProcessAttackTowers();
             this->ProcessEnemies();
             if(this->player_.GetHealth() < 1) {
                 std::cout << "ENDING GAME" << std::endl;
@@ -169,7 +170,7 @@ void Game::UpdateState() {
             }
             else projectileMoveCounter_ -= 1;
             // Attack towers shoot or reload
-            this->ProcessAttackTowers();
+
         }
     }
 }

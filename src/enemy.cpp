@@ -26,9 +26,30 @@
     }
 
 unsigned int Enemy::GetCooldown() {
-    return this->cooldown_;
+    return this->cooldown_ + this->cooldownModifier_;
 }
 
 void Enemy::ChangeCooldown(int amount) {
     this->cooldown_ += amount;
+}
+
+void Enemy::ResetCooldownModifier() {
+    this->cooldownModifier_ = 0;
+}
+
+void Enemy::SetCooldownModifier(int amount) {
+    this->cooldownModifier_ = amount;
+}
+
+void Enemy::ProgressCooldown() {
+    if(this->cooldownModifier_ > 0) {
+        cooldownModifier_ -= 1;
+    }
+    else {
+        if(this->cooldown_ > 0) cooldown_ -= 1;
+    }
+}
+
+unsigned int Enemy::GetCooldownModifier() {
+    return this->cooldownModifier_;
 }

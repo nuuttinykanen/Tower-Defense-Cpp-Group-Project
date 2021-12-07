@@ -8,6 +8,7 @@ class Enemy {
     name_(name), maxHealth_(health), currentHealth_(health), attack_(attack), speed_(speed), currentBounty_(bounty) {
         on_map_ = false;
         cooldown_ = speed;
+        cooldownModifier_ = 0;
     }
 
     ~Enemy(){}
@@ -24,6 +25,10 @@ class Enemy {
     void RemoveFromMap();
     unsigned int GetCooldown();
     void ChangeCooldown(int amount);
+    void ResetCooldownModifier();
+    void SetCooldownModifier(int amount);
+    unsigned int GetCooldownModifier();
+    void ProgressCooldown();
 
     double HealthPercentage();
 
@@ -36,6 +41,7 @@ class Enemy {
     int attack_;
     int speed_;
     unsigned int cooldown_;
+    unsigned int cooldownModifier_;
     int currentBounty_;
     bool on_map_;
 };

@@ -4,21 +4,24 @@ std::string SupportTower::GetType() const { return "support"; }
 
 unsigned int SupportTower::GetRange() const { return this->range_; }
 
-void FatherMerrin::supportEffect(MapSquare* square) {
+void Clocker::supportEffect(MapSquare* square) {
     if(square == nullptr) return;
     std::string type = square->GetType();
     // onko tower
-    if(type == "tower") {
-        TowerSquare* sq = (TowerSquare*)square;
-        // onko attacktower
-        if(sq != nullptr && sq->GetTower()->GetType() == "attack") {
-            AttackTower* at = (AttackTower*)(sq->GetTower());
-            at->AddCooldownModifier(-1 * this->GetStrength());
+    if(type == "enemy") {
+        EnemySquare* en = (EnemySquare*)square;
+        for(auto it : en->GetEnemies()) {
+            it->ChangeCooldown(it->GetCooldown() * 0.2);
         }
     }
 }
 
-void EnlightenedMerrin::supportEffect(MapSquare* square) {
+Tower* Clocker::Upgrade() {
+    std::cout << "UPGRADE NOT FOUND" << std::endl;
+    return nullptr;
+}
+
+void ClockBlocker::supportEffect(MapSquare* square) {
     if(square == nullptr) return;
     std::string type = square->GetType();
     // onko tower
@@ -89,4 +92,3 @@ void InsaneDrFrankenstein::supportEffect(MapSquare* square) {
 }
 
 
-    

@@ -10,7 +10,7 @@ class SupportTower : public Tower {
      Tower(name, description, strength, range, cost) {}
     ~SupportTower(){}
 
-    virtual void supportEffect() = 0;
+    virtual void supportEffect(MapSquare* square) = 0;
 
     virtual std::string GetType() const;
 
@@ -18,18 +18,19 @@ class SupportTower : public Tower {
 
 };
 
-class FatherMerrin : public SupportTower {
+class Clocker : public SupportTower {
     public:
-    FatherMerrin() : SupportTower("Father Merrin", "Reduces the countdown of every recruit in its range by strength.", 1, 1, 1000) {}
-    ~FatherMerrin();
+    Clocker() : SupportTower("Clocker", "Slows down enemies in its range.", 1, 2, 1000) {}
+    ~Clocker();
 
     virtual void supportEffect(MapSquare* square);
+    virtual Tower* Upgrade();
 };
 
-class EnlightenedMerrin : public SupportTower {
+class ClockBlocker : public SupportTower {
     public:
-    EnlightenedMerrin() : SupportTower("Enlightened Merrin", "Reduces the countdown of every recruit in its range by strength.", 2, 1, 1200) {}
-    ~EnlightenedMerrin();
+    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range.", 2, 3, 1200) {}
+    ~ClockBlocker();
 
     virtual void supportEffect(MapSquare* square);
 };

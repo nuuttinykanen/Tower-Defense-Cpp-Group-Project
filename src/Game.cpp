@@ -1,5 +1,5 @@
 #include "Game.hpp"
-
+#include <cmath>
 Game::~Game(){
     for(auto w : enemyWaves_) {
         delete(w);
@@ -133,6 +133,18 @@ void Game::ProcessAttackTowers() {
             this->map_.ShootProjectile(it);
         } else {
             att->Reload();
+        }
+    }
+    for(auto ot : this->map_.GetSupportTowers()) {
+        auto supp = (SupportTower*)ot->GetTower();
+        for(auto it : map_.GetSquares()) {
+            double tx = ot->GetX();
+            double ty = ot->GetY();
+            double x = it.first.first;
+            double y = it.first.second;
+            if(sqrt(pow(tx - x, 2.0) + pow(ty - y, 2.0)) <= supp->GetRange()) {
+                supp->supportEffect(it.second);
+            }
         }
     }
 }

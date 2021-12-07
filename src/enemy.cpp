@@ -24,3 +24,11 @@
         if(currentHealth_ + amount < 0) currentHealth_ = 0;
         else currentHealth_ += amount; 
     }
+
+unsigned int Enemy::GetCooldown() {
+    return this->cooldown_;
+}
+
+void Enemy::ChangeCooldown(int amount) {
+    this->cooldown_ += amount;
+}

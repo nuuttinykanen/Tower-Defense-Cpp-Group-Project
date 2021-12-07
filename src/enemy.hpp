@@ -4,9 +4,10 @@
 
 class Enemy {
     public:
-    Enemy(std::string name, int health, int attack, int speed, int bounty) : 
+    Enemy(std::string name, int health, int attack, int speed, int bounty) :
     name_(name), maxHealth_(health), currentHealth_(health), attack_(attack), speed_(speed), currentBounty_(bounty) {
         on_map_ = false;
+        cooldown_ = speed;
     }
 
     ~Enemy(){}
@@ -21,6 +22,8 @@ class Enemy {
     bool OnMap();
     void SetOnMap();
     void RemoveFromMap();
+    unsigned int GetCooldown();
+    void ChangeCooldown(int amount);
 
     double HealthPercentage();
 
@@ -32,6 +35,7 @@ class Enemy {
     int currentHealth_;
     int attack_;
     int speed_;
+    unsigned int cooldown_;
     int currentBounty_;
     bool on_map_;
 };

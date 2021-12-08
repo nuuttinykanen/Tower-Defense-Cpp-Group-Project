@@ -89,7 +89,7 @@ void StereoDude::supportEffect(MapSquare *square) {
 }
 
 Tower *StereoDude::Upgrade() {
-    auto upgrade = new StereoDude();
+    auto upgrade = new DJDude();
     return upgrade;
 }
 

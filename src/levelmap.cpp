@@ -18,6 +18,9 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
         if(!((start.first == end.first && start.second != end.second) || (start.first != end.first && start.second == end.second))) {
             throw std::invalid_argument("The input path is not correct. Reason: input coordinates create a diagonal path.");
         }
+        if(start.first >= this->size_ || start.second >= this->size_ || end.first >= this->size_ || end.second >= this->size_ || start.first < 0 || start.second < 0 || end.first < 0 || end.second < 0) {
+            throw std::invalid_argument("The input path is out of bounds!");
+        }
         if(first) first = false;
         previous_c = it;
     }
@@ -233,7 +236,7 @@ void LevelMap::MoveEnemies() {
       }
       else {
           e->ProgressCooldown();
-        if(e->GetCooldown() <= 0) {
+          if(e->GetCooldown() <= 0) {
             if(!h.second->HasNext()) {
                 this->EraseEnemy(e);
                 e->RemoveFromMap();
@@ -241,28 +244,9 @@ void LevelMap::MoveEnemies() {
             }
             else {
                 this->MoveEnemy(e, h.second, h.second->GetNext());
-                e->ResetCooldownModifier();
-                e->ChangeCooldown(e->GetSpeed());
+                e->ResetCooldown();
             }
         }
-
-        /*EnemySquare* destination = h.second->GetNext();
-        bool end = false;
-        if(destination == nullptr) end = true;
-        for(int i = 1; i < e->GetSpeed(); i++) {
-          if(destination != nullptr && destination->HasNext()) destination = destination->GetNext();
-          else {
-            end = true;
-            break;
-          }
-        }
-        if(end) {
-          this->EraseEnemy(e);
-          e->RemoveFromMap();
-          this->enemies_passed_ += 1;
-        } else {
-          this->MoveEnemy(e, h.second, destination);
-        }*/
       }
     }
   } 

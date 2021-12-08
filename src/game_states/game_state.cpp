@@ -19,15 +19,20 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     levelMap_ = JSON::loadLevelMap(levelNumber);
     Bomber* b = new Bomber();
     Gunner* g = new Gunner();
+
     levelMap_->PlaceTower(9, 8, b);
-    levelMap_->PlaceTower(11, 3, g);
+    //levelMap_->PlaceTower(11, 3, g);
 
 
-    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(11, 3)));
-    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(11, 3)));
+    //levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
+    //levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
 
     Clocker* c = new Clocker();
+    Seer* s = new Seer();
+
     levelMap_->PlaceTower(3, 7, c);
+    levelMap_->PlaceTower(9, 7, s);
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 7)));
 
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, waves);
@@ -49,19 +54,6 @@ void GameState::advance_state() {
 void GameState::draw_tower_range(LevelMap* map, TowerSquare* tsq) {
     Tower* tow = tsq->GetTower();
     if(tow == nullptr) return;
-
-    /*sf::CircleShape shape(35);
-    sf::Color color = sf::Color::White;
-    color.a = 50;
-    shape.setOutlineThickness(1);
-    sf::Color outline_color = sf::Color::Black;
-    outline_color.a = 60;
-    shape.setOutlineColor(outline_color);
-    shape.setScale(tow->GetRange(), tow->GetRange());
-    shape.setFillColor(color);
-    shape.setPosition((tsq->GetX() - tow->GetRange() + 0.5) * 35, (tsq->GetY() - tow->GetRange() + 0.5) * 35);
-    std::cout << "Drawing at " << tsq->GetX() << " " << tsq->GetY() << std::endl;
-    window_.draw(shape);*/
 
     for(auto it : map->GetSquares()) {
         double tx = tsq->GetX();

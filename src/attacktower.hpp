@@ -25,11 +25,13 @@ class AttackTower : public Tower {
 
     void AddRangeModifier(int amount);
 
-    void RemoveModifiers();
+    void ResetModifiers();
 
     unsigned int GetCurrentRange() const;
 
-    virtual Projectile* GetProjectile() = 0; 
+    virtual Projectile* GetProjectile() = 0;
+
+    virtual unsigned int GetRange() const;
 
     private:
     unsigned int cooldown_;
@@ -37,7 +39,7 @@ class AttackTower : public Tower {
     unsigned int attackCounter_;
     unsigned int rangeModifiers_;
 
-    unsigned int CurrentRange() const;
+
 
     virtual std::string GetType() const;
 };

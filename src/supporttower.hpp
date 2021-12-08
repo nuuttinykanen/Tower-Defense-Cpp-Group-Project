@@ -29,40 +29,27 @@ class Clocker : public SupportTower {
 
 class ClockBlocker : public SupportTower {
     public:
-    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range.", 3, 3, 1200) {}
+    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range.", 200, 3, 1200) {}
     ~ClockBlocker();
+    virtual Tower* Upgrade();
 
     virtual void supportEffect(MapSquare* square);
 };
 
-class LightkeeperMerrin : public SupportTower {
+class Seer : public SupportTower {
     public:
-    LightkeeperMerrin() : SupportTower("Lightkeeper Merrin", "Reduces the countdown of every recruit in its range by strength.", 2, 2, 1400) {}
-    ~LightkeeperMerrin();
+    Seer() : SupportTower("Seer", "Increases range of attack towers within range.", 1, 1, 1200) {}
+    ~Seer();
+    virtual Tower* Upgrade();
 
     virtual void supportEffect(MapSquare* square);
 };
 
-class DrFrankenstein : public SupportTower {
-    public:
-    DrFrankenstein() : SupportTower("Dr. Frankenstein", "Extends the range of all attacking recruits within his range by strength.", 1, 1, 1100) {}
-    ~DrFrankenstein();
-
-    virtual void supportEffect(MapSquare* square);
-};
-
-class MadDrFrankenstein : public SupportTower {
-    public:
-    MadDrFrankenstein() : SupportTower("Mad Frankenstein", "Extends the range of all attacking recruits within his range by strength.", 2, 1, 1100) {}
-    ~MadDrFrankenstein();
-
-   virtual void supportEffect(MapSquare* square);
-};
-
-class InsaneDrFrankenstein : public SupportTower {
-    public:
-    InsaneDrFrankenstein() : SupportTower("INSANE Dr. Frankenstein", "Extends the range of all attacking recruits within his range by strength.", 1, 1, 1100) {}
-    ~InsaneDrFrankenstein();
+class MotherBrain : public SupportTower {
+public:
+    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range.", 1, 2, 1200) {}
+    ~MotherBrain();
+    virtual Tower* Upgrade();
 
     virtual void supportEffect(MapSquare* square);
 };

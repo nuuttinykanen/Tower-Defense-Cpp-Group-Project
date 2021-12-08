@@ -127,13 +127,14 @@ void Game::ProcessEnemies() {
 }
 
 void Game::ProcessAttackTowers() {
-    for(auto it : this->map_.GetAttackTowers()){
+    for(auto it : this->map_.GetAttackTowers()) {
         auto att = (AttackTower*)it->GetTower();
         if(att->CanAttack()) {
             this->map_.ShootProjectile(it);
         } else {
             att->Reload();
         }
+        att->ResetModifiers();
     }
     for(auto ot : this->map_.GetSupportTowers()) {
         auto supp = (SupportTower*)ot->GetTower();

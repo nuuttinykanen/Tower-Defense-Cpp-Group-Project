@@ -20,78 +20,62 @@ void Clocker::supportEffect(MapSquare* square) {
 }
 
 Tower* Clocker::Upgrade() {
-    std::cout << "UPGRADE NOT FOUND" << std::endl;
-    return nullptr;
+    auto upgrade = new ClockBlocker();
+    return upgrade;
 }
 
 void ClockBlocker::supportEffect(MapSquare* square) {
     if(square == nullptr) return;
     std::string type = square->GetType();
     // onko tower
-    if(type == "tower") {
-        TowerSquare* sq = (TowerSquare*)square;
-        // onko attacktower
-        if(sq != nullptr && sq->GetTower()->GetType() == "attack") {
-            AttackTower* at = (AttackTower*)(sq->GetTower());
-            at->AddCooldownModifier(-1 * this->GetStrength());
+    if(type == "enemy") {
+        EnemySquare* en = (EnemySquare*)square;
+        for(auto it : en->GetEnemies()) {
+            if(it->GetCooldownModifier() == false) {
+                it->SetCooldownModifier();
+                it->ChangeCooldown(this->GetStrength() * it->GetSpeed() * 0.01);
+            }
         }
     }
 }
 
-void LightkeeperMerrin::supportEffect(MapSquare* square) {
+Tower* ClockBlocker::Upgrade() {
+    return nullptr;
+}
+
+void Seer::supportEffect(MapSquare* square) {
     if(square == nullptr) return;
     std::string type = square->GetType();
-    // onko tower
     if(type == "tower") {
-        TowerSquare* sq = (TowerSquare*)square;
-        // onko attacktower
-        if(sq != nullptr && sq->GetTower()->GetType() == "attack") {
-            AttackTower* at = (AttackTower*)(sq->GetTower());
-            at->AddCooldownModifier(-1 * this->GetStrength());
+        auto ts = (TowerSquare*)square;
+        if(ts->GetTower()->GetType() == "attack") {
+            auto tow = (AttackTower*)ts->GetTower();
+            tow->AddRangeModifier(this->GetStrength());
         }
     }
 }
 
-void DrFrankenstein::supportEffect(MapSquare* square) {
+Tower* Seer::Upgrade() {
+    auto upgrade = new MotherBrain();
+    return upgrade;
+}
+
+void MotherBrain::supportEffect(MapSquare* square) {
     if(square == nullptr) return;
     std::string type = square->GetType();
-    // onko tower
     if(type == "tower") {
-        TowerSquare* sq = (TowerSquare*)square;
-        // onko attacktower
-        if(sq != nullptr && sq->GetTower()->GetType() == "attack") {
-            AttackTower* at = (AttackTower*)(sq->GetTower());
-            at->AddRangeModifier(this->GetStrength());
+        auto ts = (TowerSquare*)square;
+        if(ts->GetTower()->GetType() == "attack") {
+            auto tow = (AttackTower*)ts->GetTower();
+            tow->AddRangeModifier(tow->GetRange() * 0.01 * this->GetStrength());
         }
     }
 }
 
-void MadDrFrankenstein::supportEffect(MapSquare* square) {
-    if(square == nullptr) return;
-    std::string type = square->GetType();
-    // onko tower
-    if(type == "tower") {
-        TowerSquare* sq = (TowerSquare*)square;
-        // onko attacktower
-        if(sq != nullptr && sq->GetTower()->GetType() == "attack") {
-            AttackTower* at = (AttackTower*)(sq->GetTower());
-            at->AddRangeModifier(this->GetStrength());
-        }
-    }
+Tower* MotherBrain::Upgrade() {
+    return nullptr;
 }
 
-void InsaneDrFrankenstein::supportEffect(MapSquare* square) {
-    if(square == nullptr) return;
-    std::string type = square->GetType();
-    // onko tower
-    if(type == "tower") {
-        TowerSquare* sq = (TowerSquare*)square;
-        // onko attacktower
-        if(sq != nullptr && sq->GetTower()->GetType() == "attack") {
-            AttackTower* at = (AttackTower*)(sq->GetTower());
-            at->AddRangeModifier(this->GetStrength());
-        }
-    }
-}
+
 
 

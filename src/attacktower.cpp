@@ -26,8 +26,8 @@
         if(attackCounter_ > 0) attackCounter_ -= 1;
     }
 
-    unsigned int AttackTower::GetCurrentRange() const {
-        return range_ + rangeModifiers_;
+    unsigned int AttackTower::GetRange() const {
+        return this->range_ + rangeModifiers_;
     }
 
     void AttackTower::AddCooldownModifier(int amount) {
@@ -38,7 +38,7 @@
         rangeModifiers_ += amount;
     }
 
-    void AttackTower::RemoveModifiers() {
+    void AttackTower::ResetModifiers() {
         cooldownModifiers_ = 0;
         rangeModifiers_ = 0;
     }

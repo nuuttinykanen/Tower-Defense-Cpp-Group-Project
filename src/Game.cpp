@@ -35,7 +35,6 @@ void Game::KillEnemy(Enemy *enemy) {
             break;
         }
     }
-    std::cout << "LOL" ;
     this->player_.GiveMoney(enemy->GetBounty());
 }
 

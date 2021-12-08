@@ -26,7 +26,8 @@ class Enemy {
     unsigned int GetCooldown();
     void ChangeCooldown(int amount);
     void ResetCooldownModifier();
-    void SetCooldownModifier(int amount);
+    void ResetCooldown();
+    void SetCooldownModifier();
     unsigned int GetCooldownModifier();
     void ProgressCooldown();
 
@@ -41,7 +42,7 @@ class Enemy {
     int attack_;
     int speed_;
     unsigned int cooldown_;
-    unsigned int cooldownModifier_;
+    bool cooldownModifier_;
     int currentBounty_;
     bool on_map_;
 };

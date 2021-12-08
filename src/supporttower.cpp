@@ -11,8 +11,9 @@ void Clocker::supportEffect(MapSquare* square) {
     if(type == "enemy") {
         EnemySquare* en = (EnemySquare*)square;
         for(auto it : en->GetEnemies()) {
-            if(it->GetCooldownModifier() == 0) {
-                it->SetCooldownModifier(this->GetStrength() * 0.01 *  it->GetSpeed());
+            if(it->GetCooldownModifier() == false) {
+                it->SetCooldownModifier();
+                it->ChangeCooldown(this->GetStrength() * it->GetSpeed() * 0.01);
             }
         }
     }

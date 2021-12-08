@@ -236,7 +236,7 @@ void LevelMap::MoveEnemies() {
       }
       else {
           e->ProgressCooldown();
-        if(e->GetCooldown() <= 0) {
+          if(e->GetCooldown() <= 0) {
             if(!h.second->HasNext()) {
                 this->EraseEnemy(e);
                 e->RemoveFromMap();
@@ -244,28 +244,9 @@ void LevelMap::MoveEnemies() {
             }
             else {
                 this->MoveEnemy(e, h.second, h.second->GetNext());
-                e->ResetCooldownModifier();
-                e->ChangeCooldown(e->GetSpeed());
+                e->ResetCooldown();
             }
         }
-
-        /*EnemySquare* destination = h.second->GetNext();
-        bool end = false;
-        if(destination == nullptr) end = true;
-        for(int i = 1; i < e->GetSpeed(); i++) {
-          if(destination != nullptr && destination->HasNext()) destination = destination->GetNext();
-          else {
-            end = true;
-            break;
-          }
-        }
-        if(end) {
-          this->EraseEnemy(e);
-          e->RemoveFromMap();
-          this->enemies_passed_ += 1;
-        } else {
-          this->MoveEnemy(e, h.second, destination);
-        }*/
       }
     }
   } 

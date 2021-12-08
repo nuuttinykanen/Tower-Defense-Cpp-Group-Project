@@ -20,7 +20,7 @@ class SupportTower : public Tower {
 
 class Clocker : public SupportTower {
     public:
-    Clocker() : SupportTower("Clocker", "Slows down enemies in its range.", 300, 2, 1000) {}
+    Clocker() : SupportTower("Clocker", "Slows down enemies in its range.", 150, 2, 1000) {}
     ~Clocker();
 
     virtual void supportEffect(MapSquare* square);
@@ -29,7 +29,7 @@ class Clocker : public SupportTower {
 
 class ClockBlocker : public SupportTower {
     public:
-    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range.", 2, 3, 1200) {}
+    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range.", 3, 3, 1200) {}
     ~ClockBlocker();
 
     virtual void supportEffect(MapSquare* square);

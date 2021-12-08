@@ -108,6 +108,31 @@ void GameState::draw_current_state() {
         window_.draw(freeSprite);
     }
 
+    //Draw player health and money ///////////////////////////////////////////
+    sf::Text pHealth;
+    sf::Text pMoney;
+
+    pHealth.setFont(this->getFont());
+    pMoney.setFont(this->getFont());
+
+    std::string health = "Health: " + std::to_string(this->player_->GetHealth());
+    std::string money = "Money: " + std::to_string(int(this->player_->GetMoney()));
+
+    pHealth.setString(health);
+    pMoney.setString(money);
+
+    pHealth.setCharacterSize(32);
+    pMoney.setCharacterSize(32);
+
+    pHealth.setFillColor(sf::Color::Red);
+    pMoney.setFillColor(sf::Color::Green);
+
+    pHealth.setPosition(10,550);
+    pMoney.setPosition(10, 600);
+    
+    window_.draw(pHealth);
+    window_.draw(pMoney);
+
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
 

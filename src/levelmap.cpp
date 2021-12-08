@@ -136,10 +136,9 @@ const std::map<std::pair<int, int>, EnemySquare*> LevelMap::GetEnemySquares() {
     return list;
 }
 
-std::vector<std::pair<int, int>> LevelMap::GetEnemyDeathMarks() {
-    return enemyDeathMarks_;
+std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>> LevelMap::GetProjectileMarks() {
+    return projectileMarks_;
 }
-
 
 std::vector<Enemy*> LevelMap::EnemiesAt(int x, int y) {
     const MapSquare* square = this->GetSquare(x, y);
@@ -228,7 +227,7 @@ void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destinat
 }
 
 void LevelMap::MoveEnemies() {
-  this->enemyDeathMarks_.clear();
+  this->projectileMarks_.clear();
   auto e_squares = this->GetEnemySquares();
   for(auto it = e_squares.rbegin(); it != e_squares.rend(); it++) {
     auto h = *it;
@@ -236,7 +235,6 @@ void LevelMap::MoveEnemies() {
     for(auto et = enemies.begin(); et != enemies.end(); et++) {
       auto e = *et;
       if(e->GetHealth() < 1) {
-        this->enemyDeathMarks_.emplace_back(it->second->GetX(), it->second->GetY());
         e->RemoveFromMap();
         this->EraseEnemy(e);
       }
@@ -438,9 +436,8 @@ void LevelMap::MoveProjectile(Projectile* proj) {
     MapSquare* new_square = this->GetNextMoveSquare(proj->GetLocation(), target_s);
     if(new_square == nullptr) return;
     proj->ChangeLocation(new_square);
-    std::cout << (double)ProjDistanceToTarget(proj) << std::endl;
     if(ProjDistanceToTarget(proj) <= 1) {
-      proj->Effect(this->GetTargetSquare(proj));
+      projectileMarks_.emplace_back(std::make_pair(proj->GetType(), proj->Effect(this->GetTargetSquare(proj))));
     }
 }
 

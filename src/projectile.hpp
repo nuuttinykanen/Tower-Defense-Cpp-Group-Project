@@ -22,7 +22,8 @@ class Projectile {
     void ChangeLocation(MapSquare* square);
     void SetRemovalTrue();
     bool ToBeRemoved();
-    virtual void Effect(EnemySquare* enemy) = 0;
+    virtual std::vector<std::pair<int, int>> Effect(EnemySquare* enemy) = 0;
+    virtual std::string GetType() = 0;
 
     private:
     Tower* sender_;
@@ -39,7 +40,8 @@ class BombProjectile : public Projectile {
         bomb_radius_ = 2;
     }
     ~BombProjectile() override { }
-    void Effect(EnemySquare* enemy);
+    std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
+    virtual std::string GetType();
     private: 
     unsigned int bomb_radius_;
 };
@@ -48,7 +50,8 @@ class BulletProjectile : public Projectile {
     public:
     BulletProjectile(Tower* sender) : Projectile(sender) { }
     ~BulletProjectile() override { }
-    void Effect(EnemySquare* enemy);
+    virtual std::string GetType();
+    std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
 };
 
 #endif

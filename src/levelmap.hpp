@@ -23,7 +23,7 @@ class LevelMap {
     enemy_count_ = 0;
     start_square_ = nullptr;
     end_square_ = nullptr;
-    enemyDeathMarks_ = std::vector<std::pair<int, int>>();
+    projectileMarks_ = std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>>();
 
     for(unsigned int i = 0; i < width; i++) {
       for(unsigned int j = 0; j < height; j++) {
@@ -48,7 +48,7 @@ class LevelMap {
   const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
   std::vector<TowerSquare*> GetAttackTowers();
   std::vector<TowerSquare*> GetSupportTowers();
-  std::vector<std::pair<int, int>> GetEnemyDeathMarks();
+  std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>> GetProjectileMarks();
 
 
   std::vector<Enemy*> EnemiesAt(int x, int y);
@@ -93,7 +93,7 @@ class LevelMap {
   std::vector<Projectile*> projectiles_;
   unsigned int enemy_count_;
   unsigned int enemies_passed_;
-  std::vector<std::pair<int, int>> enemyDeathMarks_;
+  std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>> projectileMarks_;
   const MapSquare* start_square_;
   const MapSquare* end_square_;
 };

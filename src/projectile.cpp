@@ -24,10 +24,12 @@ unsigned int Projectile::GetStrength() { return strength_; }
 
 bool Projectile::ToBeRemoved() { return to_be_removed_; }
 
-void BombProjectile::Effect(EnemySquare* enemy) {
-    if(enemy == nullptr) return;
+std::vector<std::pair<int, int>> BombProjectile::Effect(EnemySquare* enemy) {
+    std::vector<std::pair<int, int>> list = std::vector<std::pair<int, int>>();
+    if(enemy == nullptr) return list;
     for(auto en : enemy->GetEnemies()) {
         en->ChangeHealth(-1 * this->GetStrength());
+        list.emplace_back(std::make_pair(enemy->GetX(), enemy->GetY()));
     }
     EnemySquare* prev = enemy->GetPrevious();
     EnemySquare* next = enemy->GetNext();
@@ -35,27 +37,41 @@ void BombProjectile::Effect(EnemySquare* enemy) {
         if(prev != nullptr) {
             for(auto it : prev->GetEnemies()) {
                 it->ChangeHealth(-1 * this->GetStrength());
+                list.emplace_back(std::make_pair(prev->GetX(), prev->GetY()));
             }
             prev = prev->GetPrevious();
         }
         if(next != nullptr) {
             for(auto it : next->GetEnemies()) {
                 it->ChangeHealth(-1 * this->GetStrength());
+                list.emplace_back(std::make_pair(next->GetX(), next->GetY()));
             }
             next = next->GetNext();
         }
     }
     this->to_be_removed_ = true;
+    return list;
 }
 
-void BulletProjectile::Effect(EnemySquare* enemy) {
-    if(enemy == nullptr) return;
+std::string BombProjectile::GetType() {
+    return "bomb";
+}
+
+std::vector<std::pair<int, int>> BulletProjectile::Effect(EnemySquare* enemy) {
+    std::vector<std::pair<int, int>> list = std::vector<std::pair<int, int>>();
+    if(enemy == nullptr) return list;
     if(this->GetTarget() != nullptr) {
         Enemy* target = enemy->GetEnemy(this->GetTarget());
         if(target != nullptr) {
             target->ChangeHealth(-1 * this->GetStrength());
+            list.emplace_back(std::make_pair(enemy->GetX(), enemy->GetY()));
         }
     }
+    return list;
+}
+
+std::string BulletProjectile::GetType() {
+    return "bullet";
 }
 
 

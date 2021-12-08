@@ -18,7 +18,7 @@ class Game {
         this->waveNum_ = 1;
         this->enemyMoveCounter_ = 0;
         this->projectileMoveCounter_ = 0;
-        this->enemyMoveLimit_ = 10;
+        this->enemyMoveLimit_ = 30;
         this->projectileMoveLimit_ = 3;
     };
 

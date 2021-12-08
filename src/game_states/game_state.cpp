@@ -21,6 +21,9 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     Gunner* g = new Gunner();
 
     levelMap_->PlaceTower(9, 8, b);
+
+    //levelMap_->PlaceTower(1, 2, b);
+    //levelMap_->PlaceTower(5, 2, b);
     //levelMap_->PlaceTower(11, 3, g);
 
 
@@ -31,7 +34,7 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     Seer* s = new Seer();
     StereoDude* d = new StereoDude();
 
-    levelMap_->PlaceTower(3, 7, c);
+    //levelMap_->PlaceTower(3, 7, c);
     //levelMap_->PlaceTower(9, 7, s);
     levelMap_->PlaceTower(9, 7, d);
     //levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 7)));
@@ -163,12 +166,15 @@ void GameState::draw_current_state() {
     }
 
     // Draw enemy death sprites
-    for(auto it : map.GetEnemyDeathMarks()) {
-        sf::CircleShape triangle(80, 3);
-        triangle.setScale(0.1, 0.1);
-        triangle.setFillColor(sf::Color::Red);
-        triangle.setPosition(it.first * 35 + 12, it.second * 35 + 12);
-        window_.draw(triangle);
+    for(auto it : map.GetProjectileMarks()) {
+        for(auto coords : it.second) {
+            sf::CircleShape triangle(80, 3);
+            triangle.setScale(0.1, 0.1);
+            triangle.setFillColor(sf::Color::Black);
+            triangle.setPosition(coords.first * 35 + 12, coords.second * 35 + 12);
+            window_.draw(triangle);
+        }
+
     }
 
     // Draw projectiles

@@ -18,6 +18,9 @@ void LevelMap::InitializePath(std::vector<std::pair<std::pair<int, int>, std::pa
         if(!((start.first == end.first && start.second != end.second) || (start.first != end.first && start.second == end.second))) {
             throw std::invalid_argument("The input path is not correct. Reason: input coordinates create a diagonal path.");
         }
+        if(start.first >= this->size_ || start.second >= this->size_ || end.first >= this->size_ || end.second >= this->size_ || start.first < 0 || start.second < 0 || end.first < 0 || end.second < 0) {
+            throw std::invalid_argument("The input path is out of bounds!");
+        }
         if(first) first = false;
         previous_c = it;
     }

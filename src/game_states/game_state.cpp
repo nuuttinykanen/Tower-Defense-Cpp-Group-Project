@@ -25,7 +25,7 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
 
     //levelMap_->PlaceTower(1, 2, b);
     //levelMap_->PlaceTower(5, 2, b);
-    //levelMap_->PlaceTower(11, 3, g);
+    levelMap_->PlaceTower(7, 8, g);
 
 
     levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
@@ -162,6 +162,21 @@ void GameState::draw_current_state() {
                 en_sprite.setScale(2, 2);
                 en_sprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
                 window_.draw(en_sprite);
+
+                sf::RectangleShape outer(sf::Vector2f(19, 4));
+                outer.setSize(sf::Vector2f(20, 2));
+                outer.setOutlineColor(sf::Color::White);
+                outer.setFillColor(sf::Color::Transparent);
+                outer.setPosition(it.second->GetX()*35, it.second->GetY()*35);
+                window_.draw(outer);
+
+
+                sf::RectangleShape bar(sf::Vector2f(20.0 * (double)((double)en->GetHealth() / (double)en->GetMaxHealth()), 4));
+                bar.setSize(sf::Vector2f(20.0 * (double)((double)en->GetHealth() / (double)en->GetMaxHealth()), 2));
+                bar.setFillColor(sf::Color::Magenta);
+                bar.setScale(2, 2);
+                bar.setPosition(it.second->GetX()*35, it.second->GetY()*35 + 31);
+                window_.draw(bar);
             }
         }
     }
@@ -180,7 +195,7 @@ void GameState::draw_current_state() {
     for(auto it : map.GetProjectiles()) {
         if(it->GetLocation() != nullptr && it->GetSender() != nullptr) {
             auto projSprite = projectileSprites_.at(it->GetSender()->GetName());
-            projSprite.setScale(1.5,1.5);
+            projSprite.setScale(0.2,0.2);
             projSprite.setPosition(it->GetLocation()->GetX() * 35.5, it->GetLocation()->GetY()* 35.5);
             window_.draw(projSprite);
         }

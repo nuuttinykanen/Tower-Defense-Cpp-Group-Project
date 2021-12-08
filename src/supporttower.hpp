@@ -47,8 +47,26 @@ class Seer : public SupportTower {
 
 class MotherBrain : public SupportTower {
 public:
-    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range.", 1, 2, 1200) {}
+    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range by strength.", 1, 2, 1200) {}
     ~MotherBrain();
+    virtual Tower* Upgrade();
+
+    virtual void supportEffect(MapSquare* square);
+};
+
+class StereoDude : public SupportTower {
+    public:
+    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack towers within range by strength.", 1, 2, 1200) {}
+    ~StereoDude();
+    virtual Tower* Upgrade();
+
+    virtual void supportEffect(MapSquare* square);
+};
+
+class DJDude : public SupportTower {
+public:
+    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack towers within range by strength.", 2, 3, 1200) {}
+    ~DJDude();
     virtual Tower* Upgrade();
 
     virtual void supportEffect(MapSquare* square);

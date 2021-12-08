@@ -29,10 +29,12 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
 
     Clocker* c = new Clocker();
     Seer* s = new Seer();
+    StereoDude* d = new StereoDude();
 
     levelMap_->PlaceTower(3, 7, c);
-    levelMap_->PlaceTower(9, 7, s);
-    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 7)));
+    //levelMap_->PlaceTower(9, 7, s);
+    levelMap_->PlaceTower(9, 7, d);
+    //levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 7)));
 
     player_ = new Player(100);
     game_ = new Game( *levelMap_, *player_, waves);

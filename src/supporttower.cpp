@@ -67,7 +67,7 @@ void MotherBrain::supportEffect(MapSquare* square) {
         auto ts = (TowerSquare*)square;
         if(ts->GetTower()->GetType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
-            tow->AddRangeModifier(tow->GetRange() * 0.01 * this->GetStrength());
+            tow->AddRangeModifier(this->GetStrength());
         }
     }
 }
@@ -76,6 +76,37 @@ Tower* MotherBrain::Upgrade() {
     return nullptr;
 }
 
+void StereoDude::supportEffect(MapSquare *square) {
+    if(square == nullptr) return;
+    std::string type = square->GetType();
+    if(type == "tower") {
+        auto ts = (TowerSquare*)square;
+        if(ts->GetTower()->GetType() == "attack") {
+            auto tow = (AttackTower*)ts->GetTower();
+            tow->AddCooldownModifier(this->GetStrength() * -1);
+        }
+    }
+}
 
+Tower *StereoDude::Upgrade() {
+    auto upgrade = new StereoDude();
+    return upgrade;
+}
+
+void DJDude::supportEffect(MapSquare *square) {
+    if(square == nullptr) return;
+    std::string type = square->GetType();
+    if(type == "tower") {
+        auto ts = (TowerSquare*)square;
+        if(ts->GetTower()->GetType() == "attack") {
+            auto tow = (AttackTower*)ts->GetTower();
+            tow->AddCooldownModifier(this->GetStrength() * -1);
+        }
+    }
+}
+
+Tower *DJDude::Upgrade() {
+    return nullptr;
+}
 
 

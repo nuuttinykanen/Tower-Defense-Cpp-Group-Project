@@ -262,6 +262,78 @@ Due to time constraints the level editor will only be implemented as typing coor
 - Testing
 
 
+# Meeting 8.12.2021
+
+**Participants**
+1. Nuutti Nykänen
+2. Elias Kauranen
+3. Tino Korpelainen
+4. Patrik Ahola
+
+# Summary of works
+1.	Nuutti Nykänen
+- GUI work 
+  - Enemies, towers and their ranges drawn on map 
+  - Sprites created and implemented
+- SupportTower 
+  - virtual function implementation 
+  - SupportTower Clocker created, does not work correctly at the moment
+- Projectile debugging and optimization
+- Changing enemy speed temporarily with modifiers
+2.	Elias Kauranen
+- Made some changes in some classes (fixing bugs)
+- GUI work 
+  - Tower shop 
+  - Player can buy towers
+
+3.	Patrik Ahola
+-Overall refactoring and fixing
+- Game work 
+  - UpdateState: Enemies, towers, projectiles updated (With some help). 
+  - Enemy kill and damage detection (Might need fixing)
+- GameState 
+  - Player health and money drawn on screen
+
+4.	Tino Korpelainen
+- Added the json library
+- Added the level selector
+- Added different json files for different levels 
+  - Different sizes, enemy paths and waves. 
+  - Each level is loaded from the json file.
+- Prettied up the gui, small refactrofing.
+
+
+# Project status
+Final debugging underway. There are multiple SupportTowers yet to be implemented, but the core gameplay is functional. We don’t know yet if we have any memory leaks in our code since we can’t run Valgrind on windows, so we need to get a Linux port working as soon as possible.
+
+# TODOs
+-	Valgrind
+
+1.	Nuutti Nykänen
+-	Implement the rest of SupportTowers
+-	Possibly one more AttackTower for variety?
+-	Final debugging of projectile/enemy/tower/map functionality
+-	Rest of the sprites
+-	Enemy that has another inside
+
+2.	Elias Kauranen
+-	GUI work
+-	Final debugging of projectile/enemy/tower/map functionality
+
+3.	Tino Korpelainen
+- Add saving and loading of one save file 
+  - Includes placed towers, remaining waves etc.
+- Implement placing new towers
+- Pretty up the gui and do some bugfixing.
+
+
+4.	Patrik Ahola
+-	Debugging
+-	Ensuring correct functionality of Game and other classes
+-	Additional Game/Wave ending functionalities/logic?
+5.	Everybody
+-	Unify the coding styles under the google C++ Style Guide 
+-	Make the project documentation
 
 
 

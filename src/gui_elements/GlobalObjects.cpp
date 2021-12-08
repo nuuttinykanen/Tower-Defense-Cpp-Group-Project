@@ -127,6 +127,22 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
+    if(!gunProjecHitTexture_.loadFromFile("../src/assets/projectiles/gunProjecHit.png")) {
+        std::cout << "Error retrieving Gun projectile hit sprite" << std::endl;
+        return;
+    }
+
+    if(!bombProjecHit1Texture_.loadFromFile("../src/assets/projectiles/bombProjecHit1.png")) {
+        std::cout << "Error retrieving Bomb projectile hit 1 sprite" << std::endl;
+        return;
+    }
+
+    if(!bombProjecHit2Texture_.loadFromFile("../src/assets/projectiles/bombProjecHit2.png")) {
+        std::cout << "Error retrieving Bomb projectile hit 2 sprite" << std::endl;
+        return;
+    }
+
+
     enemySprite_.setTexture(enemyTexture_);
     purpleEnemySprite_.setTexture(purpleEnemyTexture_);
     freeSquareSprite_.setTexture(freeSquareTexture_);
@@ -156,6 +172,10 @@ GlobalObjects::GlobalObjects() {
 
     bombProjecSprite_.setTexture(bombProjecTexture_);
     gunProjecSprite_.setTexture(gunProjecTexture_);
+
+    gunProjecHitSprite_.setTexture(gunProjecHitTexture_);
+    bombProjecHit1Sprite_.setTexture(bombProjecHit1Texture_);
+    bombProjecHit2Sprite_.setTexture(bombProjecHit2Texture_);
 }
 
 sf::Sprite &GlobalObjects::getFreeSquareSprite(float scaledBy) {
@@ -268,6 +288,21 @@ sf::Sprite &GlobalObjects::getStereoDudeSprite(float scaledBy) {
 sf::Sprite &GlobalObjects::getDJDudeSprite(float scaledBy) {
     djDudeSprite_.scale(scaledBy, scaledBy);
     return djDudeSprite_;
+}
+
+sf::Sprite &GlobalObjects::getGunProjecHitSprite(float scaledBy) {
+    gunProjecHitSprite_.scale(scaledBy, scaledBy);
+    return gunProjecHitSprite_;
+}
+
+sf::Sprite &GlobalObjects::getBombProjecHit1Sprite(float scaledBy) {
+    bombProjecHit1Sprite_.scale(scaledBy, scaledBy);
+    return bombProjecHit1Sprite_;
+}
+
+sf::Sprite &GlobalObjects::getBombProjecHit2Sprite(float scaledBy) {
+    bombProjecHit2Sprite_.scale(scaledBy, scaledBy);
+    return bombProjecHit2Sprite_;
 }
 
 

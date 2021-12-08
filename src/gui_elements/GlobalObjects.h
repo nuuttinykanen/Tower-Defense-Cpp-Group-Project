@@ -27,6 +27,10 @@ public:
     sf::Sprite& getBombProjecSprite(float scaleBy = 1);
     sf::Sprite& getGunProjecSprite(float scaleBy = 1);
 
+    sf::Sprite& getGunProjecHitSprite(float scaleBy = 1);
+    sf::Sprite& getBombProjecHit1Sprite(float scaleBy = 1);
+    sf::Sprite& getBombProjecHit2Sprite(float scaleBy = 1);
+
     sf::Sprite& getSuperBomberSprite(float scaledBy = 1);
     sf::Sprite& getUltraBomberSprite(float scaledBy = 1);
     sf::Sprite& getClockerSprite(float scaledBy = 1);
@@ -67,6 +71,9 @@ private:
     sf::Texture gunnerTexture_;
     sf::Texture bombProjecTexture_;
     sf::Texture gunProjecTexture_;
+    sf::Texture gunProjecHitTexture_;
+    sf::Texture bombProjecHit1Texture_;
+    sf::Texture bombProjecHit2Texture_;
 
     sf::Sprite enemySprite_;
     sf::Sprite purpleEnemySprite_;
@@ -95,6 +102,9 @@ private:
     sf::Sprite gunnerSprite_;
     sf::Sprite bombProjecSprite_;
     sf::Sprite gunProjecSprite_;
+    sf::Sprite gunProjecHitSprite_;
+    sf::Sprite bombProjecHit1Sprite_;
+    sf::Sprite bombProjecHit2Sprite_;
 };
 
 

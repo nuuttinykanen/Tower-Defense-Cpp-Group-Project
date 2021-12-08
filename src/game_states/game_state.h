@@ -27,6 +27,8 @@ public:
 
     void generateProjectiles();
 
+    void generateProjectileHitSprites();
+
     void advance_state() override;
 
     void poll_events() override;
@@ -47,6 +49,7 @@ private:
     std::map<std::string, sf::Sprite> enemySprites_;
     std::map<std::string, sf::Sprite> towerSprites_;
     std::map<std::string, sf::Sprite> projectileSprites_;
+    std::map<std::string, sf::Sprite> projectileHitSprites_;
     Game* game_;
     LevelMap* levelMap_;
     int levelNumber_;

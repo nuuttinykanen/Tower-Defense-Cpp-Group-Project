@@ -14,6 +14,7 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     generateEnemies();
     generateTowers();
     generateProjectiles();
+    generateProjectileHitSprites();
 
     auto waves = JSON::loadWaves(levelNumber);
     levelMap_ = JSON::loadLevelMap(levelNumber);
@@ -168,13 +169,11 @@ void GameState::draw_current_state() {
     // Draw enemy death sprites
     for(auto it : map.GetProjectileMarks()) {
         for(auto coords : it.second) {
-            sf::CircleShape triangle(80, 3);
-            triangle.setScale(0.1, 0.1);
-            triangle.setFillColor(sf::Color::Black);
-            triangle.setPosition(coords.first * 35 + 12, coords.second * 35 + 12);
-            window_.draw(triangle);
+            auto sprite = this->projectileHitSprites_[it.first];
+            sprite.setScale(2, 2);
+            sprite.setPosition(coords.first * 35, coords.second * 35);
+            window_.draw(sprite);
         }
-
     }
 
     // Draw projectiles
@@ -420,4 +419,9 @@ void GameState::generateProjectiles() {
     projectileSprites_["Ultra Bomber"]  = gui_->getGlobalObjects()->getUltraBomberSprite();
     projectileSprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
     projectileSprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
+}
+
+void GameState::generateProjectileHitSprites() {
+    projectileHitSprites_["bomb"] = gui_->getGlobalObjects()->getBombProjecHit1Sprite();
+    projectileHitSprites_["bullet"] = gui_->getGlobalObjects()->getGunProjecHitSprite();
 }

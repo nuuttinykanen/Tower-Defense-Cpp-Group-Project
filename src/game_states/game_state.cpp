@@ -24,8 +24,8 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber)
     //levelMap_->PlaceTower(11, 3, g);
 
 
-    //levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
-    //levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
+    levelMap_->UpgradeTowerSquare(levelMap_->FindTower(levelMap_->TowerAt(9, 8)));
 
     Clocker* c = new Clocker();
     Seer* s = new Seer();

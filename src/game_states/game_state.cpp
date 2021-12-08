@@ -94,6 +94,7 @@ void GameState::draw_current_state() {
         freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
     }
+
     // Draw free squares
     for(auto it : map.GetFreeSquares()) {
         auto freeSprite = globals->getFreeSquareSprite();
@@ -161,6 +162,15 @@ void GameState::draw_current_state() {
         }
     }
 
+    // Draw enemy death sprites
+    for(auto it : map.GetEnemyDeathMarks()) {
+        sf::CircleShape triangle(80, 3);
+        triangle.setScale(0.1, 0.1);
+        triangle.setFillColor(sf::Color::Red);
+        triangle.setPosition(it.first * 35 + 12, it.second * 35 + 12);
+        window_.draw(triangle);
+    }
+
     // Draw projectiles
     for(auto it : map.GetProjectiles()) {
         if(it->GetLocation() != nullptr && it->GetSender() != nullptr) {
@@ -170,6 +180,8 @@ void GameState::draw_current_state() {
             window_.draw(projSprite);
         }
     }
+
+
 }
 
 void GameState::poll_events() {

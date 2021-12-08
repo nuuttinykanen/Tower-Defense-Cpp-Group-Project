@@ -47,7 +47,7 @@ class Seer : public SupportTower {
 
 class MotherBrain : public SupportTower {
 public:
-    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range.", 80, 2, 1200) {}
+    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range.", 1, 2, 1200) {}
     ~MotherBrain();
     virtual Tower* Upgrade();
 

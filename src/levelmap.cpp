@@ -136,6 +136,10 @@ const std::map<std::pair<int, int>, EnemySquare*> LevelMap::GetEnemySquares() {
     return list;
 }
 
+std::vector<std::pair<int, int>> LevelMap::GetEnemyDeathMarks() {
+    return enemyDeathMarks_;
+}
+
 
 std::vector<Enemy*> LevelMap::EnemiesAt(int x, int y) {
     const MapSquare* square = this->GetSquare(x, y);
@@ -224,6 +228,7 @@ void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destinat
 }
 
 void LevelMap::MoveEnemies() {
+  this->enemyDeathMarks_.clear();
   auto e_squares = this->GetEnemySquares();
   for(auto it = e_squares.rbegin(); it != e_squares.rend(); it++) {
     auto h = *it;
@@ -231,6 +236,7 @@ void LevelMap::MoveEnemies() {
     for(auto et = enemies.begin(); et != enemies.end(); et++) {
       auto e = *et;
       if(e->GetHealth() < 1) {
+        this->enemyDeathMarks_.emplace_back(it->second->GetX(), it->second->GetY());
         e->RemoveFromMap();
         this->EraseEnemy(e);
       }
@@ -439,11 +445,11 @@ void LevelMap::MoveProjectile(Projectile* proj) {
 }
 
 void LevelMap::MoveProjectiles() {
-  for(auto it : projectiles_) {
-    if(it->GetTarget()->OnMap()) this->MoveProjectile(it);
-    else it->SetRemovalTrue();
-  }
-  this->ScanProjectiles();
+    for(auto it : projectiles_) {
+        if(it->GetTarget()->OnMap()) this->MoveProjectile(it);
+        else it->SetRemovalTrue();
+    }
+    this->ScanProjectiles();
 }
 
 unsigned int LevelMap::GetEnemiesPassed() {

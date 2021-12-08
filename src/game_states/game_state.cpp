@@ -251,7 +251,7 @@ void GameState::poll_events() {
                             return;
                         }
                         case Support1: {
-                            auto newTower = new Gunner();
+                            auto newTower = new Clocker();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
                                 buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
@@ -262,7 +262,7 @@ void GameState::poll_events() {
                             return;
                         }
                         case Support2: {
-                            auto newTower = new Gunner();
+                            auto newTower = new Seer();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
                                 buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
@@ -273,7 +273,7 @@ void GameState::poll_events() {
                             return;
                         }
                         case Support3: {
-                            auto newTower = new Gunner();
+                            auto newTower = new StereoDude();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
                                 buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;

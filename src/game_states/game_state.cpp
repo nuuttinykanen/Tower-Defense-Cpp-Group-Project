@@ -75,7 +75,7 @@ void GameState::draw_current_state() {
     for (auto b : buttons_) {
         switch (b.first) {
             case UpgradeTower:
-                if (!isTowerSelected) continue;
+                if (!isTowerSelected || !selectedTower_.canUpgrade) continue;
                 break;
             case SellTower:
                 if (!isTowerSelected) continue;
@@ -185,7 +185,6 @@ void GameState::draw_current_state() {
 }
 
 bool buyingTower = false;
-bool sellingTower = false;
 Tower* newTower = nullptr;
 void GameState::poll_events() {
     sf::Event event{};
@@ -215,7 +214,7 @@ void GameState::poll_events() {
         }
 
         //sells and removes a tower from a tower square
-        if (sellingTower && event.type == sf::Event::MouseButtonReleased) {
+        /*if (sellingTower && event.type == sf::Event::MouseButtonReleased) {
             auto removeFrom = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
             for(auto area : map.GetTowerSquares()) {
                 auto freeSprite = globals->getFreeSquareSprite();
@@ -232,7 +231,7 @@ void GameState::poll_events() {
                     break;
                 }
             }
-        }
+        }*/
 
         // 0 -> primary click, 1-> secondary
         if (event.type == sf::Event::MouseButtonReleased) {
@@ -252,17 +251,14 @@ void GameState::poll_events() {
                             return;
                         case StartWave:
                             buyingTower = false;
-                            sellingTower = false;
                             startWave();
                             return;
                         case SellTower:
-                            buyingTower = false;
-                            sellingTower = true;
-                            std::cout << "Click on a tower to sell it!" << std::endl;
+                            sellTower();
                             return;
                         case UpgradeTower:
                             buyingTower = false;
-                            sellingTower = false;
+                            upgradeTower();
                             return;
                         case DeselectTower:
                             isTowerSelected = false;
@@ -391,6 +387,7 @@ void GameState::poll_events() {
                         }
                         isTowerSelected = true;
                         selectedTower_.tower = area.second;
+                        selectedTower_.canUpgrade = area.second->GetTower()->CanUpgrade();
                         selectedTower_.x = area.second->GetX();
                         selectedTower_.y = area.second->GetY();
                         break;
@@ -432,9 +429,19 @@ void GameState::buyTower(Tower* tower) {
     std::cout << "Tower bought successfully!" << std::endl;
 }
 
-void GameState::sellTower(Tower* tower) {
+void GameState::sellTower() {
+    isTowerSelected = false;
+    auto tower = selectedTower_.tower->GetTower();
+    this->levelMap_->EraseTower(tower);
+
     player_->SellTower(tower);
-    std::cout << "Tower sold successfully!" << std::endl;
+
+}
+
+void GameState::upgradeTower() {
+
+    levelMap_->UpgradeTowerSquare(selectedTower_.tower);
+    isTowerSelected = false;
 }
 
 void GameState::generateButtons() {
@@ -597,11 +604,16 @@ void GameState::draw_selected_tower_info() {
         d->setPosition(180, 550 + i * 30);
         d->setFont(getFont());
     }
+    auto desc = tower->GetDescription();
+    int numberOfNewLines = std::count(desc.begin(), desc.end(), '\n');
 
-    c[0]->setString("Name: " + tower->GetName());
-    c[1]->setString("Description: " + tower->GetDescription());
-    c[2]->setString("Range: " + std::to_string(tower->GetRange()));
-    c[3]->setString("Strength: " + std::to_string(tower->GetStrength()));
+    name.setString("Name: " + tower->GetName());
+    description.setString("Description: \n\n" + desc);
+    range.setString("Range: " + std::to_string(tower->GetRange()));
+    range.setPosition(180, 640 + numberOfNewLines * 20);
+    strength.setString("Strength: " + std::to_string(tower->GetStrength()));
+    strength.setPosition(180, 660 + numberOfNewLines * 20);
+
 
 
     window_.draw(sprite);

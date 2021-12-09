@@ -36,6 +36,8 @@ class ClockBlocker : public SupportTower {
     ~ClockBlocker() { };
     virtual Tower* Upgrade();
 
+    bool CanUpgrade() override {return false;}
+
     virtual TowerTypes getType() const {return TowerTypes::ClockerBlockerType;}
 
     virtual void supportEffect(MapSquare* square);
@@ -43,7 +45,7 @@ class ClockBlocker : public SupportTower {
 
 class Seer : public SupportTower {
     public:
-    Seer() : SupportTower("Seer", "Increases range of attack towers within range.", 1, 1, 1) {}
+    Seer() : SupportTower("Seer", "Increases range of attack towers \nwithin range.", 1, 1, 1) {}
     ~Seer() { };
     virtual Tower* Upgrade();
 
@@ -54,8 +56,11 @@ class Seer : public SupportTower {
 
 class MotherBrain : public SupportTower {
 public:
-    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range.", 1, 2, 1) {}
+    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers \nwithin range.", 1, 2, 1) {}
     ~MotherBrain() {};
+
+    bool CanUpgrade() override {return false;}
+
     virtual Tower* Upgrade();
 
     virtual TowerTypes getType() const {return TowerTypes::MotherBrainType;}
@@ -66,7 +71,7 @@ public:
 
 class StereoDude : public SupportTower {
     public:
-    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack towers within range by 'STRENGTH' percent.", 80, 2, 1) {}
+    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack towers \nwithin range by 'STRENGTH' percent.", 80, 2, 1) {}
     ~StereoDude() { };
     virtual Tower* Upgrade();
 
@@ -77,10 +82,12 @@ class StereoDude : public SupportTower {
 
 class DJDude : public SupportTower {
 public:
-    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack towers within range by strength.", 80, 3, 1) { }
+    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack towers \nwithin range by strength.", 80, 3, 1) { }
     ~DJDude() { };
 
     virtual TowerTypes getType() const {return TowerTypes::DJDudeType;}
+
+    bool CanUpgrade() override {return false;}
 
     virtual Tower* Upgrade();
 

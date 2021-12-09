@@ -25,6 +25,8 @@ class Tower {
 
     unsigned int GetPrice() const;
 
+    virtual bool CanUpgrade() {return true;};
+
     virtual std::string GetMainType() const = 0;
 
     virtual TowerTypes getType() const = 0;

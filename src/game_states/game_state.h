@@ -16,6 +16,7 @@ struct SelectedTower {
     int x;
     int y;
     TowerSquare* tower;
+    bool canUpgrade;
 };
 // enum TowerTypes {GunnerType, BomberType, Attack3, Attack4, ClockerType, SeerType, StereoType, Support4};
 
@@ -54,7 +55,9 @@ public:
 
     void buyTower(Tower*);
 
-    void sellTower(Tower*);
+    void sellTower();
+
+    void upgradeTower();
 
 private:
     std::map<GameButtonTarget, Button*> buttons_;

@@ -70,6 +70,8 @@ class UltraBomber : public AttackTower {
     UltraBomber() : AttackTower("Ultra Bomber", "Ultra bombs enemies", 2, 4, 100, 510) { }
     virtual Projectile* GetProjectile();
 
+    bool CanUpgrade() override {return false;}
+
     virtual TowerTypes getType() const {return TowerTypes::UltraBomberType;}
 
     virtual Tower* Upgrade();
@@ -102,6 +104,8 @@ class GunFiend : public AttackTower {
     GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 1, 2, 20, 500) { }
     ~GunFiend(){}
     virtual Projectile* GetProjectile();
+
+    bool CanUpgrade() override {return false;}
 
     virtual TowerTypes getType() const {return TowerTypes::GunFiendType;}
 

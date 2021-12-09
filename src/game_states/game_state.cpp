@@ -205,6 +205,7 @@ void GameState::draw_current_state() {
 }
 
 bool buyingTower = false;
+bool sellingTower = false;
 Tower* newTower = nullptr;
 void GameState::poll_events() {
     sf::Event event{};
@@ -215,8 +216,7 @@ void GameState::poll_events() {
         if (event.type == sf::Event::Closed)
             window_.close();
 
-        // 0 -> primary click, 1-> secondary
-
+        //buys and adds a chosen tower to a clicked free square
         if (buyingTower && event.type == sf::Event::MouseButtonReleased) {
             auto placeTo = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
             for(auto area : map.GetFreeSquares()) {
@@ -225,16 +225,33 @@ void GameState::poll_events() {
                 freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
                 if(freeSprite.getGlobalBounds().contains(placeTo)) {
                     buyingTower = !(this->levelMap_->PlaceTower(area.second->GetX(), area.second->GetY(), newTower));
-                    if(buyingTower) {
-                        std::cout << "Choose another square!" << std::endl;
-                    } else {
-                        buyTower(newTower);
+                    buyTower(newTower);
+                    break;
+                }
+            }
+        }
+
+        //sells and removes a tower from a tower square
+        if (sellingTower && event.type == sf::Event::MouseButtonReleased) {
+            auto removeFrom = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
+            for(auto area : map.GetTowerSquares()) {
+                auto freeSprite = globals->getFreeSquareSprite();
+                freeSprite.setScale(2, 2);
+                freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
+                if(freeSprite.getGlobalBounds().contains(removeFrom)) {
+                    try {
+                        Tower* soldTower = this->levelMap_->TowerAt(area.second->GetX(), area.second->GetY());
+                        sellingTower = !(this->levelMap_->EraseTower(soldTower));
+                        sellTower(soldTower);
+                    } catch(std::invalid_argument) {
+                        break;
                     }
                     break;
                 }
             }
         }
 
+        // 0 -> primary click, 1-> secondary
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == 0) {
                 auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
@@ -248,11 +265,18 @@ void GameState::poll_events() {
                             quitToMenu();
                             return;
                         case StartWave:
+                            buyingTower = false;
+                            sellingTower = false;
                             startWave();
                             return;
                         case SellTower:
+                            buyingTower = false;
+                            sellingTower = true;
+                            std::cout << "Click on a tower to sell it!" << std::endl;
                             return;
                         case UpgradeTower:
+                            buyingTower = false;
+                            sellingTower = false;
                             return;
                     }
                 }
@@ -397,6 +421,12 @@ void GameState::startWave() {
 
 void GameState::buyTower(Tower* tower) {
     player_->AddTower(tower);
+    std::cout << "Tower bought successfully!" << std::endl;
+}
+
+void GameState::sellTower(Tower* tower) {
+    player_->SellTower(tower);
+    std::cout << "Tower sold successfully!" << std::endl;
 }
 
 void GameState::generateButtons() {

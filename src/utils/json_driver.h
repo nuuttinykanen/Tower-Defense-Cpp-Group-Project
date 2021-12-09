@@ -20,7 +20,7 @@ using std::pair;
 
 class JSON {
 public:
-    static void test();
+    static bool latestSaveExists();
     static int getNumberOfLevels();
     static LevelMap* loadLevelMap(int index);
     static std::vector<Wave*> loadWaves(int index);

@@ -16,17 +16,21 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber): Windo
     generateProjectiles();
     generateProjectileHitSprites();
 
-    // 0 level number means that we are loading the latest save
-    if (levelNumber == 0) {
+    // 0 level number means that we are loading the latest save, also check that the file exists
+    if (levelNumber == 0 && JSON::latestSaveExists()) {
         game_ = JSON::loadLatestSave();
         levelMap_ = &game_->GetMap();
         levelNumber_ = levelMap_->getLevelNumber();
         player_ = &game_->GetPlayer();
 
     } else {
-        levelNumber_ = levelNumber;
-        levelMap_ = JSON::loadLevelMap(levelNumber);
-        auto waves = JSON::loadWaves(levelNumber);
+        if (!JSON::latestSaveExists() && levelNumber == 0) {
+            levelNumber_ = 1;
+        } else {
+            levelNumber_ = levelNumber;
+        }
+        levelMap_ = JSON::loadLevelMap(levelNumber_);
+        auto waves = JSON::loadWaves(levelNumber_);
         player_ = new Player(100);
         game_ = new Game( *levelMap_, *player_, waves);
     }

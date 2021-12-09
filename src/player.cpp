@@ -52,3 +52,11 @@ unsigned int Player::GetHealth() {
 void Player::ChangeHealth(int amount) {
     this->health_ += amount;
 }
+
+void Player::SetHealth(int amount) {
+    health_ = amount;
+}
+
+void Player::SetMoney(double amount) {
+    money_ = amount;
+}

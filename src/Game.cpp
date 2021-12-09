@@ -72,8 +72,6 @@ void Game::StartWave() {
         enemyWaves_.erase(enemyWaves_.begin());
     }
     else{std::cout << "Wait for the previous wave to end!!" << std::endl; }
-
-
 }
 void Game::EndWave() {
     if(this->waveInProgress_) {

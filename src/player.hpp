@@ -16,6 +16,7 @@ class Player {
         std::vector<Tower*> GetTowers() const;
 
         double GetMoney() const;
+        void SetMoney(double amount);
         void GiveMoney(double amount);
         void TakeMoney(double amount);
         void RemoveTower(Tower* tower);
@@ -25,6 +26,7 @@ class Player {
         unsigned int GetMaxHealth();
         unsigned int GetHealth();
         void ChangeHealth(int amount);
+        void SetHealth(int amount);
 
 
     private:

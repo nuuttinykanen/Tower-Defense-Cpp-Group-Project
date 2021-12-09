@@ -1,5 +1,13 @@
 {
    "current_wave" : 1,
+   "health" : 97,
    "index" : 1,
-   "towers" : []
+   "money" : 178.0,
+   "towers" : [
+      {
+         "id" : 0,
+         "x" : 3,
+         "y" : 8
+      }
+   ]
 }

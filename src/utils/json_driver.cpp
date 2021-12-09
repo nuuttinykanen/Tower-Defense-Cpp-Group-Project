@@ -137,7 +137,8 @@ void JSON::saveCurrentGame(Game* game, int levelNumber) {
     JSONCPP_STRING errs;
 
     root["index"] = levelNumber;
-
+    root["health"] = game->GetPlayer().GetHealth();
+    root["money"] = game->GetPlayer().GetMoney();
 
     // Save towers and their positions
     auto towerSquares = game->GetMap().GetTowerSquares();
@@ -178,13 +179,17 @@ Game* JSON::loadLatestSave() {
 
     int levelIndex = root["index"].asInt();
     int currentWave = root["current_wave"].asInt();
-
+    int playerHealth = root["health"].asInt();
+    int playerMoney = root["money"].asInt();
 
     auto lvlMap = loadLevelMap(levelIndex);
     auto waves = loadWaves(levelIndex);
 
 
     auto player = new Player(100);
+    player->SetMoney(playerMoney);
+    player->SetHealth(playerHealth);
+
     auto game = new Game(*lvlMap, *player, waves);
     game->SetWaveNumber(currentWave);
 

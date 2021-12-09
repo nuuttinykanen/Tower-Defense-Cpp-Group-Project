@@ -49,21 +49,21 @@ class Enemy {
 
 class Zombie : public Enemy {
     public:
-    Zombie(int health = 4, int attack = 1, int speed = 1, int bounty = 19) : 
+    Zombie(int health = 4, int attack = 1, int speed = 30, int bounty = 19) :
     Enemy("Zombie", health, attack, speed, bounty) {}
     ~Zombie(){}
 };
 
 class ZombieHorde : public Enemy {
     public:
-    ZombieHorde(int health = 8, int attack = 2, int speed = 2, int bounty = 40) : 
+    ZombieHorde(int health = 8, int attack = 2, int speed = 2, int bounty = 40) :
     Enemy("Zombie Horde", health, attack, speed, bounty) {}
     ~ZombieHorde(){}
 };
 
 class MichaelMyers : public Enemy {
     public:
-    MichaelMyers(int health = 80, int attack = 5, int speed = 1, int bounty = 100) : 
+    MichaelMyers(int health = 80, int attack = 5, int speed = 2, int bounty = 100) :
     Enemy("Michael Myers", health, attack, speed, bounty) {}
     ~MichaelMyers(){}
 };
@@ -77,7 +77,7 @@ class Dracula : public Enemy {
 
 class Bat : public Enemy {
     public:
-    Bat(int health = 4, int attack = 10, int speed = 2, int bounty = 1) : 
+    Bat(int health = 4, int attack = 10, int speed = 4, int bounty = 1) :
     Enemy("Bat", health, attack, speed, bounty) {}
     ~Bat(){}
 };

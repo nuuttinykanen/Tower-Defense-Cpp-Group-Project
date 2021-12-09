@@ -1,5 +1,5 @@
 #include "enemy.hpp"
-
+#include <iostream>
     std::string Enemy::GetName() { return name_; }
 
     int Enemy::GetMaxHealth() { return maxHealth_; }

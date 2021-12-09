@@ -68,7 +68,6 @@ void Game::StartWave() {
         this->waveInProgress_ = true;
         auto wave = enemyWaves_[this->waveNum_ - 1];
         auto enemyWave = wave->getWaveEnemies();
-
         this->enemies_ = wave->getWaveEnemies();
         enemyWaves_.erase(enemyWaves_.begin());
     }
@@ -109,11 +108,21 @@ LevelMap &Game::GetMap() {
 void Game::ProcessEnemies() {
     if(this->enemyMoveCounter_ < 1) {
         this->map_.MoveEnemies();
+
         // Place next enemy
         if(this->GetCurrentWave() != nullptr && map_.GetStartSquare() != nullptr && !this->GetCurrentWave()->isEmpty()) {
             auto start_sq = map_.GetStartSquare();
-            this->map_.PlaceEnemy(start_sq->GetX(), start_sq->GetY(), this->GetCurrentWave()->PopNext());
+            Enemy& e = this->GetCurrentWave()->PopNext();
+            //As the waves recycle the same enemy objects, when starting a second wave
+            //the enemies have zero health from the first wave, thus dying at spawn
+            //This changes the spawned enemys health to max, if its health = 0
+            if(e.GetHealth() < 1){
+                e.ChangeHealth(e.GetMaxHealth());
+            }
+            this->map_.PlaceEnemy(start_sq->GetX(), start_sq->GetY(), e);
+
         }
+
         this->enemyMoveCounter_ = enemyMoveLimit_;
     }
     this->enemyMoveCounter_ -= 1;

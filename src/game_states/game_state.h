@@ -47,6 +47,8 @@ public:
 
     void buyTower(Tower*);
 
+    void sellTower(Tower*);
+
 private:
     std::map<GameButtonTarget, Button*> buttons_;
     std::map<TowerTypes, TowerButton*> towerButtons_;

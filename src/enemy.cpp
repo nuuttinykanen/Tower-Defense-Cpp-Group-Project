@@ -18,8 +18,6 @@
 
     void Enemy::RemoveFromMap() { on_map_ = false; }
 
-    double Enemy::HealthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
-
     void Enemy::ChangeHealth(int amount) { 
         if(currentHealth_ + amount < 0) currentHealth_ = 0;
         else currentHealth_ += amount; 
@@ -53,4 +51,27 @@ void Enemy::ProgressCooldown() {
 
 unsigned int Enemy::GetCooldownModifier() {
     return this->cooldownModifier_;
+}
+
+Enemy *Zombie::Inner() {
+    return nullptr;
+}
+
+
+Enemy *ZombieHorde::Inner() {
+    auto inner = new Zombie();
+    return inner;
+}
+
+Enemy *MichaelMyers::Inner() {
+    return nullptr;
+}
+
+Enemy *Dracula::Inner() {
+    return nullptr;
+}
+
+Enemy *Bat::Inner() {
+    auto inner = new Dracula();
+    return inner;
 }

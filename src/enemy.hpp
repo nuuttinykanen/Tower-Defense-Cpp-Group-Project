@@ -31,9 +31,8 @@ class Enemy {
     unsigned int GetCooldownModifier();
     void ProgressCooldown();
 
-    double HealthPercentage();
-
     void ChangeHealth(int amount);
+    virtual Enemy* Inner() = 0;
 
     private:
     std::string name_;
@@ -52,6 +51,7 @@ class Zombie : public Enemy {
     Zombie(int health = 4, int attack = 1, int speed = 30, int bounty = 19) :
     Enemy("Zombie", health, attack, speed, bounty) {}
     ~Zombie(){}
+    virtual Enemy* Inner();
 };
 
 class ZombieHorde : public Enemy {
@@ -59,6 +59,7 @@ class ZombieHorde : public Enemy {
     ZombieHorde(int health = 8, int attack = 2, int speed = 2, int bounty = 40) :
     Enemy("Zombie Horde", health, attack, speed, bounty) {}
     ~ZombieHorde(){}
+    virtual Enemy* Inner();
 };
 
 class MichaelMyers : public Enemy {
@@ -66,6 +67,7 @@ class MichaelMyers : public Enemy {
     MichaelMyers(int health = 80, int attack = 5, int speed = 2, int bounty = 100) :
     Enemy("Michael Myers", health, attack, speed, bounty) {}
     ~MichaelMyers(){}
+    virtual Enemy* Inner();
 };
 
 class Dracula : public Enemy {
@@ -73,6 +75,7 @@ class Dracula : public Enemy {
     Dracula(int health = 150, int attack = 8, int speed = 1, int bounty = 400) : 
     Enemy("Dracula", health, attack, speed, bounty) {}
     ~Dracula(){}
+    virtual Enemy* Inner();
 };
 
 class Bat : public Enemy {
@@ -80,6 +83,7 @@ class Bat : public Enemy {
     Bat(int health = 4, int attack = 10, int speed = 4, int bounty = 1) :
     Enemy("Bat", health, attack, speed, bounty) {}
     ~Bat(){}
+    virtual Enemy* Inner();
 };
 
 #endif

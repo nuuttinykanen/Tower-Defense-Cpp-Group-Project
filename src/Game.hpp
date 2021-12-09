@@ -12,7 +12,7 @@ class Game {
     public:
 
     Game(LevelMap& map, Player& player, std::vector<Wave*> waves) : map_(map), player_(player)
-    , enemyWaves_(waves){
+    , enemyWaves_(waves), totalWaveCount_(waves.size()) {
 
         this->towers_ = player_.GetTowers();
         this->gameEnd_ = false;
@@ -52,7 +52,7 @@ class Game {
 
     void EndWave();
 
-    unsigned int GetTotalWaveCount();
+    unsigned int GetTotalWaveCount() {return totalWaveCount_;};
 
     bool ifWaveInProgress();
 
@@ -69,6 +69,7 @@ class Game {
     Player& player_;
     std::vector<Wave*> enemyWaves_;
     unsigned int waveNum_;
+    unsigned int totalWaveCount_;
     unsigned int enemyMoveCounter_;
     unsigned int enemyMoveLimit_;
     unsigned int projectileMoveCounter_;

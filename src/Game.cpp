@@ -64,6 +64,7 @@ void Game::SellTower(Tower* tower) {
 
 // Start the first wave and then remove it from the vector
 void Game::StartWave() {
+
     if(!this->waveInProgress_){
         this->waveInProgress_ = true;
         auto wave = enemyWaves_[this->waveNum_ - 1];
@@ -87,9 +88,6 @@ Wave* Game::GetCurrentWave() {
     return this->enemyWaves_[this->waveNum_ - 1];
 }
 
-unsigned int Game::GetTotalWaveCount() {
-    return this->enemyWaves_.size();
-}
 
 bool Game::ifWaveInProgress() {
     return this->waveInProgress_;
@@ -164,7 +162,7 @@ void Game::ProcessAttackTowers() {
 void Game::UpdateState() {
     if(!this->gameEnd_) {
         if(this->GetCurrentWave()->isEmpty() && map_.GetEnemyAmount() < 1) {
-            this->waveInProgress_ = false;
+            EndWave();
             return;
         }
 

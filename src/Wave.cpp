@@ -1,6 +1,8 @@
 #include "Wave.hpp"
 #include <stdexcept>
 #include <iostream>
+
+
 Wave::~Wave() {
     for(auto w : waveEnemies_) {
         delete(w);

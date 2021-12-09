@@ -48,11 +48,11 @@ void GameState::advance_state() {
     game_->UpdateState();
 }
 
-void GameState::draw_tower_range(LevelMap* map, TowerSquare* tsq) {
+void GameState::draw_tower_range(TowerSquare* tsq) {
     Tower* tow = tsq->GetTower();
     if(tow == nullptr) return;
 
-    for(auto it : map->GetSquares()) {
+    for(auto it : levelMap_->GetSquares()) {
         double tx = tsq->GetX();
         double ty = tsq->GetY();
         double x = it.first.first;
@@ -73,6 +73,19 @@ void GameState::draw_tower_range(LevelMap* map, TowerSquare* tsq) {
 
 void GameState::draw_current_state() {
     for (auto b : buttons_) {
+        switch (b.first) {
+            case UpgradeTower:
+                if (!isTowerSelected) continue;
+                break;
+            case SellTower:
+                if (!isTowerSelected) continue;
+                break;
+            case DeselectTower:
+                if (!isTowerSelected) continue;
+                break;
+            default:
+                break;
+        }
         b.second->draw(window_);
     }
     for (auto t : towerButtons_)  {
@@ -98,7 +111,7 @@ void GameState::draw_current_state() {
         window_.draw(freeSprite);
     }
 
-    draw_info();
+    draw_player_info();
 
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
@@ -108,18 +121,17 @@ void GameState::draw_current_state() {
         freeSprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
         window_.draw(freeSprite);
 
-        for(auto sq : it.second->EnemySquaresInRange()) {
-            sf::Sprite r_sprite = globals->getRangeSprite();
-            r_sprite.setScale(2,2);
-            r_sprite.setPosition(sq->GetX() * 35, sq->GetY()* 35);
-            window_.draw(r_sprite);
-        }
+
 
 
         sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
         tow_sprite.setScale(1.9,1.9);
         tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
-        draw_tower_range(levelMap_, it.second);
+
+        draw_selected_tower_info();
+
+
+
         window_.draw(tow_sprite);
 
     }
@@ -252,6 +264,9 @@ void GameState::poll_events() {
                             buyingTower = false;
                             sellingTower = false;
                             return;
+                        case DeselectTower:
+                            isTowerSelected = false;
+                            return;
                     }
                 }
                 for (auto t : towerButtons_) {
@@ -364,6 +379,24 @@ void GameState::poll_events() {
                         }
                     }
                 }
+                for(auto area : map.GetTowerSquares()) {
+                    auto freeSprite = globals->getFreeSquareSprite();
+                    freeSprite.setScale(2, 2);
+                    freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
+                    if(freeSprite.getGlobalBounds().contains(mouse_pos)) {
+                        if (selectedTower_.tower == area.second) {
+                            isTowerSelected = false;
+                            selectedTower_.tower = nullptr;
+                            break;
+                        }
+                        isTowerSelected = true;
+                        selectedTower_.tower = area.second;
+                        selectedTower_.x = area.second->GetX();
+                        selectedTower_.y = area.second->GetY();
+                        break;
+                    }
+                }
+
             } else if (event.mouseButton.button == 1) {
                 //right click does nothing
             }
@@ -382,6 +415,7 @@ void GameState::quitToMenu() {
 
 void GameState::startWave() {
     game_->StartWave();
+    isTowerSelected = false;
     if (!game_->ifWaveInProgress()) {
         // Remove the start wave button
         for (auto it = buttons_.begin(); it != buttons_.end(); it++) {
@@ -418,14 +452,18 @@ void GameState::generateButtons() {
                                   "Quit game",this->getFont(), 20, 18, 8);
     buttons_[GameButtonTarget::QuitToMenu] = quitButton;
 
-    auto upgradeTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750
-                                                 , 590),
-                                         "Upgrade tower", this->getFont(), 20, 10, 13);
+    auto upgradeTowerButton = new Button(sf::Vector2f(300, 40), sf::Vector2f(700
+                                                 , 550),
+                                         "Upgrade tower", this->getFont(), 20, 18, 8);
     buttons_[GameButtonTarget::UpgradeTower] = upgradeTowerButton;
 
-    auto sellTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750, 650),
-                                      "Sell tower", this->getFont(), 20, 40, 13);
+    auto sellTowerButton = new Button(sf::Vector2f(300, 40), sf::Vector2f(700, 610),
+                                      "Sell tower", this->getFont(), 20, 50, 8);
     buttons_[GameButtonTarget::SellTower] = sellTowerButton;
+    auto deselectTowerButton = new Button(sf::Vector2f(300, 40), sf::Vector2f(700, 670),
+                                      "Deselect tower", this->getFont(), 20, 18, 8);
+    buttons_[GameButtonTarget::DeselectTower] = deselectTowerButton;
+
 
     // TODO: Add the correct sprites here when they are made
     // TODO: Add correct costs in the end
@@ -503,7 +541,7 @@ void GameState::saveGame() {
     JSON::saveCurrentGame(game_, levelNumber_);
 }
 
-void GameState::draw_info() {
+void GameState::draw_player_info() {
     sf::Text pHealth;
     sf::Text pMoney;
     sf::Text waves;
@@ -537,4 +575,40 @@ void GameState::draw_info() {
     window_.draw(pHealth);
     window_.draw(pMoney);
     window_.draw(waves);
+}
+
+void GameState::draw_selected_tower_info() {
+    if (!isTowerSelected) return;
+
+    draw_tower_range(selectedTower_.tower);
+    auto globals = gui_->getGlobalObjects();
+
+    auto tower = selectedTower_.tower->GetTower();
+
+    auto &sprite = globals->getTowerSpriteByType(tower->getType());
+    sprite.setScale(6, 6);
+    sprite.setPosition(50, 550);
+
+    sf::Text name, description, range, strength;
+    std::vector<sf::Text*> c = {&name, &description, &range, &strength};
+    for (int i = 0; i < c.size(); i++) {
+        auto d = c[i];
+        d->setCharacterSize(15);
+        d->setPosition(180, 550 + i * 30);
+        d->setFont(getFont());
+    }
+
+    c[0]->setString("Name: " + tower->GetName());
+    c[1]->setString("Description: " + tower->GetDescription());
+    c[2]->setString("Range: " + std::to_string(tower->GetRange()));
+    c[3]->setString("Strength: " + std::to_string(tower->GetStrength()));
+
+
+    window_.draw(sprite);
+    window_.draw(name);
+    for (auto e : c) {
+        window_.draw(*e);
+
+    }
+
 }

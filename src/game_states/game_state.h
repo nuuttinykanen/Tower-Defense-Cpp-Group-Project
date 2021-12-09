@@ -10,8 +10,13 @@
 #include "../utils/json_driver.h"
 
 
-enum GameButtonTarget {QuitToMenu, SaveGame, StartWave, SellTower, UpgradeTower};
+enum GameButtonTarget {QuitToMenu, SaveGame, StartWave, SellTower, UpgradeTower, DeselectTower};
 
+struct SelectedTower {
+    int x;
+    int y;
+    TowerSquare* tower;
+};
 // enum TowerTypes {GunnerType, BomberType, Attack3, Attack4, ClockerType, SeerType, StereoType, Support4};
 
 class GameState: public WindowState {
@@ -33,9 +38,11 @@ public:
 
     void poll_events() override;
 
-    void draw_tower_range(LevelMap* map, TowerSquare* tsq);
+    void draw_tower_range(TowerSquare* tsq);
 
-    void draw_info();
+    void draw_player_info();
+
+    void draw_selected_tower_info();
 
     void draw_current_state() override;
 
@@ -61,6 +68,8 @@ private:
     int levelNumber_;
     Player* player_;
 
+    bool isTowerSelected = false;
+    SelectedTower selectedTower_ = {};
 
 };
 #endif //TOWER_DEFENSE_12_GAME_STATE_H

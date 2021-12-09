@@ -39,7 +39,7 @@ void Enemy::ResetCooldownModifier() {
 
 void Enemy::ResetCooldown() {
     this->ResetCooldownModifier();
-    this->cooldown_ = 0;
+    this->cooldown_ = this->GetSpeed();
 }
 
 void Enemy::SetCooldownModifier() {

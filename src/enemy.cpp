@@ -18,8 +18,6 @@
 
     void Enemy::RemoveFromMap() { on_map_ = false; }
 
-    double Enemy::HealthPercentage() { return (double)currentHealth_ / (double)maxHealth_; }
-
     void Enemy::ChangeHealth(int amount) { 
         if(currentHealth_ + amount < 0) currentHealth_ = 0;
         else currentHealth_ += amount; 

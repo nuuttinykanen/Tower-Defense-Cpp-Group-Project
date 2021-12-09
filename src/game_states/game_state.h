@@ -35,6 +35,8 @@ public:
 
     void draw_tower_range(LevelMap* map, TowerSquare* tsq);
 
+    void draw_info();
+
     void draw_current_state() override;
 
     void saveGame();

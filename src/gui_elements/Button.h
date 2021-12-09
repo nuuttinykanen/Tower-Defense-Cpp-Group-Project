@@ -17,7 +17,7 @@ class Button {
 public:
     Button(Vector2f size, Vector2f pos, string text, sf::Font& font, int fontsize,
            float textOffsetX = 0, float textOffsetY = 10,
-           Color boxColor = Color::White,
+           Color boxColor = Color(224, 224, 224),
            Color textColor = Color::Black);
     ~Button() = default;
 

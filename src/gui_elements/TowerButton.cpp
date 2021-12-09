@@ -1,18 +1,20 @@
 #include "TowerButton.h"
 
 TowerButton::TowerButton(Vector2f pos, sf::Sprite& towerSprite) :
-        box_(RectangleShape(Vector2f(100, 100))),
+        box_(RectangleShape(Vector2f(90, 90))),
         icon_(towerSprite),
         pos_(pos)
 {
     box_.setPosition(pos);
+    box_.setOutlineColor(Color::Black);
+    box_.setOutlineThickness(5);
     box_.setFillColor(Color::White);
 }
 
 void TowerButton::draw(sf::RenderWindow &window) {
     window.draw(box_);
 
-    icon_.setPosition(pos_.x + 20, pos_.y + 20);
+    icon_.setPosition(pos_.x + 15, pos_.y + 15);
     icon_.setScale(3, 3);
     window.draw(icon_);
 

@@ -3,8 +3,9 @@
 #include "menu_state.h"
 #include <cmath>
 
-#define TOWER_BUTTON_GRID_START_X 1050
-#define TOWER_BUTTON_GRID_START_Y 75
+#define TOWER_BUTTON_GRID_START_X 1065
+#define TOWER_BUTTON_GRID_START_Y 15
+#define TOWER_BUTTON_OFFSET 110
 
 
 GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber): WindowState(window, gui) {
@@ -93,30 +94,7 @@ void GameState::draw_current_state() {
         window_.draw(freeSprite);
     }
 
-    //Draw player health and money ///////////////////////////////////////////
-    sf::Text pHealth;
-    sf::Text pMoney;
-
-    pHealth.setFont(this->getFont());
-    pMoney.setFont(this->getFont());
-
-    std::string health = "Health: " + std::to_string(this->player_->GetHealth());
-    std::string money = "Money: " + std::to_string(int(this->player_->GetMoney()));
-
-    pHealth.setString(health);
-    pMoney.setString(money);
-
-    pHealth.setCharacterSize(32);
-    pMoney.setCharacterSize(32);
-
-    pHealth.setFillColor(sf::Color::Red);
-    pMoney.setFillColor(sf::Color::Green);
-
-    pHealth.setPosition(10,550);
-    pMoney.setPosition(10, 600);
-
-    window_.draw(pHealth);
-    window_.draw(pMoney);
+    draw_info();
 
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
@@ -198,8 +176,11 @@ void GameState::poll_events() {
     auto globals = gui_->getGlobalObjects();
     while (window_.pollEvent(event))
     {
-        if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Closed) {
+            saveGame();
             window_.close();
+        }
+
 
         // 0 -> primary click, 1-> secondary
 
@@ -390,44 +371,51 @@ void GameState::buyTower(Tower* tower) {
 
 void GameState::generateButtons() {
     // Generate buttons
-    auto startButton = new Button(sf::Vector2f (225, 50), sf::Vector2f(1050, 650),
-                                  "Quit game",this->getFont(), 20);
-    buttons_[GameButtonTarget::QuitToMenu] = startButton;
-    auto startWaveButton = new Button(sf::Vector2f(225, 50), sf::Vector2f(1050, 590),
-                                      "Start wave!", this->getFont(), 20);
+
+    auto startWaveButton = new Button(sf::Vector2f(215, 40), sf::Vector2f(1060, 550),
+                                      "Start wave!", this->getFont(), 20, 2, 8);
     buttons_[GameButtonTarget::StartWave] = startWaveButton;
+
+    auto saveButton = new Button(sf::Vector2f(215, 40), sf::Vector2f(1060, 610),
+                                      "Save game", this->getFont(), 20, 20, 8);
+    buttons_[GameButtonTarget::SaveGame] = saveButton;
+
+    auto quitButton = new Button(sf::Vector2f (215, 40), sf::Vector2f(1060, 670),
+                                  "Quit game",this->getFont(), 20, 18, 8);
+    buttons_[GameButtonTarget::QuitToMenu] = quitButton;
+
     auto upgradeTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750
                                                  , 590),
-                                         "Upgrade tower", this->getFont(), 20);
+                                         "Upgrade tower", this->getFont(), 20, 10, 13);
     buttons_[GameButtonTarget::UpgradeTower] = upgradeTowerButton;
 
     auto sellTowerButton = new Button(sf::Vector2f(275, 50), sf::Vector2f(750, 650),
-                                      "Sell tower", this->getFont(), 20);
+                                      "Sell tower", this->getFont(), 20, 40, 13);
     buttons_[GameButtonTarget::SellTower] = sellTowerButton;
 
     // TODO: Add the correct sprites here when they are made
     auto attack1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getGunnerSprite());
     towerButtons_[TowerTypes::GunnerType] = attack1Button;
 
-    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getBomberSprite());
+    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getBomberSprite());
     towerButtons_[TowerTypes::BomberType] = attack2Button;
 
-    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 100), gui_->getGlobalObjects()->getGunnerSprite());
+    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite());
     towerButtons_[TowerTypes::Attack3] = attack3Button;
 
-    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y + 100), gui_->getGlobalObjects()->getGunnerSprite());
+    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite());
     towerButtons_[TowerTypes::Attack4] = attack4Button;
 
-    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 200), gui_->getGlobalObjects()->getClockerSprite());
+    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite());
     towerButtons_[TowerTypes::ClockerType] = support1Button;
 
-    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y + 200), gui_->getGlobalObjects()->getSeerSprite());
+    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getSeerSprite());
     towerButtons_[TowerTypes::SeerType] = support2Button;
 
-    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 300), gui_->getGlobalObjects()->getStereoDudeSprite());
+    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 3 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getStereoDudeSprite());
     towerButtons_[TowerTypes::StereoType] = support3Button;
 
-    auto support4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + 100, TOWER_BUTTON_GRID_START_Y + 300), gui_->getGlobalObjects()->getGunnerSprite());
+    auto support4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 3*TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite());
     towerButtons_[TowerTypes::Support4] = support4Button;
 }
 
@@ -470,4 +458,40 @@ void GameState::generateProjectileHitSprites() {
 
 void GameState::saveGame() {
     JSON::saveCurrentGame(game_, levelNumber_);
+}
+
+void GameState::draw_info() {
+    sf::Text pHealth;
+    sf::Text pMoney;
+    sf::Text waves;
+
+    pHealth.setFont(this->getFont());
+    pMoney.setFont(this->getFont());
+    waves.setFont(this->getFont());
+
+    std::string health = "Health: " + std::to_string(this->player_->GetHealth());
+    std::string money = "Money: " + std::to_string(int(this->player_->GetMoney()));
+    std::string waveText = "Wave " + std::to_string(game_->GetWaveNumber()) + " / " + std::to_string(game_->GetTotalWaveCount());
+
+    pHealth.setString(health);
+    pMoney.setString(money);
+    waves.setString(waveText);
+
+    pHealth.setCharacterSize(20);
+    pMoney.setCharacterSize(20);
+    waves.setCharacterSize(20);
+
+    pHealth.setFillColor(sf::Color::Red);
+    pMoney.setFillColor(sf::Color::Green);
+    waves.setFillColor(sf::Color::White);
+
+
+
+    pHealth.setPosition(1060,450);
+    pMoney.setPosition(1060, 485);
+    waves.setPosition(1060, 520);
+
+    window_.draw(pHealth);
+    window_.draw(pMoney);
+    window_.draw(waves);
 }

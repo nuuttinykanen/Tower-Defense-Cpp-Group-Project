@@ -6,6 +6,8 @@ Button::Button(Vector2f size, Vector2f pos, string text, sf::Font& font, int fon
 box_(RectangleShape(size)){
     box_.setPosition(pos);
     box_.setFillColor(boxColor);
+    box_.setOutlineColor(Color::Black);
+    box_.setOutlineThickness(4);
     text_.setFont(font);
     text_.setCharacterSize(fontsize);
     text_.setString(text);

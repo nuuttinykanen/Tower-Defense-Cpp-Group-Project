@@ -8,7 +8,7 @@ WindowState::WindowState(sf::RenderWindow& window, Gui* gui)
 }
 
 void WindowState::draw_window() {
-    window_.clear();
+    window_.clear(Color(38, 38, 38));
 
     advance_state();
     draw_current_state();

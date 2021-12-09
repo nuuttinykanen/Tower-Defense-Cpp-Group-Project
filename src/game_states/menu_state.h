@@ -4,7 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 
-enum MenuButtonTarget {StartGame, StartLevelSelect, Quit};
+enum MenuButtonTarget {StartLatestSave, StartLevelSelect, Quit};
 
 
 class MenuState: public WindowState {
@@ -19,7 +19,7 @@ public:
 
     void poll_events() override;
 
-    void start_game();
+    void start_latest_save();
 
     void startLevelSelect();
 

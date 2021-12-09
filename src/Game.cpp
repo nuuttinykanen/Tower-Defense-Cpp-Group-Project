@@ -180,6 +180,10 @@ void Game::UpdateState() {
     }
 }
 
+void Game::SetWaveNumber(unsigned int newWaveNumber) {
+    waveNum_ = newWaveNumber;
+}
+
 
 
 

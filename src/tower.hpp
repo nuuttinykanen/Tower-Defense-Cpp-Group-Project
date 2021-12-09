@@ -2,6 +2,13 @@
 #define TOWER_HPP
 #include <iostream>
 #include <vector>
+
+
+enum TowerTypes {GunnerType, MultiGunnerType, GunFiendType, BomberType, SuperBomberType, UltraBomberType,
+        Attack3, Attack4, ClockerType, ClockerBlockerType, SeerType, MotherBrainType,
+        StereoType, DJDudeType, Support4
+};
+
 class Tower {
     public:
     Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(name), strength_(strength), range_(range), price_(price) { }
@@ -18,7 +25,9 @@ class Tower {
 
     unsigned int GetPrice() const;
 
-    virtual std::string GetType() const = 0;
+    virtual std::string GetMainType() const = 0;
+
+    virtual TowerTypes getType() const = 0;
 
     virtual Tower* Upgrade() = 0;
 

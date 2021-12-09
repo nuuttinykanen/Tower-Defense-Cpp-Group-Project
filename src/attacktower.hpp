@@ -41,7 +41,7 @@ class AttackTower : public Tower {
 
 
 
-    virtual std::string GetType() const;
+    virtual std::string GetMainType() const;
 };
 
 class Bomber : public AttackTower {
@@ -49,6 +49,9 @@ class Bomber : public AttackTower {
     Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 2, 20, 500) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::BomberType;}
+
     virtual Tower* Upgrade();
 };
 
@@ -56,6 +59,9 @@ class SuperBomber : public AttackTower {
     public:
     SuperBomber() : AttackTower("Super Bomber", "Super bombs enemies", 2, 3, 15, 510) { }
     virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::SuperBomberType;}
+
     virtual Tower* Upgrade();
 };
 
@@ -63,6 +69,9 @@ class UltraBomber : public AttackTower {
     public:
     UltraBomber() : AttackTower("Ultra Bomber", "Ultra bombs enemies", 2, 4, 100, 510) { }
     virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::UltraBomberType;}
+
     virtual Tower* Upgrade();
 };
 
@@ -71,6 +80,9 @@ class Gunner : public AttackTower {
     Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 5, 20, 500) { }
     ~Gunner(){}
     virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::GunnerType;}
+
     virtual Tower* Upgrade();
 };
 
@@ -79,6 +91,9 @@ class Multigunner : public AttackTower {
     Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 1, 5, 20, 500) { }
     ~Multigunner(){}
     virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::MultiGunnerType;}
+
     virtual Tower* Upgrade();
 };
 
@@ -87,5 +102,8 @@ class GunFiend : public AttackTower {
     GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 1, 2, 20, 500) { }
     ~GunFiend(){}
     virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::GunFiendType;}
+
     virtual Tower* Upgrade();
 };

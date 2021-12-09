@@ -8,9 +8,9 @@ MenuState::MenuState(sf::RenderWindow& window, Gui* gui) : WindowState(window, g
     // Generate buttons
     auto size = window_.getSize();
     auto startButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 100),
-                                  "Start a new game",this->getFont(), 20);
+                                  "Start the latest save",this->getFont(), 20);
 
-    buttons_[MenuButtonTarget::StartGame] = startButton;
+    buttons_[MenuButtonTarget::StartLatestSave] = startButton;
 
     auto levelSelectButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 200),
                                   "Level selector",this->getFont(), 20);
@@ -59,8 +59,8 @@ void MenuState::poll_events() {
                     if (!b.second->contains(mouse_pos)) continue;
                     switch (b.first) {
 
-                        case StartGame:
-                            start_game();
+                        case StartLatestSave:
+                            start_latest_save();
                             return;
                         case StartLevelSelect:
                             startLevelSelect();
@@ -81,13 +81,12 @@ void MenuState::poll_events() {
     }
 }
 
-void MenuState::start_game() {
-    std::cout << "Starting the game!" << std::endl;
-    gui_->change_game_state(new GameState(window_, gui_, 1));
+void MenuState::start_latest_save() {
+    gui_->change_game_state(new GameState(window_, gui_, 0));
+
 }
 
 void MenuState::startLevelSelect() {
-    std::cout << "Starting level select!" << std::endl;
     gui_->change_game_state(new LevelSelectState(window_, gui_));
 }
 

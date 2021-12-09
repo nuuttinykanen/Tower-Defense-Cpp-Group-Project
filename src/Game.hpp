@@ -1,3 +1,7 @@
+#ifndef TOWER_DEFENSE_12_GAME_H
+#define TOWER_DEFENSE_12_GAME_H
+
+
 #include "levelmap.hpp"
 #include <vector>
 #include "player.hpp"
@@ -25,6 +29,12 @@ class Game {
     ~Game();
 
     LevelMap& GetMap();
+
+    Player& GetPlayer() {return player_;}
+
+    unsigned int GetWaveNumber() {return waveNum_;}
+
+    void SetWaveNumber(unsigned int newWaveNumber);
 
     void UpdateState();
 
@@ -72,3 +82,4 @@ class Game {
 
 };
 
+#endif

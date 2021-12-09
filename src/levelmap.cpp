@@ -108,7 +108,7 @@ const std::map<std::pair<int, int>, TowerSquare*> LevelMap::GetTowerSquares() {
   std::vector<TowerSquare*> LevelMap::GetAttackTowers() {
     std::vector<TowerSquare*> list;
     for(auto it : this->GetTowerSquares()) {
-      if(it.second->GetTower()->GetType() == "attack") {
+      if(it.second->GetTower()->GetMainType() == "attack") {
         list.push_back(it.second);
       }
     }
@@ -118,7 +118,7 @@ const std::map<std::pair<int, int>, TowerSquare*> LevelMap::GetTowerSquares() {
   std::vector<TowerSquare*> LevelMap::GetSupportTowers() {
     std::vector<TowerSquare*> list;
     for(auto it : this->GetTowerSquares()) {
-        if(it.second->GetTower()->GetType() == "support") {
+        if(it.second->GetTower()->GetMainType() == "support") {
             list.push_back(it.second);
         }
     }
@@ -383,7 +383,7 @@ EnemySquare* LevelMap::GetFarthestEnemy(std::vector<EnemySquare*> list) {
 
 void LevelMap::ShootProjectile(TowerSquare* sender) {
     Tower* tower = sender->GetTower();
-    if(tower->GetType() != "attack") return;
+    if(tower->GetMainType() != "attack") return;
 
     EnemySquare* target_s = this->GetFarthestEnemy(sender->EnemySquaresInRange());
     if(target_s == nullptr || !target_s->ContainsEnemies()) return;

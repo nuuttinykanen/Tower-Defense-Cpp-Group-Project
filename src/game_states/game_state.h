@@ -9,13 +9,13 @@
 #include "../gui_elements/EnemyGui.h"
 #include "../utils/json_driver.h"
 
-enum GameButtonTarget {QuitToMenu, StartWave, SellTower, UpgradeTower};
 
-enum TowerSelectionTarget {Attack1, Attack2, Attack3, Attack4, Support1, Support2, Support3, Support4};
+enum GameButtonTarget {QuitToMenu, SaveGame, StartWave, SellTower, UpgradeTower};
+
+// enum TowerTypes {GunnerType, BomberType, Attack3, Attack4, ClockerType, SeerType, StereoType, Support4};
 
 class GameState: public WindowState {
 public:
-    // TODO: Specify which level to start
     GameState(sf::RenderWindow& window, Gui* gui, int levelNumber);
     ~GameState();
 
@@ -37,6 +37,8 @@ public:
 
     void draw_current_state() override;
 
+    void saveGame();
+
     void quitToMenu();
 
     void startWave();
@@ -45,7 +47,7 @@ public:
 
 private:
     std::map<GameButtonTarget, Button*> buttons_;
-    std::map<TowerSelectionTarget, TowerButton*> towerButtons_;
+    std::map<TowerTypes, TowerButton*> towerButtons_;
     std::map<std::string, sf::Sprite> enemySprites_;
     std::map<std::string, sf::Sprite> towerSprites_;
     std::map<std::string, sf::Sprite> projectileSprites_;

@@ -43,7 +43,7 @@
         rangeModifiers_ = 0;
     }
 
-    std::string AttackTower::GetType() const { return "attack"; }
+    std::string AttackTower::GetMainType() const { return "attack"; }
 
     Projectile* Bomber::GetProjectile() {
         Projectile* projec = new BombProjectile(this);

@@ -60,5 +60,7 @@ private:
     LevelMap* levelMap_;
     int levelNumber_;
     Player* player_;
+
+
 };
 #endif //TOWER_DEFENSE_12_GAME_STATE_H

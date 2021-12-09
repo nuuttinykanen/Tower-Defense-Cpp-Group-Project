@@ -72,7 +72,7 @@ void GameState::draw_current_state() {
         b.second->draw(window_);
     }
     for (auto t : towerButtons_)  {
-        t.second->draw(window_);
+        t.second->draw(window_, player_->GetMoney());
     }
     auto globals = gui_->getGlobalObjects();
 
@@ -424,28 +424,37 @@ void GameState::generateButtons() {
     buttons_[GameButtonTarget::SellTower] = sellTowerButton;
 
     // TODO: Add the correct sprites here when they are made
-    auto attack1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getGunnerSprite());
+    // TODO: Add correct costs in the end
+    auto attack1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getGunnerSprite(),
+                                         getFont(), 50);
     towerButtons_[TowerTypes::GunnerType] = attack1Button;
 
-    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getBomberSprite());
+    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getBomberSprite(),
+                                         getFont(), 100);
     towerButtons_[TowerTypes::BomberType] = attack2Button;
 
-    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite());
+    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
+                                         getFont(), 200);
     towerButtons_[TowerTypes::Attack3] = attack3Button;
 
-    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite());
+    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
+                                         getFont(), 300);
     towerButtons_[TowerTypes::Attack4] = attack4Button;
 
-    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite());
+    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite(),
+                                          getFont(), 50);
     towerButtons_[TowerTypes::ClockerType] = support1Button;
 
-    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getSeerSprite());
+    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getSeerSprite(),
+                                          getFont(), 50);
     towerButtons_[TowerTypes::SeerType] = support2Button;
 
-    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 3 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getStereoDudeSprite());
+    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 3 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getStereoDudeSprite(),
+                                          getFont(), 50);
     towerButtons_[TowerTypes::StereoType] = support3Button;
 
-    auto support4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 3*TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite());
+    auto support4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 3*TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
+                                          getFont(), 50);
     towerButtons_[TowerTypes::Support4] = support4Button;
 }
 

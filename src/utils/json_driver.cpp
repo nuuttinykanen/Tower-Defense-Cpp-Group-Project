@@ -180,7 +180,7 @@ Game* JSON::loadLatestSave() {
     int levelIndex = root["index"].asInt();
     int currentWave = root["current_wave"].asInt();
     int playerHealth = root["health"].asInt();
-    int playerMoney = root["money"].asInt();
+    float playerMoney = root["money"].asFloat();
 
     auto lvlMap = loadLevelMap(levelIndex);
     auto waves = loadWaves(levelIndex);

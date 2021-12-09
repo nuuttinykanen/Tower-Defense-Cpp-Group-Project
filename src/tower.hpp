@@ -11,7 +11,7 @@ enum TowerTypes {GunnerType, MultiGunnerType, GunFiendType, BomberType, SuperBom
 
 class Tower {
     public:
-    Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(name), strength_(strength), range_(range), price_(price) { }
+    Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(name), description_(description), strength_(strength), range_(range), price_(price) { }
     
     ~Tower();
 

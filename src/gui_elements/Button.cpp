@@ -12,7 +12,6 @@ box_(RectangleShape(size)){
     text_.setCharacterSize(fontsize);
     text_.setString(text);
     text_.setFillColor(textColor);
-    text_.setString(text);
     text_.setPosition(pos.x + textOffsetX, pos.y + textOffsetY);
 }
 

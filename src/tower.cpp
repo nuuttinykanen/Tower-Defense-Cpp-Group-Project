@@ -4,7 +4,7 @@
 
     std::string Tower::GetName() const { return name_; }
 
-    std::string Tower::GetDescription() const { return description_; } 
+    std::string Tower::GetDescription() const { return description_; }
 
     unsigned int Tower::GetStrength() const { return strength_; }
 

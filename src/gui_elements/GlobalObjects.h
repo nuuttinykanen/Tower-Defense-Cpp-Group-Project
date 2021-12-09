@@ -2,6 +2,8 @@
 #define TOWER_DEFENSE_12_GLOBALOBJECTS_H
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include "../tower.hpp"
+
 // Contains fonts, sprites, etc. so they don`t have to be initalized everytime
 class GlobalObjects {
 public:
@@ -41,6 +43,8 @@ public:
     sf::Sprite& getGunFiendSprite(float scaledBy = 1);
     sf::Sprite& getStereoDudeSprite(float scaledBy = 1);
     sf::Sprite& getDJDudeSprite(float scaledBy = 1);
+
+    sf::Sprite& getTowerSpriteByType(TowerTypes type, float scaledBy = 1);
 
 private:
     sf::Font font_;

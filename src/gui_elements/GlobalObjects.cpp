@@ -1,4 +1,7 @@
+
+
 #include "GlobalObjects.h"
+
 
 GlobalObjects::GlobalObjects() {
     // Relative path from the cmake executable
@@ -303,6 +306,44 @@ sf::Sprite &GlobalObjects::getBombProjecHit1Sprite(float scaledBy) {
 sf::Sprite &GlobalObjects::getBombProjecHit2Sprite(float scaledBy) {
     bombProjecHit2Sprite_.scale(scaledBy, scaledBy);
     return bombProjecHit2Sprite_;
+}
+
+sf::Sprite &GlobalObjects::getTowerSpriteByType(TowerTypes type, float scaledBy) {
+
+    switch (type) {
+        case GunnerType:
+            return getGunnerSprite(scaledBy);
+        case MultiGunnerType:
+            return getMultigunnerSprite(scaledBy);
+        case GunFiendType:
+            return getGunFiendSprite(scaledBy);
+        case BomberType:
+            return getBomberSprite(scaledBy);
+        case SuperBomberType:
+            return getSuperBomberSprite(scaledBy);
+        case UltraBomberType:
+            return getUltraBomberSprite(scaledBy);
+        case Attack3:
+            return getGunnerSprite(scaledBy);
+        case Attack4:
+            return getGunnerSprite(scaledBy);
+        case ClockerType:
+            return getClockerSprite(scaledBy);;
+        case ClockerBlockerType:
+            return getClockBlockerSprite(scaledBy);
+        case SeerType:
+            return getSeerSprite(scaledBy);
+        case MotherBrainType:
+            return getMotherBrainSprite(scaledBy);
+        case StereoType:
+            return getStereoDudeSprite(scaledBy);
+        case DJDudeType:
+            return getDJDudeSprite(scaledBy);
+        case Support4:
+            return getSeerSprite(scaledBy);
+        default:
+            throw std::invalid_argument("Invalid tower type");
+    }
 }
 
 

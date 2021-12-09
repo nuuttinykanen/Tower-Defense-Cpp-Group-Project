@@ -54,3 +54,26 @@ void Enemy::ProgressCooldown() {
 unsigned int Enemy::GetCooldownModifier() {
     return this->cooldownModifier_;
 }
+
+Enemy *Zombie::Inner() {
+    return nullptr;
+}
+
+
+Enemy *ZombieHorde::Inner() {
+    auto inner = new Zombie();
+    return inner;
+}
+
+Enemy *MichaelMyers::Inner() {
+    return nullptr;
+}
+
+Enemy *Dracula::Inner() {
+    return nullptr;
+}
+
+Enemy *Bat::Inner() {
+    auto inner = new Dracula();
+    return inner;
+}

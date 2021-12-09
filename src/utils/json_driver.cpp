@@ -1,8 +1,10 @@
+
+
 #include "json_driver.h"
 
 // Maps each map index to a save file name
 std::map<int, std::string> indexToFile {
-        make_pair(0, "latest_save/test.json"),
+        make_pair(0, "latest_save/save.json"),
         make_pair(1, "level1.json"),
         make_pair(2, "level2.json"),
         make_pair(3, "level3.json"),
@@ -18,7 +20,7 @@ enum Enemies {
 void JSON::test() {
     Json::Value root;
     std::ifstream ifs;
-    ifs.open("../src/level_files/test.json");
+    ifs.open("../src/level_files/save.json");
     Json::CharReaderBuilder builder;
 
     JSONCPP_STRING errs;
@@ -61,7 +63,7 @@ LevelMap* JSON::loadLevelMap(int index) {
     for (int i = 0; i < pairs.size() - 1; i++) {
         coords.emplace_back(pairs[i], pairs[i + 1]);
     }
-    auto levelMap = new LevelMap(width, height);
+    auto levelMap = new LevelMap(width, height, index);
     levelMap->InitializePath(coords);
     return levelMap;
 }
@@ -113,10 +115,146 @@ std::vector<Wave*> JSON::loadWaves(int index) {
         }
     }
     std::reverse(newWaves.begin(), newWaves.end());
+
+    ifs.close();
+
     return newWaves;
 }
 
 
 int JSON::getNumberOfLevels() {
     return indexToFile.size() - 1;
+}
+
+void JSON::saveCurrentGame(Game* game, int levelNumber) {
+    auto fileName = indexToFile[0];
+    Json::Value root;
+    std::ofstream ofs;
+    ofs.open("../src/level_files/" + fileName);
+
+    Json::StyledWriter styledWriter;
+
+    JSONCPP_STRING errs;
+
+    root["index"] = levelNumber;
+
+
+    // Save towers and their positions
+    auto towerSquares = game->GetMap().GetTowerSquares();
+    Json::Value vec(Json::arrayValue);
+
+    for (auto it : towerSquares) {
+        Json::Value newTower;
+        auto tower = it.second->GetTower();
+
+        newTower["id"] = tower->getType();
+        newTower["x"] = it.first.first;
+        newTower["y"] = it.first.second;
+
+        vec.append(newTower);
+    }
+    root["towers"] = vec;
+
+    root["current_wave"] = game->GetWaveNumber();
+
+
+    ofs << styledWriter.write(root);
+    ofs.close();
+}
+
+Game* JSON::loadLatestSave() {
+    auto fileName = indexToFile[0];
+    Json::Value root;
+    std::ifstream ifs;
+    ifs.open("../src/level_files/" + fileName);
+
+    Json::CharReaderBuilder builder;
+
+    JSONCPP_STRING errs;
+    if (!parseFromStream(builder, ifs, &root, &errs)) {
+        std::cout << errs << std::endl;
+        Json::throwRuntimeError("Couldn't parse json");
+    }
+
+    int levelIndex = root["index"].asInt();
+    int currentWave = root["current_wave"].asInt();
+
+
+    auto lvlMap = loadLevelMap(levelIndex);
+    auto waves = loadWaves(levelIndex);
+
+
+    auto player = new Player(100);
+    auto game = new Game(*lvlMap, *player, waves);
+    game->SetWaveNumber(currentWave);
+
+
+    // load the placed towers
+    for (auto tower : root["towers"]) {
+        int x = tower["x"].asInt();
+        int y = tower["y"].asInt();
+        auto towerType = static_cast<TowerTypes>(tower["id"].asInt());
+        Tower* newTower = nullptr;
+
+        switch (towerType) {
+            case GunnerType:
+                newTower = new Gunner();
+                break;
+            case MultiGunnerType:
+                newTower = new Multigunner();
+                break;
+            case GunFiendType:
+                newTower = new GunFiend();
+                break;
+            case BomberType:
+                newTower = new Bomber();
+                break;
+            case SuperBomberType:
+                newTower = new SuperBomber();
+                break;
+            case UltraBomberType:
+                newTower = new UltraBomber();
+                break;
+            case Attack3:
+                // TODO: Add new attack tower
+                newTower = new Gunner();
+                break;
+            case Attack4:
+                // TODO: Add new attack tower
+                newTower = new Gunner();
+                break;
+            case ClockerType:
+                newTower = new Clocker();
+                break;
+            case ClockerBlockerType:
+                newTower = new ClockBlocker();
+                break;
+            case SeerType:
+                newTower = new Seer();
+                break;
+            case MotherBrainType:
+                newTower = new MotherBrain();
+                break;
+            case StereoType:
+                newTower = new StereoDude();
+                break;
+            case DJDudeType:
+                newTower = new DJDude();
+                break;
+            case Support4:
+                // TODO: Add new support tower
+                newTower = new Clocker();
+                break;
+            default:
+                Json::throwLogicError("Unknown tower id");
+        }
+        lvlMap->PlaceTower(x, y, newTower);
+    }
+
+
+
+
+    ifs.close();
+
+    return game;
 }

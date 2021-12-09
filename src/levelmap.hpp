@@ -15,7 +15,7 @@ class LevelMap {
 
   public:
   // TODO: Path validity checks. 
-  LevelMap(unsigned int width, unsigned int height): width_(width), height_(height) {
+  LevelMap(unsigned int width, unsigned int height, int levelNumber): width_(width), height_(height), levelNumber_(levelNumber) {
     towers_ = std::vector<Tower*>();
     enemies_ = std::vector<Enemy*>();
     squares_ = std::map<std::pair<int, int>, MapSquare*>();
@@ -37,6 +37,7 @@ class LevelMap {
   }
   ~LevelMap();
   void InitializePath(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> enemy_path);
+  int getLevelNumber() {return levelNumber_;}
   const MapSquare* GetStartSquare();
   const MapSquare* GetEndSquare();
   const std::map<std::pair<int, int>, MapSquare*>& GetSquares();
@@ -86,6 +87,7 @@ class LevelMap {
   size_t size_;
   int width_;
   int height_;
+  int levelNumber_;
   std::map<std::pair<int, int>, MapSquare*> squares_;
   std::map<std::pair<int, int>, EnemySquare*> enemy_path_;
   std::vector<Tower*> towers_;

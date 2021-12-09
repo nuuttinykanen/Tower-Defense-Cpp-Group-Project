@@ -1,6 +1,6 @@
 #include "supporttower.hpp"
 
-std::string SupportTower::GetType() const { return "support"; }
+std::string SupportTower::GetMainType() const { return "support"; }
 
 unsigned int SupportTower::GetRange() const { return this->range_; }
 
@@ -48,7 +48,7 @@ void Seer::supportEffect(MapSquare* square) {
     std::string type = square->GetType();
     if(type == "tower") {
         auto ts = (TowerSquare*)square;
-        if(ts->GetTower()->GetType() == "attack") {
+        if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
             tow->AddRangeModifier(this->GetStrength());
         }
@@ -65,7 +65,7 @@ void MotherBrain::supportEffect(MapSquare* square) {
     std::string type = square->GetType();
     if(type == "tower") {
         auto ts = (TowerSquare*)square;
-        if(ts->GetTower()->GetType() == "attack") {
+        if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
             tow->AddRangeModifier(this->GetStrength());
         }
@@ -81,7 +81,7 @@ void StereoDude::supportEffect(MapSquare *square) {
     std::string type = square->GetType();
     if(type == "tower") {
         auto ts = (TowerSquare*)square;
-        if(ts->GetTower()->GetType() == "attack") {
+        if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
             tow->AddCooldownModifier(this->GetStrength() * -1);
         }
@@ -98,7 +98,7 @@ void DJDude::supportEffect(MapSquare *square) {
     std::string type = square->GetType();
     if(type == "tower") {
         auto ts = (TowerSquare*)square;
-        if(ts->GetTower()->GetType() == "attack") {
+        if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
             tow->AddCooldownModifier(this->GetStrength() * 0.01 * -1);
         }

@@ -12,7 +12,7 @@ class SupportTower : public Tower {
 
     virtual void supportEffect(MapSquare* square) = 0;
 
-    virtual std::string GetType() const;
+    virtual std::string GetMainType() const;
 
     virtual unsigned int GetRange() const;
 
@@ -24,6 +24,9 @@ class Clocker : public SupportTower {
     ~Clocker() { };
 
     virtual void supportEffect(MapSquare* square);
+
+    virtual TowerTypes getType() const {return TowerTypes::ClockerType;}
+
     virtual Tower* Upgrade();
 };
 
@@ -32,6 +35,8 @@ class ClockBlocker : public SupportTower {
     ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range.", 200, 3, 1200) {}
     ~ClockBlocker() { };
     virtual Tower* Upgrade();
+
+    virtual TowerTypes getType() const {return TowerTypes::ClockerBlockerType;}
 
     virtual void supportEffect(MapSquare* square);
 };
@@ -42,6 +47,8 @@ class Seer : public SupportTower {
     ~Seer() { };
     virtual Tower* Upgrade();
 
+    virtual TowerTypes getType() const {return TowerTypes::SeerType;}
+
     virtual void supportEffect(MapSquare* square);
 };
 
@@ -50,6 +57,9 @@ public:
     MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers within range.", 1, 2, 1200) {}
     ~MotherBrain() {};
     virtual Tower* Upgrade();
+
+    virtual TowerTypes getType() const {return TowerTypes::MotherBrainType;}
+
 
     virtual void supportEffect(MapSquare* square);
 };
@@ -60,6 +70,8 @@ class StereoDude : public SupportTower {
     ~StereoDude() { };
     virtual Tower* Upgrade();
 
+    virtual TowerTypes getType() const {return TowerTypes::StereoType;}
+
     virtual void supportEffect(MapSquare* square);
 };
 
@@ -67,6 +79,9 @@ class DJDude : public SupportTower {
 public:
     DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack towers within range by strength.", 80, 3, 1200) { }
     ~DJDude() { };
+
+    virtual TowerTypes getType() const {return TowerTypes::DJDudeType;}
+
     virtual Tower* Upgrade();
 
     virtual void supportEffect(MapSquare* square);

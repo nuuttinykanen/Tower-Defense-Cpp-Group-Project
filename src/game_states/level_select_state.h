@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../utils/json_driver.h"
 #include "game_state.h"
+#include "menu_state.h"
 #include "../Gui.h"
 // #include "../Gui.h"
 

@@ -22,6 +22,11 @@ LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowSt
             y++;
             x = 0;
         }
+        if (i == JSON::getNumberOfLevels()) {
+            auto backToMenuButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 300 + 100 * y),
+                                               "Back to main menu", getFont(), 20, 10);
+            buttons_[-1] = backToMenuButton;
+        }
     }
 }
 
@@ -53,6 +58,11 @@ void LevelSelectState::poll_events() {
                     if (!b.second->contains(mouse_pos)) continue;
 
                     switch (b.first) {
+                        case -1:{
+                            auto menu = new MenuState(window_, gui_);
+                            gui_->change_game_state(menu);
+                            return;
+                        }
                         case 0: {
                             auto game = new GameState(window_, gui_, 0);
                             gui_->change_game_state(game);

@@ -7,18 +7,18 @@ MenuState::MenuState(sf::RenderWindow& window, Gui* gui) : WindowState(window, g
 
     // Generate buttons
     auto size = window_.getSize();
-    auto startButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 100),
-                                  "Start the latest save",this->getFont(), 20);
+    auto startButton = new Button(sf::Vector2f (450, 50), sf::Vector2f(450, 125),
+                                  "Start the latest save",this->getFont(), 20, 10);
 
     buttons_[MenuButtonTarget::StartLatestSave] = startButton;
 
-    auto levelSelectButton = new Button(sf::Vector2f (425, 50), sf::Vector2f(500, 200),
-                                  "Level selector",this->getFont(), 20);
+    auto levelSelectButton = new Button(sf::Vector2f (450, 50), sf::Vector2f(450, 225),
+                                  "Level selector",this->getFont(), 20, 85);
 
     buttons_[MenuButtonTarget::StartLevelSelect] = levelSelectButton;
 
-    auto quitButton = new Button(sf::Vector2f (325, 50), sf::Vector2f(500, 300),
-                                  "Quit the game",this->getFont(), 20);
+    auto quitButton = new Button(sf::Vector2f (450, 50), sf::Vector2f(450, 325),
+                                  "Quit the game",this->getFont(), 20, 100);
     buttons_[MenuButtonTarget::Quit] = quitButton;
 
 }

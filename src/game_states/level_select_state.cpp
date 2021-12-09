@@ -6,10 +6,16 @@ LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowSt
     JSON::loadLevelMap(1);
     int y = 0;
     int x = 0;
+
+
+    auto latestSaveButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 100),
+                                       "Load latest save", getFont(), 20, 15);
+    buttons_[0] = latestSaveButton;
+
     // Draw buttons in a 4xX grid
     for (int i = 1; i <= JSON::getNumberOfLevels() ; i++) {
         auto button = new Button(sf::Vector2f(50, 50), sf::Vector2f(475 + 100 * x, 200 + 100 * y),
-                                 std::to_string(i), this->getFont(), 20, 15);
+                                 std::to_string(i), getFont(), 20, 15);
         buttons_[i] = button;
         x++;
         if (i % 4 == 0)  {
@@ -48,12 +54,14 @@ void LevelSelectState::poll_events() {
 
                     switch (b.first) {
                         case 0: {
-                            std::cout << "Switching to previous save" << std::endl;
+                            auto game = new GameState(window_, gui_, 0);
+                            gui_->change_game_state(game);
                             return;
                         }
                         default: {
                             auto game = new GameState(window_, gui_, b.first);
                             gui_->change_game_state(game);
+                            return;
                         }
                     }
                 }

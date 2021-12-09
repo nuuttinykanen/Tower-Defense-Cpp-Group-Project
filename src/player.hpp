@@ -8,7 +8,7 @@
 class Player {
 
     public :
-        Player(unsigned int maxHealth, int money = 100, std::vector<Tower*> towers = std::vector<Tower*>() ) : maxHealth_(maxHealth), money_(money), playerTowers_(towers) {
+        Player(unsigned int maxHealth, int money = 500, std::vector<Tower*> towers = std::vector<Tower*>() ) : maxHealth_(maxHealth), money_(money), playerTowers_(towers) {
             health_ = maxHealth;
         }
         ~Player();

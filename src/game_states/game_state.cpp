@@ -204,15 +204,37 @@ void GameState::draw_current_state() {
 
 }
 
+bool buyingTower = false;
+Tower* newTower = nullptr;
 void GameState::poll_events() {
     sf::Event event{};
-
+    LevelMap& map = game_->GetMap();
+    auto globals = gui_->getGlobalObjects();
     while (window_.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
             window_.close();
 
         // 0 -> primary click, 1-> secondary
+
+        if (buyingTower && event.type == sf::Event::MouseButtonReleased) {
+            auto placeTo = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
+            for(auto area : map.GetFreeSquares()) {
+                auto freeSprite = globals->getFreeSquareSprite();
+                freeSprite.setScale(2, 2);
+                freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
+                if(freeSprite.getGlobalBounds().contains(placeTo)) {
+                    buyingTower = !(this->levelMap_->PlaceTower(area.second->GetX(), area.second->GetY(), newTower));
+                    if(buyingTower) {
+                        std::cout << "Choose another square!" << std::endl;
+                    } else {
+                        buyTower(newTower);
+                    }
+                    break;
+                }
+            }
+        }
+
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == 0) {
                 auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
@@ -239,91 +261,107 @@ void GameState::poll_events() {
                     switch (t.first) {
 
                         case Attack1: {
-                            auto newTower = new Gunner();
+                            newTower = new Gunner();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Attack2: {
-                            auto newTower = new Bomber();
+                            newTower = new Bomber();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Attack3: {
-                            auto newTower = new Gunner();
+                            newTower = new Gunner();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Attack4: {
-                            auto newTower = new Gunner();
+                            newTower = new Gunner();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Support1: {
-                            auto newTower = new Clocker();
+                            newTower = new Clocker();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Support2: {
-                            auto newTower = new Seer();
+                            newTower = new Seer();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Support3: {
-                            auto newTower = new StereoDude();
+                            newTower = new StereoDude();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                         case Support4: {
-                            auto newTower = new Gunner();
+                            newTower = new Clocker();
                             if(newTower->GetPrice() <= player_->GetMoney()) {
-                                buyTower(newTower);
                                 std::cout << "Choosing tower!" << std::endl;
+                                std::cout << "Click on a free square to place the tower!" << std::endl;
+                                buyingTower = true;
                             } else {
                                 std::cout << "You don't have enough money!" << std::endl;
                                 delete (newTower);
                             }
+
                             return;
                         }
                     }

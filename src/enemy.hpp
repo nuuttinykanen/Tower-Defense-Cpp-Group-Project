@@ -48,7 +48,7 @@ class Enemy {
 
 class Zombie : public Enemy {
     public:
-    Zombie(int health = 4, int attack = 1, int speed = 30, int bounty = 19) :
+    Zombie(int health = 4, int attack = 1, int speed = 2, int bounty = 19) :
     Enemy("Zombie", health, attack, speed, bounty) {}
     ~Zombie(){}
     virtual Enemy* Inner();

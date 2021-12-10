@@ -8,7 +8,7 @@ class SupportTower : public Tower {
     public:
     SupportTower(std::string name, std::string description, int strength, int range, int cost):
      Tower(name, description, strength, range, cost) {}
-    ~SupportTower(){}
+    ~SupportTower() override = default;
 
     virtual void supportEffect(MapSquare* square) = 0;
 

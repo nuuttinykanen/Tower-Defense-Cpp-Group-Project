@@ -8,6 +8,7 @@
 #define TOWER_BUTTON_OFFSET 110
 
 
+
 GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber): WindowState(window, gui) {
 
     generateButtons();
@@ -180,7 +181,7 @@ void GameState::draw_current_state() {
             window_.draw(projSprite);
         }
     }
-
+    draw_popup_text();
 
 }
 
@@ -206,32 +207,15 @@ void GameState::poll_events() {
                 freeSprite.setScale(2, 2);
                 freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
                 if(freeSprite.getGlobalBounds().contains(placeTo)) {
-                    buyingTower = !(this->levelMap_->PlaceTower(area.second->GetX(), area.second->GetY(), newTower));
+                    this->levelMap_->PlaceTower(area.second->GetX(), area.second->GetY(), newTower);
+                    buyingTower = false;
+                    remove_popup();
                     buyTower(newTower);
                     break;
                 }
             }
         }
 
-        //sells and removes a tower from a tower square
-        /*if (sellingTower && event.type == sf::Event::MouseButtonReleased) {
-            auto removeFrom = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
-            for(auto area : map.GetTowerSquares()) {
-                auto freeSprite = globals->getFreeSquareSprite();
-                freeSprite.setScale(2, 2);
-                freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
-                if(freeSprite.getGlobalBounds().contains(removeFrom)) {
-                    try {
-                        Tower* soldTower = this->levelMap_->TowerAt(area.second->GetX(), area.second->GetY());
-                        sellingTower = !(this->levelMap_->EraseTower(soldTower));
-                        sellTower(soldTower);
-                    } catch(std::invalid_argument) {
-                        break;
-                    }
-                    break;
-                }
-            }
-        }*/
 
         // 0 -> primary click, 1-> secondary
         if (event.type == sf::Event::MouseButtonReleased) {
@@ -248,16 +232,21 @@ void GameState::poll_events() {
                             return;
                         case SaveGame:
                             saveGame();
+                            add_popup("Game saved!", 400, false);
                             return;
                         case StartWave:
                             buyingTower = false;
+                            remove_popup();
                             startWave();
                             return;
                         case SellTower:
+                            buyingTower = false;
+                            remove_popup();
                             sellTower();
                             return;
                         case UpgradeTower:
                             buyingTower = false;
+                            remove_popup();
                             upgradeTower();
                             return;
                         case DeselectTower:
@@ -267,113 +256,17 @@ void GameState::poll_events() {
                 }
                 for (auto t : towerButtons_) {
                     if (!t.second->contains(mouse_pos)) continue;
-                    switch (t.first) {
 
-                        case GunnerType: {
-                            newTower = new Gunner();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
+                    newTower = getTowerByType(t.first);
 
-                            return;
-                        }
-                        case BomberType: {
-                            newTower = new Bomber();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
-                        case Attack3: {
-                            newTower = new Gunner();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
-                        case Attack4: {
-                            newTower = new Gunner();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
-                        case ClockerType: {
-                            newTower = new Clocker();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
-                        case SeerType: {
-                            newTower = new Seer();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
-                        case StereoType: {
-                            newTower = new StereoDude();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
-                        case Support4: {
-                            newTower = new Clocker();
-                            if(newTower->GetPrice() <= player_->GetMoney()) {
-                                std::cout << "Choosing tower!" << std::endl;
-                                std::cout << "Click on a free square to place the tower!" << std::endl;
-                                buyingTower = true;
-                            } else {
-                                std::cout << "You don't have enough money!" << std::endl;
-                                delete (newTower);
-                            }
-
-                            return;
-                        }
+                    if(newTower->GetPrice() <= player_->GetMoney()) {
+                        add_popup("Place the " + newTower->GetName() + "in a free square!", 185, true);
+                        buyingTower = true;
+                    } else {
+                        add_popup("You don't have enough money!", 200, false);
+                        delete newTower;
                     }
+
                 }
                 for(auto area : map.GetTowerSquares()) {
                     auto freeSprite = globals->getFreeSquareSprite();
@@ -624,3 +517,40 @@ void GameState::draw_selected_tower_info() {
     }
 
 }
+void GameState::add_popup(const std::string& content, int posX, bool permanent) {
+    auto text = new sf::Text();
+    text->setString(content);
+    text->setFont(getFont());
+    text->setCharacterSize(20);
+    text->setOutlineColor(Color::Black);
+    text->setOutlineThickness(3);
+    text->setPosition(posX, 40);
+
+   remove_popup();
+
+    popupText_.text = text;
+    popupText_.permanent = permanent;
+    popupText_.opacity = 1;
+}
+void GameState::remove_popup() {
+    delete popupText_.text;
+    popupText_.text = nullptr;
+    popupText_.permanent = false;
+    popupText_.opacity = 1;
+}
+
+void GameState::draw_popup_text() {
+    if (popupText_.text == nullptr) return;
+    if (!popupText_.permanent) {popupText_.opacity -= 0.005;}
+    if (popupText_.opacity <= 0) {
+        remove_popup();
+        return;
+    }
+    popupText_.text->setFillColor(Color(255, 255, 255, popupText_.opacity * 255));
+    popupText_.text->setOutlineColor(Color(0, 0, 0, popupText_.opacity * 255));
+    window_.draw(*popupText_.text);
+
+
+}
+
+

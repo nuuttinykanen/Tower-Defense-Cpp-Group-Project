@@ -9,7 +9,7 @@ class AttackTower : public Tower {
     Tower(name, description, strength, range, cost),
     cooldown_(cooldown), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
-    ~AttackTower(){};
+    ~AttackTower() override = default;;
 
     unsigned int CurrentCooldown() const;
     

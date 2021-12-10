@@ -1,6 +1,7 @@
 #include "tower.hpp"
+#include "supporttower.hpp"
 
-    Tower::~Tower() { }
+#include "attacktower.hpp"
 
     std::string Tower::GetName() const { return name_; }
 
@@ -11,3 +12,4 @@
     unsigned int Tower::GetRange() const { return range_; }
 
     unsigned int Tower::GetPrice() const { return price_; }
+

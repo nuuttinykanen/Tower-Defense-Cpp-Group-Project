@@ -4,6 +4,7 @@
 #include <vector>
 
 
+
 enum TowerTypes {GunnerType, MultiGunnerType, GunFiendType, BomberType, SuperBomberType, UltraBomberType,
         Attack3, Attack4, ClockerType, ClockerBlockerType, SeerType, MotherBrainType,
         StereoType, DJDudeType, Support4
@@ -12,8 +13,8 @@ enum TowerTypes {GunnerType, MultiGunnerType, GunFiendType, BomberType, SuperBom
 class Tower {
     public:
     Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(name), description_(description), strength_(strength), range_(range), price_(price) { }
-    
-    ~Tower();
+
+    virtual ~Tower() = default;
 
     std::string GetName() const;
 
@@ -41,4 +42,9 @@ class Tower {
     protected:
     unsigned int range_;
 };
+
+
+
+
+
 #endif

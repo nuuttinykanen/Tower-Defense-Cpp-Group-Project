@@ -30,6 +30,7 @@ void LevelSelectState::poll_events() {
                 auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
 
                 for (auto b : buttons_) {
+                    gui_->getSoundDriver()->playSound(SelectSound, 50);
                     if (!b.second->contains(mouse_pos)) continue;
 
                     switch (b.first) {

@@ -8,6 +8,7 @@ void SoundDriver::initiateSounds() {
     // Note, only .wav or .ogg supported!
     effectToFile_[Hitmarker] = "hitmarker.wav";
     effectToFile_[VictorySound] = "victory_sound.wav";
+    effectToFile_[SelectSound] = "SelectSound.wav";
 
 
     for (const auto& e : effectToFile_) {

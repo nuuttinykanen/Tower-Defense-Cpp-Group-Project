@@ -18,7 +18,7 @@ using std::make_pair;
 
 
 
-enum SoundEffects {Hitmarker, VictorySound};
+enum SoundEffects {Hitmarker, VictorySound, SelectSound};
 
 
 

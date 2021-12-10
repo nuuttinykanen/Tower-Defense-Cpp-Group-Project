@@ -7,7 +7,7 @@ class AttackTower : public Tower {
     public:
     AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int cooldown, unsigned int cost) :
     Tower(name, description, strength, range, cost),
-    cooldownLimit_(cooldown), cooldown_(cooldown), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
+    cooldownLimit_(cooldown), cooldown_(0), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
     ~AttackTower() override = default;;
 

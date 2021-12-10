@@ -72,6 +72,9 @@ void GameState::draw_tower_range(TowerSquare* tsq) {
     }
 }
 
+bool buyingTower = false;
+Tower* newTower = nullptr;
+
 void GameState::draw_current_state() {
     for (auto b : buttons_) {
         switch (b.first) {
@@ -183,13 +186,25 @@ void GameState::draw_current_state() {
             window_.draw(projSprite);
         }
     }
-    draw_popup_text();
 
+    if (newTower != nullptr && buyingTower) {
+        auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
+        for (auto area: map.GetSquares()) {
+            auto freeSprite = this->towerSprites_.at(newTower->GetName());
+            freeSprite.setScale(2, 2);
+            freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
+            if (freeSprite.getGlobalBounds().contains(mouse_pos)) {
+                window_.draw(freeSprite);
+                break;
+            }
+        }
+    }
+
+    draw_popup_text();
 
 }
 
-bool buyingTower = false;
-Tower* newTower = nullptr;
+
 void GameState::poll_events() {
     sf::Event event{};
     LevelMap& map = game_->GetMap();
@@ -218,8 +233,6 @@ void GameState::poll_events() {
                 }
             }
         }
-
-
         // 0 -> primary click, 1-> secondary
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == 0) {
@@ -526,7 +539,11 @@ void GameState::draw_selected_tower_info() {
     range.setPosition(180, 640 + numberOfNewLines * 20);
     strength.setString("Strength: " + std::to_string(tower->GetStrength()));
     strength.setPosition(180, 660 + numberOfNewLines * 20);
-
+    if(tower->GetMainType() == "attack") {
+        auto att = (AttackTower*)tower;
+        strength.setString("Cooldown: " + std::to_string(att->GetCooldownLimit()));
+        strength.setPosition(180, 680 + numberOfNewLines * 20);
+    }
 
 
     window_.draw(sprite);

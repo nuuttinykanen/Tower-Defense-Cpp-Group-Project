@@ -8,7 +8,7 @@
 class Player {
 
     public :
-        Player(unsigned int maxHealth, int money = 500) : maxHealth_(maxHealth), money_(money) {
+        Player(unsigned int maxHealth, int money = 100000) : maxHealth_(maxHealth), money_(money) {
             health_ = maxHealth;
         }
         ~Player();

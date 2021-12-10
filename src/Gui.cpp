@@ -27,6 +27,7 @@ void Gui::start_main_loop() {
         current_state_->poll_events();
         current_state_->draw_window();
 
+
     }
 }
 

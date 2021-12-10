@@ -67,7 +67,6 @@ class LevelMap {
   bool PlaceTower(int x, int y, Tower* tower);
   void EraseTowerAt(TowerSquare *towerSquare);
   TowerSquare* FindTower(Tower* tower);
-  void UpgradeTowerSquare(TowerSquare* tower);
 
   std::vector<Projectile*> GetProjectiles();
   MapSquare* GetProjStartSquare(TowerSquare* t_square, Enemy* enemy);

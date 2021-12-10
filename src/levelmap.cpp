@@ -308,16 +308,6 @@ TowerSquare* LevelMap::FindTower(Tower* tower) {
   return nullptr;
 }
 
-void LevelMap::UpgradeTowerSquare(TowerSquare *tsq) {
-    if(tsq == nullptr) return;
-    auto upgrade = tsq->GetTower()->Upgrade();
-    if(upgrade == nullptr) return;
-    int x = tsq->GetX();
-    int y = tsq->GetY();
-    this->EraseTowerAt(tsq);
-    this->PlaceTower(x, y, upgrade);
-}
-
 std::vector<Projectile*> LevelMap::GetProjectiles() { return projectiles_; }
 
 MapSquare* LevelMap::GetNextMoveSquare(MapSquare* start, MapSquare* end) {

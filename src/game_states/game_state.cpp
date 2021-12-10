@@ -262,7 +262,7 @@ void GameState::poll_events() {
                     newTower = getTowerByType(t.first);
 
                     if(newTower->GetPrice() <= player_->GetMoney()) {
-                        add_popup("Place the " + newTower->GetName() + "in a free square!", 185, true);
+                        add_popup("Place the " + newTower->GetName() + " in a free square!", 185, true);
                         buyingTower = true;
                     } else {
                         add_popup("You don't have enough money!", 200, false);
@@ -338,8 +338,24 @@ void GameState::sellTower() {
 
 void GameState::upgradeTower() {
 
-    levelMap_->UpgradeTowerSquare(selectedTower_.tower);
+    if (selectedTower_.tower != nullptr) {
+        auto upgrade = selectedTower_.tower->GetTower()->Upgrade();
+        if(upgrade != nullptr) {
+            if(upgrade->GetPrice() > player_->GetMoney()) {
+                add_popup("You don't have enough money!", 200, false);
+            } else {
+                player_->AddTower(upgrade);
+                int x = selectedTower_.tower->GetX();
+                int y = selectedTower_.tower->GetY();
+                this->levelMap_->EraseTowerAt(selectedTower_.tower);
+                this->levelMap_->PlaceTower(x, y, upgrade);
+            }
+        } else {
+            add_popup("No upgrade available!", 200, false);
+        }
+    }
     isTowerSelected = false;
+
 }
 
 void GameState::generateButtons() {

@@ -24,6 +24,7 @@ class Game {
         this->projectileMoveCounter_ = 0;
         this->enemyMoveLimit_ = 15;
         this->projectileMoveLimit_ = 3;
+        this->waveSpawned_ = false;
     };
 
     ~Game();
@@ -88,6 +89,7 @@ class Game {
     std::vector<Projectile*> projectiles_;
     bool gameEnd_;
     bool waveInProgress_;
+    bool waveSpawned_;
 
 };
 

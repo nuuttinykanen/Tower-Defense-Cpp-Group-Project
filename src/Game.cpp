@@ -81,10 +81,11 @@ void Game::EndWave() {
 
     startOfWaveHealth_ = player_.GetHealth();
     startOfWaveMoney_ = player_.GetMoney();
-
+    this->enemies_.clear();
     if(this->waveInProgress_) {
         this->waveInProgress_ = false;
         this->waveNum_ += 1;
+        this->waveSpawned_= false;
         if(waveNum_ > this->GetTotalWaveCount()) {
             this->EndGame();
         }
@@ -109,6 +110,7 @@ LevelMap &Game::GetMap() {
 }
 
 void Game::ProcessEnemies() {
+    //std::cout << "es on map: " << this->map_.GetEnemyAmount() << std::endl;
     if(this->enemyMoveCounter_ < 1) {
         this->map_.MoveEnemies();
 
@@ -127,6 +129,9 @@ void Game::ProcessEnemies() {
                 e.ChangeHealth(e.GetMaxHealth());
             }
             this->map_.PlaceEnemy(start_sq->GetX(), start_sq->GetY(), e);
+            if(this->map_.GetEnemyAmount() == this->enemies_.size()){
+                this->waveSpawned_= true;
+            }
 
         }
 
@@ -140,7 +145,7 @@ void Game::ProcessEnemies() {
         if(e->GetHealth() <= 0){
             this->KillEnemy(e);
         }
-        else if(e->GetHealth() > 0 and !e->OnMap() and this->map_.GetEnemiesPassed() > 0){
+        else if(e->GetHealth() > 0 and !e->OnMap() and this->map_.GetEnemiesPassed() > 0 && this->waveSpawned_){
             this->TakeDamage(e);
         }
     }

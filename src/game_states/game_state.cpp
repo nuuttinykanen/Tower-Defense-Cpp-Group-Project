@@ -454,7 +454,7 @@ void GameState::generateProjectiles() {
 
 void GameState::generateProjectileHitSprites() {
     projectileHitSprites_["bomb"] = gui_->getGlobalObjects()->getBombProjecHit1Sprite();
-    projectileHitSprites_["bullet"] = gui_->getGlobalObjects()->getGunProjecHitSprite();
+    projectileHitSprites_["bullet"] = gui_->getGlobalObjects()->getBombProjecHit2Sprite();
 }
 
 void GameState::saveGame() {

@@ -321,8 +321,9 @@ MapSquare* LevelMap::GetNextMoveSquare(MapSquare* start, MapSquare* end) {
         double x_distance = sqrt(pow(x2 - x1, 2.0));
         double y_distance = sqrt(pow(y2 - y1, 2.0));
 
+        if(x_distance == y_distance && abs(x_distance - y_distance) <= 2) new_square = end;
         // If diffx > diffy, either east or west
-        if(x_distance > y_distance) {
+        else if(x_distance > y_distance) {
             double west_x_dist = sqrt(pow(x1 - 1 - x2, 2.0));
             double east_x_dist = sqrt(pow(x1 + 1 - x2, 2.0));
             if(west_x_dist < east_x_dist) {
@@ -421,6 +422,7 @@ void LevelMap::MoveProjectile(Projectile* proj) {
     proj->ChangeLocation(new_square);
     if(ProjDistanceToTarget(proj) <= 1) {
       projectileMarks_.emplace_back(std::make_pair(proj->GetType(), proj->Effect(this->GetTargetSquare(proj))));
+      proj->SetRemovalTrue();
     }
 }
 

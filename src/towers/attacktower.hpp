@@ -49,7 +49,7 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 1, 2, 20, 500) { }
+    Bomber() : AttackTower("Bomber", "Bombs enemies.", 3, 2, 20, 500) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
 
@@ -82,7 +82,7 @@ class UltraBomber : public AttackTower {
 
 class Gunner : public AttackTower {
     public:
-    Gunner() : AttackTower("Gunner", "Guns enemies.", 1, 5, 20, 500) { }
+    Gunner() : AttackTower("Gunner", "Guns enemies.", 3, 7, 20, 500) { }
     ~Gunner(){}
     virtual Projectile* GetProjectile();
 

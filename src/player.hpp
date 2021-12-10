@@ -1,5 +1,5 @@
 
-#include "tower.hpp"
+#include "towers/tower.hpp"
 
 #ifndef TOWER_DEFENSE_12_PLAYER_HPP
 #define TOWER_DEFENSE_12_PLAYER_HPP

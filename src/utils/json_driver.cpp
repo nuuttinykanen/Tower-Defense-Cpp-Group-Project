@@ -102,9 +102,9 @@ std::vector<Wave*> JSON::loadWaves(int index) {
                     enemies.push_back(new Bat());
                     break;
             }
-            std::reverse(enemies.begin(), enemies.end());
-            newWaves.push_back(new Wave(enemies));
         }
+        std::reverse(enemies.begin(), enemies.end());
+        newWaves.push_back(new Wave(enemies));
     }
     std::reverse(newWaves.begin(), newWaves.end());
 

@@ -3,7 +3,7 @@
 
 #include "enemy.hpp"
 #include "mapsquare.hpp"
-#include "tower.hpp"
+#include "towers/tower.hpp"
 class Projectile {
     public:
     Projectile(Tower* sender) : sender_(sender) {

@@ -2,7 +2,7 @@
 #define SUPPORTTOWER_HPP
 #include "tower.hpp"
 #include <string>
-#include "mapsquare.hpp"
+#include "../mapsquare.hpp"
 #include "attacktower.hpp"
 class SupportTower : public Tower {
     public:

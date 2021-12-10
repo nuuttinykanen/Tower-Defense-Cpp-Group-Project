@@ -11,7 +11,7 @@ class Enemy {
         cooldownModifier_ = 0;
     }
 
-    ~Enemy(){}
+    virtual ~Enemy()= default;
 
     std::string GetName();
     int GetMaxHealth();

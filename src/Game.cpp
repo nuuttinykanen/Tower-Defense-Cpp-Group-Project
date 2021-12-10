@@ -62,18 +62,17 @@ void Game::SellTower(TowerSquare* towerSquare) {
 
 
 
-// Start the first wave and then remove it from the vector
+// Start the first wave
 void Game::StartWave() {
-
+    // Not removing the wave since it's simpler to keep track this way
     if(!this->waveInProgress_){
         this->waveInProgress_ = true;
         auto wave = enemyWaves_[this->waveNum_ - 1];
         auto enemyWave = wave->getWaveEnemies();
         this->enemies_ = wave->getWaveEnemies();
-        enemyWaves_.erase(enemyWaves_.begin());
     }
-    else{std::cout << "Wait for the previous wave to end!!" << std::endl; }
 }
+
 void Game::EndWave() {
     if(this->waveInProgress_) {
         this->waveInProgress_ = false;
@@ -89,7 +88,7 @@ Wave* Game::GetCurrentWave() {
 }
 
 
-bool Game::ifWaveInProgress() {
+bool Game::isWaveInProgress() {
     return this->waveInProgress_;
 }
 

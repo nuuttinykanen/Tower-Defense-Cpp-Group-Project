@@ -25,13 +25,12 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber): Windo
         player_ = &game_->GetPlayer();
 
     } else {
-        if (!JSON::latestSaveExists() && levelNumber == 0) {
-            levelNumber_ = 1;
-        } else {
-            levelNumber_ = levelNumber;
-        }
+        if (!JSON::latestSaveExists() && levelNumber == 0) { levelNumber_ = 1;}
+        else { levelNumber_ = levelNumber;}
+
         levelMap_ = JSON::loadLevelMap(levelNumber_);
         auto waves = JSON::loadWaves(levelNumber_);
+        std::cout << waves.size() << std::endl;
         player_ = new Player(100);
         game_ = new Game( *levelMap_, *player_, waves);
     }
@@ -238,7 +237,6 @@ void GameState::poll_events() {
                             buyingTower = false;
                             remove_popup();
                             startWave();
-                            add_popup("Starting wave " + std::to_string(game_->GetWaveNumber()), 350, false);
                             return;
                         case SellTower:
                             buyingTower = false;
@@ -305,17 +303,14 @@ void GameState::quitToMenu() {
 }
 
 void GameState::startWave() {
-    game_->StartWave();
-    isTowerSelected = false;
-    if (!game_->ifWaveInProgress()) {
-        // Remove the start wave button
-        for (auto it = buttons_.begin(); it != buttons_.end(); it++) {
-            if (it->first == GameButtonTarget::StartWave) {
-                delete it->second;
-                buttons_.erase(it);
-            }
-        }
+    if (game_->isWaveInProgress()) {
+        add_popup("Can't start a new wave yet!", 200, false);
+        return;
     }
+    isTowerSelected = false;
+    game_->StartWave();
+    add_popup("Starting wave " + std::to_string(game_->GetWaveNumber()), 350, false);
+
 }
 
 void GameState::buyTower(Tower* tower) {

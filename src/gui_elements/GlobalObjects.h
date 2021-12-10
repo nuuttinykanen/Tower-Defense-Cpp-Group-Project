@@ -2,7 +2,7 @@
 #define TOWER_DEFENSE_12_GLOBALOBJECTS_H
 #include "SFML/Graphics.hpp"
 #include <iostream>
-#include "../tower.hpp"
+#include "../towers/tower.hpp"
 
 // Contains fonts, sprites, etc. so they don`t have to be initalized everytime
 class GlobalObjects {

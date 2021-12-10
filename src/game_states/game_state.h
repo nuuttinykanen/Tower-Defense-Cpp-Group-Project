@@ -4,7 +4,7 @@
 #include "window_state.h"
 #include <iostream>
 #include "../Game.hpp"
-#include "../tower.hpp"
+#include "../towers/tower.hpp"
 #include "../gui_elements/TowerButton.h"
 #include "../gui_elements/EnemyGui.h"
 #include "../utils/json_driver.h"

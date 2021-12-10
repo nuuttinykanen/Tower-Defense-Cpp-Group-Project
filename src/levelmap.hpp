@@ -6,11 +6,11 @@
 #include <map>
 #include <string>
 #include <iostream>
-#include "tower.hpp"
+#include "towers/tower.hpp"
 #include "enemy.hpp"
 #include "projectile.hpp"
-#include "attacktower.hpp"
-#include "supporttower.hpp"
+#include "towers/attacktower.hpp"
+#include "towers/supporttower.hpp"
 class LevelMap {
 
   public:

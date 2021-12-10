@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include "enemy.hpp"
-#include "tower.hpp"
+#include "towers/tower.hpp"
 class MapSquare {
     public:
     MapSquare(int x, int y) : x_(x), y_(y) { }

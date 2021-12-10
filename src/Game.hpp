@@ -54,7 +54,7 @@ class Game {
 
     unsigned int GetTotalWaveCount() {return totalWaveCount_;};
 
-    bool ifWaveInProgress();
+    bool isWaveInProgress();
 
     Wave* GetCurrentWave();
 

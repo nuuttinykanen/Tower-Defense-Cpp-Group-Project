@@ -11,15 +11,15 @@ std::vector<Tower *> Player::GetTowers() const{
     return playerTowers_;
 }
 
-double Player::GetMoney() const{
+int Player::GetMoney() const{
     return money_;
 }
 
-void Player::GiveMoney(double amount) {
+void Player::GiveMoney(int amount) {
     this->money_ += amount;
 }
 
-void Player::TakeMoney(double amount) {
+void Player::TakeMoney(int amount) {
     this->money_ -= amount;
 }
 
@@ -57,6 +57,6 @@ void Player::SetHealth(int amount) {
     health_ = amount;
 }
 
-void Player::SetMoney(double amount) {
+void Player::SetMoney(int amount) {
     money_ = amount;
 }

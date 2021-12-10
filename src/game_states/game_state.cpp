@@ -238,6 +238,7 @@ void GameState::poll_events() {
                             buyingTower = false;
                             remove_popup();
                             startWave();
+                            add_popup("Starting wave " + std::to_string(game_->GetWaveNumber()), 350, false);
                             return;
                         case SellTower:
                             buyingTower = false;
@@ -319,13 +320,13 @@ void GameState::startWave() {
 
 void GameState::buyTower(Tower* tower) {
     player_->AddTower(tower);
-    std::cout << "Tower bought successfully!" << std::endl;
 }
 
 void GameState::sellTower() {
     isTowerSelected = false;
     auto tower = selectedTower_.tower->GetTower();
-    this->levelMap_->EraseTower(tower);
+    game_->SellTower(selectedTower_.tower);
+    this->levelMap_->EraseTowerAt(selectedTower_.tower);
 
     player_->SellTower(tower);
 

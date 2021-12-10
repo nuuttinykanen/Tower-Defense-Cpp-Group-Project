@@ -70,7 +70,7 @@ public:
     TowerSquare(int x, int y, Tower* tower) : MapSquare(x, y), tower_(tower) {
         enemySquaresInRange_ = std::vector<EnemySquare*>();
     }
-    ~TowerSquare(){}
+    ~TowerSquare(){delete tower_;}
     virtual bool free() const;
     virtual std::string GetType() const;
 

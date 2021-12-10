@@ -14,7 +14,7 @@ class Game {
     Game(LevelMap& map, Player& player, std::vector<Wave*> waves) : map_(map), player_(player)
     , enemyWaves_(waves), totalWaveCount_(waves.size()) {
 
-        this->towers_ = player_.GetTowers();
+        this->towers_ = map_.GetTowers();
         this->gameEnd_ = false;
         this->enemies_ = map_.GetEnemies();
         this->projectiles_ = map_.GetProjectiles();
@@ -46,7 +46,7 @@ class Game {
 
     void KillEnemy(Enemy* enemy);
 
-    void SellTower(Tower* tower);
+    void SellTower(TowerSquare* towerSquare);
 
     void StartWave();
 

@@ -41,7 +41,7 @@ class LevelMap {
   const MapSquare* GetStartSquare();
   const MapSquare* GetEndSquare();
   const std::map<std::pair<int, int>, MapSquare*>& GetSquares();
-  const std::vector<Tower*>& GetTowers();
+  const std::vector<Tower*>& GetTowers() {return towers_;};
   const std::vector<Enemy*>& GetEnemies();
   MapSquare* GetSquare(int x, int y); 
   const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
@@ -65,7 +65,7 @@ class LevelMap {
   unsigned int GetEnemyAmount();
 
   bool PlaceTower(int x, int y, Tower* tower);
-  bool EraseTower(Tower* tower);
+  void EraseTowerAt(TowerSquare *towerSquare);
   TowerSquare* FindTower(Tower* tower);
   void UpgradeTowerSquare(TowerSquare* tower);
 

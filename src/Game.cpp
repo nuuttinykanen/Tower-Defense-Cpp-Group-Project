@@ -41,7 +41,7 @@ void Game::KillEnemy(Enemy *enemy) {
 //Deals enemy attack's worth of damage to player
 void Game::TakeDamage(Enemy *enemy){
     this->player_.ChangeHealth(-enemy->GetAttack());
-    for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); it++){
+    for(auto it = enemies_.begin(); it != enemies_.end(); it++){
         if(*it == enemy){
             if(enemies_.size()==1){
                 enemies_.pop_back();
@@ -55,9 +55,9 @@ void Game::TakeDamage(Enemy *enemy){
     }
 }
 
-void Game::SellTower(Tower* tower) {
-    this->player_.SellTower(tower);
-    this->map_.EraseTower(tower);
+void Game::SellTower(TowerSquare* towerSquare) {
+    this->player_.SellTower(towerSquare->GetTower());
+    this->map_.EraseTowerAt(towerSquare);
 }
 
 

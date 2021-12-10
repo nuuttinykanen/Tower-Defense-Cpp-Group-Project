@@ -291,17 +291,10 @@ bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
     return false;
 }
 
-bool LevelMap::EraseTower(Tower* tower) {
-  auto t_squares = this->GetTowerSquares();
-  for(auto it = t_squares.rbegin(); it != t_squares.rend(); it++) {
-    auto h = *it;
-    if(h.second->ContainsTower(tower)) { 
-        FreeSquare* f_square = new FreeSquare(h.second->GetX(), h.second->GetY());
-        this->ChangeSquare(h.second->GetX(), h.second->GetY(), *f_square);
-        return true;
-    }
-  }
-  return false;
+void LevelMap::EraseTowerAt(TowerSquare *towerSquare) {
+
+        auto* f_square = new FreeSquare(towerSquare->GetX(), towerSquare->GetY());
+        this->ChangeSquare(towerSquare->GetX(), towerSquare->GetY(), *f_square);
 }
 
 TowerSquare* LevelMap::FindTower(Tower* tower) {
@@ -321,7 +314,7 @@ void LevelMap::UpgradeTowerSquare(TowerSquare *tsq) {
     if(upgrade == nullptr) return;
     int x = tsq->GetX();
     int y = tsq->GetY();
-    this->EraseTower(tsq->GetTower());
+    this->EraseTowerAt(tsq);
     this->PlaceTower(x, y, upgrade);
 }
 

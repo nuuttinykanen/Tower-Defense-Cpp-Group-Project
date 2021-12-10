@@ -294,9 +294,6 @@ void GameState::poll_events() {
             }
 
         }
-
-
-
     }
     if (game_->isGameOver()) {
         auto newState = new FinishState(window_, gui_, levelNumber_);

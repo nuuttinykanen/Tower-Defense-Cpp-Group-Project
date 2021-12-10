@@ -2,6 +2,8 @@
 #include "../Gui.h"
 #include "game_state.h"
 #include "level_select_state.h"
+#include "../utils/sound_driver.h"
+
 
 MenuState::MenuState(sf::RenderWindow& window, Gui* gui) : WindowState(window, gui) {
 
@@ -60,6 +62,7 @@ void MenuState::poll_events() {
                     switch (b.first) {
 
                         case StartLatestSave:
+                            gui_->getSoundDriver()->playSound(Hitmarker, 50);
                             start_latest_save();
                             return;
                         case StartLevelSelect:

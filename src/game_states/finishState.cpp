@@ -9,6 +9,8 @@ FinishState::FinishState(sf::RenderWindow &window, Gui* gui, int levelNumber): l
     text_.setString("Congratulations for finishing lvl: " + std::to_string(levelNumber) + "!" );
     text_.setPosition(125, 75);
     generate_buttons();
+    gui_->getSoundDriver()->playSound(VictorySound, 50);
+
 }
 
 FinishState::~FinishState() {

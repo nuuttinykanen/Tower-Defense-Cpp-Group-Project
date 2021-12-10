@@ -129,8 +129,8 @@ void JSON::saveCurrentGame(Game* game, int levelNumber) {
     JSONCPP_STRING errs;
 
     root["index"] = levelNumber;
-    root["health"] = game->GetPlayer().GetHealth();
-    root["money"] = game->GetPlayer().GetMoney();
+    root["health"] = game->GetStartOfWaveHealth();
+    root["money"] = game->GetStartOfWaveMoney();
 
     // Save towers and their positions
     auto towerSquares = game->GetMap().GetTowerSquares();

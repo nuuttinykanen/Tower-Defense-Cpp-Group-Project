@@ -54,6 +54,10 @@ class Game {
 
     unsigned int GetTotalWaveCount() {return totalWaveCount_;};
 
+    int GetStartOfWaveMoney() {return startOfWaveMoney_;}
+
+    unsigned int GetStartOfWaveHealth() {return startOfWaveHealth_;}
+
     bool isWaveInProgress();
 
     Wave* GetCurrentWave();
@@ -68,6 +72,9 @@ class Game {
     private:
     LevelMap& map_;
     Player& player_;
+    // Need to keep track of how much money the player has at the start of an wave for the save file
+    int startOfWaveMoney_;
+    unsigned int startOfWaveHealth_;
     std::vector<Wave*> enemyWaves_;
     unsigned int waveNum_;
     unsigned int totalWaveCount_;

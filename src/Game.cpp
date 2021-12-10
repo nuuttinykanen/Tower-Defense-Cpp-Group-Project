@@ -64,6 +64,10 @@ void Game::SellTower(TowerSquare* towerSquare) {
 
 // Start the first wave
 void Game::StartWave() {
+
+    startOfWaveHealth_ = player_.GetHealth();
+    startOfWaveMoney_ = player_.GetMoney();
+
     // Not removing the wave since it's simpler to keep track this way
     if(!this->waveInProgress_){
         this->waveInProgress_ = true;
@@ -74,6 +78,10 @@ void Game::StartWave() {
 }
 
 void Game::EndWave() {
+
+    startOfWaveHealth_ = player_.GetHealth();
+    startOfWaveMoney_ = player_.GetMoney();
+
     if(this->waveInProgress_) {
         this->waveInProgress_ = false;
         this->waveNum_ += 1;

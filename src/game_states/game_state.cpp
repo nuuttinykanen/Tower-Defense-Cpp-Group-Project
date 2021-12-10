@@ -61,8 +61,14 @@ void GameState::draw_tower_range(int tx, int ty, Tower* tow) {
             rectangle.setPosition(x * 35, y * 35);
             rectangle.setOutlineThickness(1);
             rectangle.setOutlineColor(sf::Color::Black);
-            sf::Color color = sf::Color::White;
-            color.a = 90;
+            sf::Color color;
+            if(it.second->GetType() == "enemy") {
+                color = sf::Color::Magenta;
+            }
+            else {
+                    color = sf::Color::White;
+                    color.a = 90;
+            }
             rectangle.setFillColor(color);
             window_.draw(rectangle);
         }
@@ -143,6 +149,20 @@ void GameState::draw_current_state() {
             window_.draw(bar);
         }
     }
+
+    if (newTower != nullptr && buyingTower) {
+        auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
+        for (auto area: map.GetSquares()) {
+            auto freeSprite = this->towerSprites_.at(newTower->GetName());
+            freeSprite.setScale(2, 2);
+            freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
+            if (freeSprite.getGlobalBounds().contains(mouse_pos)) {
+                draw_tower_range(area.second->GetX(), area.second->GetY(), newTower);
+                window_.draw(freeSprite);
+                break;
+            }
+        }
+    }
     for(auto it : map.GetEnemySquares()) {
         if(it.second->ContainsEnemies()) {
             for(Enemy* en : it.second->GetEnemies()) {
@@ -184,19 +204,8 @@ void GameState::draw_current_state() {
         }
     }
 
-    if (newTower != nullptr && buyingTower) {
-        auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
-        for (auto area: map.GetSquares()) {
-            auto freeSprite = this->towerSprites_.at(newTower->GetName());
-            freeSprite.setScale(2, 2);
-            freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
-            if (freeSprite.getGlobalBounds().contains(mouse_pos)) {
-                draw_tower_range(area.second->GetX(), area.second->GetY(), newTower);
-                window_.draw(freeSprite);
-                break;
-            }
-        }
-    }
+
+
 
     draw_popup_text();
 

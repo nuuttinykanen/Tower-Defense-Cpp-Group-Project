@@ -8,7 +8,7 @@
 #include "../gui_elements/TowerButton.h"
 #include "../gui_elements/EnemyGui.h"
 #include "../utils/json_driver.h"
-
+#include "finishState.h"
 
 enum GameButtonTarget {QuitToMenu, SaveGame, StartWave, SellTower, UpgradeTower, DeselectTower};
 

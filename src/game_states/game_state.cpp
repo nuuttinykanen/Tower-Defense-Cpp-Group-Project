@@ -46,6 +46,7 @@ GameState::~GameState() {
 
 void GameState::advance_state() {
     game_->UpdateState();
+
 }
 
 void GameState::draw_tower_range(TowerSquare* tsq) {
@@ -182,6 +183,7 @@ void GameState::draw_current_state() {
     }
     draw_popup_text();
 
+
 }
 
 bool buyingTower = false;
@@ -253,6 +255,7 @@ void GameState::poll_events() {
                             return;
                     }
                 }
+
                 for (auto t : towerButtons_) {
                     if (!t.second->contains(mouse_pos)) continue;
 
@@ -294,6 +297,12 @@ void GameState::poll_events() {
 
 
 
+    }
+    if (game_->isGameOver()) {
+        auto newState = new FinishState(window_, gui_, levelNumber_);
+
+        gui_->change_game_state(newState);
+        return;
     }
 }
 

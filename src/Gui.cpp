@@ -30,7 +30,13 @@ void Gui::start_main_loop() {
 }
 
 void Gui::change_game_state(WindowState* new_state) {
+    std::cout << "done creating2" << std::endl;
+
     delete current_state_;
+    std::cout << "done creating3" << std::endl;
+
     current_state_ = new_state;
+    std::cout << "done creating4" << std::endl;
+
 }
 

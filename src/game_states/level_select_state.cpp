@@ -3,31 +3,6 @@
 
 LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
     generateButtons();
-    JSON::loadLevelMap(1);
-    int y = 0;
-    int x = 0;
-
-
-    auto latestSaveButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 100),
-                                       "Load latest save", getFont(), 20, 15);
-    buttons_[0] = latestSaveButton;
-
-    // Draw buttons in a 4xX grid
-    for (int i = 1; i <= JSON::getNumberOfLevels() ; i++) {
-        auto button = new Button(sf::Vector2f(50, 50), sf::Vector2f(475 + 100 * x, 200 + 100 * y),
-                                 std::to_string(i), getFont(), 20, 15);
-        buttons_[i] = button;
-        x++;
-        if (i % 4 == 0)  {
-            y++;
-            x = 0;
-        }
-        if (i == JSON::getNumberOfLevels()) {
-            auto backToMenuButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 300 + 100 * y),
-                                               "Back to main menu", getFont(), 20, 10);
-            buttons_[-1] = backToMenuButton;
-        }
-    }
 }
 
 void LevelSelectState::advance_state() {
@@ -88,5 +63,26 @@ void LevelSelectState::poll_events() {
 }
 
 void LevelSelectState::generateButtons() {
+    auto latestSaveButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 100),
+                                       "Load latest save", getFont(), 20, 15);
+    buttons_[0] = latestSaveButton;
 
+    int y = 0;
+    int x = 0;
+    // Draw buttons in a 4xX grid
+    for (int i = 1; i <= JSON::getNumberOfLevels() ; i++) {
+        auto button = new Button(sf::Vector2f(50, 50), sf::Vector2f(475 + 100 * x, 200 + 100 * y),
+                                 std::to_string(i), getFont(), 20, 15);
+        buttons_[i] = button;
+        x++;
+        if (i % 4 == 0)  {
+            y++;
+            x = 0;
+        }
+        if (i == JSON::getNumberOfLevels()) {
+            auto backToMenuButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 300 + 100 * y),
+                                               "Back to main menu", getFont(), 20, 10);
+            buttons_[-1] = backToMenuButton;
+        }
+    }
 }

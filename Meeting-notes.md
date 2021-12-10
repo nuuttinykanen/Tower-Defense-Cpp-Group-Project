@@ -92,7 +92,7 @@ The project has been successfully started smoothly. Each team member has worked 
   - 
 2.	Tino Korpelainen
 -	Added a parent window state class from which different child classes extend
--	Added child classes: GameState, LevelEditorState, LevelSelectorState, MenuState
+-	Added child classes: GameState, FinishState, LevelSelectorState, MenuState
 -	Gui loop calls different states loops. State loops first advance the game state and then draw the updated game stat
 4.	Patrik Ahola
 -	Wave and player classes first versions

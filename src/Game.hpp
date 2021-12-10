@@ -62,6 +62,7 @@ class Game {
 
     void ProcessAttackTowers();
 
+    bool isGameOver() const { return gameEnd_;}
     void TakeDamage(Enemy* enemy);
 
     private:

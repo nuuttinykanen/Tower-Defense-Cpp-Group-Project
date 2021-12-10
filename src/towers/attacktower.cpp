@@ -47,7 +47,11 @@
 
     std::string AttackTower::GetMainType() const { return "attack"; }
 
-    Projectile* Bomber::GetProjectile() {
+unsigned int AttackTower::GetCooldownLimit() const {
+    return cooldownLimit_;
+}
+
+Projectile* Bomber::GetProjectile() {
         Projectile* projec = new BombProjectile(this);
         return projec;
     }

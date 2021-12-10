@@ -18,13 +18,13 @@
 
     void Enemy::RemoveFromMap() { on_map_ = false; }
 
-    void Enemy::ChangeHealth(int amount) { 
-        if(currentHealth_ + amount < 0) currentHealth_ = 0;
-        else currentHealth_ += amount; 
+    void Enemy::ChangeHealth(int amount) {
+        if (currentHealth_ + amount < 0) currentHealth_ = 0;
+        else currentHealth_ += amount;
     }
 
 unsigned int Enemy::GetCooldown() {
-    return this->cooldown_ + this->cooldownModifier_;
+    return this->cooldown_;
 }
 
 void Enemy::ChangeCooldown(int amount) {

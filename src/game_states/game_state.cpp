@@ -123,18 +123,25 @@ void GameState::draw_current_state() {
         window_.draw(freeSprite);
 
 
-
-
         sf::Sprite tow_sprite = towerSprites_.at(it.second->GetTower()->GetName());
         tow_sprite.setScale(1.9,1.9);
         tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
 
         draw_selected_tower_info();
-
-
-
         window_.draw(tow_sprite);
+        // Draw cooldown bar
+        auto tow = (AttackTower*)it.second->GetTower();
+        if(game_->isWaveInProgress() && it.second->GetTower()->GetMainType() == "attack" && tow->CurrentCooldown() > 0) {
+            sf::RectangleShape bar(sf::Vector2f(20.0 * (double)((double)tow->CurrentCooldown() / (double)tow->GetCooldownLimit()), 4));
+            bar.setSize(sf::Vector2f(18.0 * (double)((double)tow->CurrentCooldown() / (double)tow->GetCooldownLimit()), 2));
+            bar.setFillColor(sf::Color::White);
+            bar.setOutlineThickness(1);
+            bar.setOutlineColor(sf::Color::Black);
+            bar.setScale(2, 2);
+            bar.setPosition(it.second->GetX() * 35 + 1, it.second->GetY() * 35 + 31);
 
+            window_.draw(bar);
+        }
     }
     for(auto it : map.GetEnemySquares()) {
         if(it.second->ContainsEnemies()) {
@@ -144,14 +151,8 @@ void GameState::draw_current_state() {
                 en_sprite.setPosition(it.second->GetX()*35, it.second->GetY()*35);
                 window_.draw(en_sprite);
 
-                sf::RectangleShape outer(sf::Vector2f(19, 4));
-                outer.setSize(sf::Vector2f(20, 2));
-                outer.setOutlineColor(sf::Color::White);
-                outer.setFillColor(sf::Color::Transparent);
-                outer.setPosition(it.second->GetX()*35, it.second->GetY()*35);
-                window_.draw(outer);
 
-
+                // Draw health bar
                 sf::RectangleShape bar(sf::Vector2f(20.0 * (double)((double)en->GetHealth() / (double)en->GetMaxHealth()), 4));
                 bar.setSize(sf::Vector2f(20.0 * (double)((double)en->GetHealth() / (double)en->GetMaxHealth()), 2));
                 bar.setFillColor(sf::Color::Magenta);
@@ -164,6 +165,7 @@ void GameState::draw_current_state() {
 
     // Draw enemy death sprites
     for(auto it : map.GetProjectileMarks()) {
+        if(!game_->isWaveInProgress()) break;
         for(auto coords : it.second) {
             auto sprite = this->projectileHitSprites_[it.first];
             sprite.setScale(2, 2);

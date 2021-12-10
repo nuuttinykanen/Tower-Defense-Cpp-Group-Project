@@ -12,6 +12,8 @@ class AttackTower : public Tower {
     ~AttackTower() override = default;;
 
     unsigned int CurrentCooldown() const;
+
+    unsigned int GetCooldownLimit() const;
     
     double CooldownPercentage() const;
 

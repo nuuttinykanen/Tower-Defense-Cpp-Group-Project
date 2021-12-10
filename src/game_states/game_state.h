@@ -50,7 +50,7 @@ public:
 
     void draw_player_info();
 
-    void draw_selected_tower_info();
+    void draw_tower_info(int x, int y, Tower* tow);
 
     void draw_popup_text();
 

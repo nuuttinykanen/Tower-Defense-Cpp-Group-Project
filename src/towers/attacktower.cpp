@@ -2,8 +2,6 @@
 
     unsigned int AttackTower::CurrentCooldown() const {
      if((int)cooldown_ + cooldownModifiers_ > 0) {
-         std::cout << cooldown_ + cooldownModifiers_ << std::endl;
-         std::cout << "Modifiers: " << cooldownModifiers_ << std::endl;
          return cooldown_ + cooldownModifiers_;
      }
      return 0;

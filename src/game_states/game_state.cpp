@@ -120,6 +120,25 @@ void GameState::draw_current_state() {
 
     draw_player_info();
 
+    if (newTower != nullptr && buyingTower) {
+        auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
+        draw_tower_info(0, 0, newTower);
+        for (auto area: map.GetSquares()) {
+            auto freeSprite = this->towerSprites_.at(newTower->GetName());
+            freeSprite.setScale(2, 2);
+            freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
+            if (freeSprite.getGlobalBounds().contains(mouse_pos)) {
+                draw_tower_range(area.second->GetX(), area.second->GetY(), newTower);
+                window_.draw(freeSprite);
+                break;
+            }
+        }
+    }
+    else if(isTowerSelected) {
+        draw_tower_info(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
+        draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
+    }
+
     // Draw towers
     for(auto it : map.GetTowerSquares()) {
 
@@ -133,7 +152,6 @@ void GameState::draw_current_state() {
         tow_sprite.setScale(1.9,1.9);
         tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
 
-        draw_selected_tower_info();
         window_.draw(tow_sprite);
         // Draw cooldown bar
         auto tow = (AttackTower*)it.second->GetTower();
@@ -150,19 +168,7 @@ void GameState::draw_current_state() {
         }
     }
 
-    if (newTower != nullptr && buyingTower) {
-        auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
-        for (auto area: map.GetSquares()) {
-            auto freeSprite = this->towerSprites_.at(newTower->GetName());
-            freeSprite.setScale(2, 2);
-            freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
-            if (freeSprite.getGlobalBounds().contains(mouse_pos)) {
-                draw_tower_range(area.second->GetX(), area.second->GetY(), newTower);
-                window_.draw(freeSprite);
-                break;
-            }
-        }
-    }
+
     for(auto it : map.GetEnemySquares()) {
         if(it.second->ContainsEnemies()) {
             for(Enemy* en : it.second->GetEnemies()) {
@@ -203,9 +209,6 @@ void GameState::draw_current_state() {
             window_.draw(projSprite);
         }
     }
-
-
-
 
     draw_popup_text();
 
@@ -274,6 +277,10 @@ void GameState::poll_events() {
                             return;
                         case DeselectTower:
                             isTowerSelected = false;
+                            return;
+                        default:
+                            isTowerSelected = false;
+                            buyingTower = false;
                             return;
                     }
                 }
@@ -356,8 +363,7 @@ void GameState::sellTower() {
 }
 
 void GameState::upgradeTower() {
-
-    if (selectedTower_.tower != nullptr) {
+    if (selectedTower_.tower != nullptr && selectedTower_.tower->GetTower()->CanUpgrade()) {
         auto upgrade = selectedTower_.tower->GetTower()->Upgrade();
         if(upgrade != nullptr) {
             if(upgrade->GetPrice() > player_->GetMoney()) {
@@ -368,13 +374,12 @@ void GameState::upgradeTower() {
                 int y = selectedTower_.tower->GetY();
                 this->levelMap_->EraseTowerAt(selectedTower_.tower);
                 this->levelMap_->PlaceTower(x, y, upgrade);
+                selectedTower_.tower = levelMap_->FindTower(upgrade);
             }
         } else {
             add_popup("No upgrade available!", 200, false);
         }
     }
-    isTowerSelected = false;
-
 }
 
 void GameState::generateButtons() {
@@ -517,15 +522,11 @@ void GameState::draw_player_info() {
     window_.draw(waves);
 }
 
-void GameState::draw_selected_tower_info() {
-    if (!isTowerSelected) return;
-
-    draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
+void GameState::draw_tower_info(int x, int y, Tower* tow) {
+    if ((!isTowerSelected && newTower == nullptr)) return;
     auto globals = gui_->getGlobalObjects();
 
-    auto tower = selectedTower_.tower->GetTower();
-
-    auto &sprite = globals->getTowerSpriteByType(tower->getType());
+    auto &sprite = globals->getTowerSpriteByType(tow->getType());
     sprite.setScale(6, 6);
     sprite.setPosition(50, 550);
 
@@ -537,17 +538,17 @@ void GameState::draw_selected_tower_info() {
         d->setPosition(180, 550 + i * 30);
         d->setFont(getFont());
     }
-    auto desc = tower->GetDescription();
+    auto desc = tow->GetDescription();
     int numberOfNewLines = std::count(desc.begin(), desc.end(), '\n');
 
-    name.setString("Name: " + tower->GetName());
+    name.setString("Name: " + tow->GetName());
     description.setString("Description: \n\n" + desc);
-    range.setString("Range: " + std::to_string(tower->GetRange()));
+    range.setString("Range: " + std::to_string(tow->GetRange()));
     range.setPosition(180, 640 + numberOfNewLines * 20);
-    strength.setString("Strength: " + std::to_string(tower->GetStrength()));
+    strength.setString("Strength: " + std::to_string(tow->GetStrength()));
     strength.setPosition(180, 660 + numberOfNewLines * 20);
-    if(tower->GetMainType() == "attack") {
-        auto att = (AttackTower*)tower;
+    if(tow->GetMainType() == "attack") {
+        auto att = (AttackTower*)tow;
         strength.setString("Cooldown: " + std::to_string(att->GetCooldownLimit()));
         strength.setPosition(180, 680 + numberOfNewLines * 20);
     }

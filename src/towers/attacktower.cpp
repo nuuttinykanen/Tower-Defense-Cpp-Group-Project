@@ -1,7 +1,9 @@
 #include "attacktower.hpp"
 
     unsigned int AttackTower::CurrentCooldown() const {
-     if(cooldown_ + cooldownModifiers_ > 0) {
+     if((int)cooldown_ + cooldownModifiers_ > 0) {
+         std::cout << cooldown_ + cooldownModifiers_ << std::endl;
+         std::cout << "Modifiers: " << cooldownModifiers_ << std::endl;
          return cooldown_ + cooldownModifiers_;
      }
      return 0;
@@ -9,21 +11,21 @@
 
     double AttackTower::CooldownPercentage() const {
       if(CurrentCooldown() > 0) {
-          return (double)attackCounter_ / (double)CurrentCooldown();
+          return (double)cooldown_ / (double)CurrentCooldown();
       }
       return 0;
     }
 
     bool AttackTower::CanAttack() const {
-        return attackCounter_ <= 0;
+        return this->CurrentCooldown() <= 0;
     }
 
     void AttackTower::RestartCooldown() {
-        attackCounter_ = CurrentCooldown();
+        cooldown_ = this->cooldownLimit_;
     }
 
     void AttackTower::Reload() {
-        if(attackCounter_ > 0) attackCounter_ -= 1;
+        if(cooldown_ > 0) cooldown_ -= 1;
     }
 
     unsigned int AttackTower::GetRange() const {
@@ -31,7 +33,7 @@
     }
 
     void AttackTower::AddCooldownModifier(int amount) {
-        cooldownModifiers_ += amount;
+        if(cooldownModifiers_ <= 0) cooldownModifiers_ += amount;
     }
 
     void AttackTower::AddRangeModifier(int amount) {

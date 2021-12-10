@@ -71,7 +71,7 @@ public:
 
 class StereoDude : public SupportTower {
     public:
-    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack towers \nwithin range by 'STRENGTH' percent.", 80, 2, 1) {}
+    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack towers \nwithin range by 'STRENGTH'", 5, 4, 1) {}
     ~StereoDude() { };
     virtual Tower* Upgrade();
 

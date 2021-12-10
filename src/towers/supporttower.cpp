@@ -100,7 +100,7 @@ void DJDude::supportEffect(MapSquare *square) {
         auto ts = (TowerSquare*)square;
         if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
-            tow->AddCooldownModifier(this->GetStrength() * 0.01 * -1);
+            tow->AddCooldownModifier(this->GetStrength() * -1);
         }
     }
 }

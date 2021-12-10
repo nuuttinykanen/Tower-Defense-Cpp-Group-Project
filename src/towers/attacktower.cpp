@@ -1,10 +1,10 @@
 #include "attacktower.hpp"
 
-    unsigned int AttackTower::CurrentCooldown() const {
-     if((int)cooldown_ + cooldownModifiers_ > 0) {
-         return cooldown_ + cooldownModifiers_;
+    int AttackTower::CurrentCooldown() const {
+     if(cooldown_ > 0) {
+         return cooldown_;
      }
-     return 0;
+     else return 0;
     }
 
     double AttackTower::CooldownPercentage() const {
@@ -20,6 +20,7 @@
 
     void AttackTower::RestartCooldown() {
         cooldown_ = this->cooldownLimit_;
+        cooldownModifiers_ = 0;
     }
 
     void AttackTower::Reload() {
@@ -31,7 +32,7 @@
     }
 
     void AttackTower::AddCooldownModifier(int amount) {
-        if(cooldownModifiers_ <= 0) cooldownModifiers_ += amount;
+        if(cooldownModifiers_ == 0) cooldownModifiers_ += amount;
     }
 
     void AttackTower::AddRangeModifier(int amount) {
@@ -45,9 +46,9 @@
 
     std::string AttackTower::GetMainType() const { return "attack"; }
 
-unsigned int AttackTower::GetCooldownLimit() const {
-    return cooldownLimit_;
-}
+    int AttackTower::GetCooldownLimit() const {
+        return cooldownLimit_ + cooldownModifiers_;
+    }
 
 Projectile* Bomber::GetProjectile() {
         Projectile* projec = new BombProjectile(this);

@@ -5,15 +5,15 @@
 #include "../projectile.hpp"
 class AttackTower : public Tower {
     public:
-    AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int cooldown, unsigned int cost) :
+    AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, int cooldown, unsigned int cost) :
     Tower(name, description, strength, range, cost),
     cooldownLimit_(cooldown), cooldown_(0), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
     ~AttackTower() override = default;;
 
-    unsigned int CurrentCooldown() const;
+    int CurrentCooldown() const;
 
-    unsigned int GetCooldownLimit() const;
+    int GetCooldownLimit() const;
     
     double CooldownPercentage() const;
 
@@ -36,8 +36,8 @@ class AttackTower : public Tower {
     virtual unsigned int GetRange() const;
 
     private:
-    unsigned int cooldownLimit_;
-    unsigned int cooldown_;
+    int cooldownLimit_;
+    int cooldown_;
     int cooldownModifiers_;
     unsigned int attackCounter_;
     unsigned int rangeModifiers_;
@@ -49,7 +49,7 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Bombs enemies.", 3, 2, 20, 500) { }
+    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target.", 6, 2, 35, 500) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
 
@@ -60,7 +60,7 @@ class Bomber : public AttackTower {
 
 class SuperBomber : public AttackTower {
     public:
-    SuperBomber() : AttackTower("Super Bomber", "Super bombs enemies", 2, 3, 15, 510) { }
+    SuperBomber() : AttackTower("Super Bomber", "Launches bombs that also deal\ndamage to enemies next to a target.", 7, 3, 30, 510) { }
     virtual Projectile* GetProjectile();
 
     virtual TowerTypes getType() const {return TowerTypes::SuperBomberType;}
@@ -70,7 +70,7 @@ class SuperBomber : public AttackTower {
 
 class UltraBomber : public AttackTower {
     public:
-    UltraBomber() : AttackTower("Ultra Bomber", "Ultra bombs enemies", 2, 4, 100, 510) { }
+    UltraBomber() : AttackTower("Ultra Bomber", "Launches bombs that also deal\ndamage to enemies next to a target.", 10, 4, 25, 700) { }
     virtual Projectile* GetProjectile();
 
     bool CanUpgrade() override {return false;}
@@ -82,7 +82,7 @@ class UltraBomber : public AttackTower {
 
 class Gunner : public AttackTower {
     public:
-    Gunner() : AttackTower("Gunner", "Guns enemies.", 3, 7, 20, 500) { }
+    Gunner() : AttackTower("Gunner", "Guns enemies.", 2, 5, 30, 300) { }
     ~Gunner(){}
     virtual Projectile* GetProjectile();
 
@@ -93,7 +93,7 @@ class Gunner : public AttackTower {
 
 class Multigunner : public AttackTower {
     public:
-    Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 1, 5, 20, 500) { }
+    Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 4, 5, 20, 500) { }
     ~Multigunner(){}
     virtual Projectile* GetProjectile();
 
@@ -104,7 +104,7 @@ class Multigunner : public AttackTower {
 
 class GunFiend : public AttackTower {
     public:
-    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 1, 2, 20, 500) { }
+    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 6, 6, 18, 550) { }
     ~GunFiend(){}
     virtual Projectile* GetProjectile();
 

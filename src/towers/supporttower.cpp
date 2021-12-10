@@ -83,7 +83,7 @@ void StereoDude::supportEffect(MapSquare *square) {
         auto ts = (TowerSquare*)square;
         if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
-            tow->AddCooldownModifier(this->GetStrength() * -1);
+            tow->AddCooldownModifier((int)this->GetStrength() * -1 * 0.01 * tow->GetCooldownLimit());
         }
     }
 }
@@ -100,7 +100,7 @@ void DJDude::supportEffect(MapSquare *square) {
         auto ts = (TowerSquare*)square;
         if(ts->GetTower()->GetMainType() == "attack") {
             auto tow = (AttackTower*)ts->GetTower();
-            tow->AddCooldownModifier(this->GetStrength() * -1);
+            tow->AddCooldownModifier((int)this->GetStrength() * -1 * 0.01 * tow->GetCooldownLimit());
         }
     }
 }

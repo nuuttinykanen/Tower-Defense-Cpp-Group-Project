@@ -46,7 +46,6 @@ GameState::~GameState() {
 
 void GameState::advance_state() {
     game_->UpdateState();
-
 }
 
 void GameState::draw_tower_range(int tx, int ty, Tower* tow) {
@@ -153,6 +152,7 @@ void GameState::draw_current_state() {
         tow_sprite.setPosition(it.second->GetX() * 35, it.second->GetY() * 35);
 
         window_.draw(tow_sprite);
+
         // Draw cooldown bar
         auto tow = (AttackTower*)it.second->GetTower();
         if(game_->isWaveInProgress() && it.second->GetTower()->GetMainType() == "attack" && tow->CurrentCooldown() > 0) {
@@ -542,7 +542,7 @@ void GameState::draw_tower_info(int x, int y, Tower* tow) {
     int numberOfNewLines = std::count(desc.begin(), desc.end(), '\n');
 
     name.setString("Name: " + tow->GetName());
-    description.setString("Description: \n\n" + desc);
+    description.setString(desc);
     range.setString("Range: " + std::to_string(tow->GetRange()));
     range.setPosition(180, 640 + numberOfNewLines * 20);
     strength.setString("Strength: " + std::to_string(tow->GetStrength()));

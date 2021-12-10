@@ -49,16 +49,13 @@ void GameState::advance_state() {
 
 }
 
-void GameState::draw_tower_range(TowerSquare* tsq) {
-    Tower* tow = tsq->GetTower();
+void GameState::draw_tower_range(int tx, int ty, Tower* tow) {
     if(tow == nullptr) return;
 
     for(auto it : levelMap_->GetSquares()) {
-        double tx = tsq->GetX();
-        double ty = tsq->GetY();
         double x = it.first.first;
         double y = it.first.second;
-        if(sqrt(pow(tx - x, 2.0) + pow(ty - y, 2.0)) <= tsq->GetTower()->GetRange()) {
+        if(sqrt(pow(tx - x, 2.0) + pow(ty - y, 2.0)) <= tow->GetRange()) {
             sf::RectangleShape rectangle(sf::Vector2f(1, 1));
             rectangle.setSize(sf::Vector2f(35, 35));
             rectangle.setPosition(x * 35, y * 35);
@@ -194,6 +191,7 @@ void GameState::draw_current_state() {
             freeSprite.setScale(2, 2);
             freeSprite.setPosition(area.second->GetX() * 35, area.second->GetY() * 35);
             if (freeSprite.getGlobalBounds().contains(mouse_pos)) {
+                draw_tower_range(area.second->GetX(), area.second->GetY(), newTower);
                 window_.draw(freeSprite);
                 break;
             }
@@ -513,7 +511,7 @@ void GameState::draw_player_info() {
 void GameState::draw_selected_tower_info() {
     if (!isTowerSelected) return;
 
-    draw_tower_range(selectedTower_.tower);
+    draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
     auto globals = gui_->getGlobalObjects();
 
     auto tower = selectedTower_.tower->GetTower();

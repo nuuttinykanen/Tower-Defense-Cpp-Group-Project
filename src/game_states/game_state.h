@@ -46,7 +46,7 @@ public:
 
     void poll_events() override;
 
-    void draw_tower_range(TowerSquare* tsq);
+    void draw_tower_range(int tx, int ty, Tower* tow);
 
     void draw_player_info();
 

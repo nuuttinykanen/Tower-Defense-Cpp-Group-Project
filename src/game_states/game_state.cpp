@@ -30,7 +30,6 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int levelNumber): Windo
 
         levelMap_ = JSON::loadLevelMap(levelNumber_);
         auto waves = JSON::loadWaves(levelNumber_);
-        std::cout << waves.size() << std::endl;
         player_ = new Player(100);
         game_ = new Game( *levelMap_, *player_, waves);
     }
@@ -119,9 +118,10 @@ void GameState::draw_current_state() {
 
     draw_player_info();
 
+    // Draw purchase candidate tower info and range.
     if (newTower != nullptr && buyingTower) {
+        draw_tower_info(newTower);
         auto mouse_pos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_));
-        draw_tower_info(0, 0, newTower);
         for (auto area: map.GetSquares()) {
             auto freeSprite = this->towerSprites_.at(newTower->GetName());
             freeSprite.setScale(2, 2);
@@ -133,8 +133,11 @@ void GameState::draw_current_state() {
             }
         }
     }
-    else if(isTowerSelected) {
-        draw_tower_info(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
+    else if(isTowerSelected && overUpgrade) {
+        draw_tower_info(upgradePreview_.tower->GetTower());
+        draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
+    } else if(isTowerSelected) {
+        draw_tower_info(selectedTower_.tower->GetTower());
         draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
     }
 
@@ -422,9 +425,9 @@ void GameState::generateButtons() {
                                          getFont(), 100);
     towerButtons_[TowerTypes::BomberType] = attack2Button;
 
-    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
+    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getCursedKidSprite(),
                                          getFont(), 200);
-    towerButtons_[TowerTypes::Attack3] = attack3Button;
+    towerButtons_[TowerTypes::CursedKidType] = attack3Button;
 
     auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
                                          getFont(), 300);
@@ -468,6 +471,9 @@ void GameState::generateTowers() {
     towerSprites_["Clock Blocker"]  = gui_->getGlobalObjects()->getClockBlockerSprite();
     towerSprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
     towerSprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
+    towerSprites_["Masked Kid"]  = gui_->getGlobalObjects()->getMaskedKidSprite();
+    towerSprites_["Cursed Kid"]  = gui_->getGlobalObjects()->getCursedKidSprite();
+    towerSprites_["Masked God"]  = gui_->getGlobalObjects()->getMaskedGodSprite();
 }
 
 void GameState::generateProjectiles() {
@@ -477,11 +483,15 @@ void GameState::generateProjectiles() {
     projectileSprites_["Ultra Bomber"]  = gui_->getGlobalObjects()->getUltraBomberSprite();
     projectileSprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
     projectileSprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
+    projectileSprites_["Masked Kid"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
+    projectileSprites_["Cursed Kid"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
+    projectileSprites_["Masked God"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
 }
 
 void GameState::generateProjectileHitSprites() {
     projectileHitSprites_["bomb"] = gui_->getGlobalObjects()->getBombProjecHit1Sprite();
     projectileHitSprites_["bullet"] = gui_->getGlobalObjects()->getBombProjecHit2Sprite();
+    projectileHitSprites_["cursed"] = gui_->getGlobalObjects()->getCursedProjectileHitSprite();
 }
 
 void GameState::saveGame() {
@@ -524,7 +534,7 @@ void GameState::draw_player_info() {
     window_.draw(waves);
 }
 
-void GameState::draw_tower_info(int x, int y, Tower* tow) {
+void GameState::draw_tower_info(Tower* tow) {
     if ((!isTowerSelected && newTower == nullptr)) return;
     auto globals = gui_->getGlobalObjects();
 

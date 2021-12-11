@@ -109,3 +109,31 @@ Projectile* Bomber::GetProjectile() {
         return nullptr;
     }
 
+Projectile *CursedKid::GetProjectile() {
+    Projectile* projec = new CursedProjectile(this, 2);
+    return projec;
+}
+
+Tower *CursedKid::Upgrade() {
+    auto upgrade = new MaskedKid();
+    return upgrade;
+}
+
+Projectile *MaskedKid::GetProjectile() {
+    Projectile* projec = new CursedProjectile(this, 3);
+    return projec;
+}
+
+Tower *MaskedKid::Upgrade() {
+    auto upgrade = new MaskedGod();
+    return upgrade;
+}
+
+Projectile *MaskedGod::GetProjectile() {
+    Projectile* projec = new CursedProjectile(this, 5);
+    return projec;
+}
+
+Tower *MaskedGod::Upgrade() {
+    return nullptr;
+}

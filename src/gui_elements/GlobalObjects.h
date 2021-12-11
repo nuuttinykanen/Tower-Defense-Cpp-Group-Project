@@ -32,6 +32,7 @@ public:
     sf::Sprite& getGunProjecHitSprite(float scaleBy = 1);
     sf::Sprite& getBombProjecHit1Sprite(float scaleBy = 1);
     sf::Sprite& getBombProjecHit2Sprite(float scaleBy = 1);
+    sf::Sprite& getCursedProjectileHitSprite(float scaledBy = 1);
 
     sf::Sprite& getSuperBomberSprite(float scaledBy = 1);
     sf::Sprite& getUltraBomberSprite(float scaledBy = 1);
@@ -43,6 +44,10 @@ public:
     sf::Sprite& getGunFiendSprite(float scaledBy = 1);
     sf::Sprite& getStereoDudeSprite(float scaledBy = 1);
     sf::Sprite& getDJDudeSprite(float scaledBy = 1);
+    sf::Sprite& getCursedKidSprite(float scaledBy = 1);
+    sf::Sprite& getMaskedKidSprite(float scaledBy = 1);
+    sf::Sprite& getMaskedGodSprite(float scaledBy = 1);
+    sf::Sprite& getCursedProjectileSprite(float scaledBy = 1);
 
     sf::Sprite& getTowerSpriteByType(TowerTypes type, float scaledBy = 1);
 
@@ -65,6 +70,9 @@ private:
     sf::Texture gunFiendTexture_;
     sf::Texture stereoDudeTexture_;
     sf::Texture djDudeTexture_;
+    sf::Texture cursedKidTexture_;
+    sf::Texture maskedKidTexture_;
+    sf::Texture maskedGodTexture_;
 
     sf::Texture hordeTexture_;
     sf::Texture zombieTexture_;
@@ -78,6 +86,8 @@ private:
     sf::Texture gunProjecHitTexture_;
     sf::Texture bombProjecHit1Texture_;
     sf::Texture bombProjecHit2Texture_;
+    sf::Texture cursedProjectileHitTexture_;
+    sf::Texture cursedProjectileTexture_;
 
     sf::Sprite enemySprite_;
     sf::Sprite purpleEnemySprite_;
@@ -96,6 +106,9 @@ private:
     sf::Sprite gunFiendSprite_;
     sf::Sprite stereoDudeSprite_;
     sf::Sprite djDudeSprite_;
+    sf::Sprite cursedKidSprite_;
+    sf::Sprite maskedKidSprite_;
+    sf::Sprite maskedGodSprite_;
 
     sf::Sprite hordeSprite_;
     sf::Sprite zombieSprite_;
@@ -109,6 +122,8 @@ private:
     sf::Sprite gunProjecHitSprite_;
     sf::Sprite bombProjecHit1Sprite_;
     sf::Sprite bombProjecHit2Sprite_;
+    sf::Sprite cursedProjectileSprite_;
+    sf::Sprite cursedProjectileHitSprite_;
 };
 
 

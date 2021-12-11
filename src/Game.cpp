@@ -116,10 +116,6 @@ void Game::ProcessEnemies() {
 
         // Place next enemy
         if(this->GetCurrentWave() != nullptr && map_.GetStartSquare() != nullptr && !this->GetCurrentWave()->isEmpty()) {
-            for(auto it : this->GetCurrentWave()->getWaveEnemies()) {
-                std::cout << it->GetName() << std::endl;
-            }
-            std::cout << "------" << std::endl;
             auto start_sq = map_.GetStartSquare();
             Enemy& e = this->GetCurrentWave()->PopNext();
             //As the waves recycle the same enemy objects, when starting a second wave
@@ -186,7 +182,6 @@ void Game::UpdateState() {
             this->ProcessAttackTowers();
             this->ProcessEnemies();
             if(this->player_.GetHealth() < 1) {
-                std::cout << "ENDING GAME" << std::endl;
                 this->EndGame();
             }
 

@@ -49,7 +49,7 @@ public:
 
     void draw_player_info();
 
-    void draw_tower_info(int x, int y, Tower* tow);
+    void draw_tower_info(Tower* tow);
 
     void draw_popup_text();
 
@@ -79,7 +79,9 @@ private:
     int levelNumber_;
     Player* player_;
 
+    bool overUpgrade = false;
     bool isTowerSelected = false;
+    SelectedTower upgradePreview_ = {};
     SelectedTower selectedTower_ = {};
     PopupText popupText_ ={1, nullptr, false};
 
@@ -107,8 +109,12 @@ static Tower* getTowerByType(TowerTypes type) {
             return new SuperBomber();
         case UltraBomberType:
             return new UltraBomber();
-        case Attack3:
-            return new Gunner();
+        case CursedKidType:
+            return new CursedKid();
+        case MaskedKidType:
+            return new MaskedKid();
+        case MaskedGodType:
+            return new MaskedGod();
         case Attack4:
             return new Gunner();
         case ClockerType:

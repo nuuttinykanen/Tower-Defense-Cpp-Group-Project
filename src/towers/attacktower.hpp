@@ -114,3 +114,36 @@ class GunFiend : public AttackTower {
 
     virtual Tower* Upgrade();
 };
+
+class CursedKid : public AttackTower {
+public:
+    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by two squares.", 2, 5, 60, 300) { }
+    ~CursedKid(){}
+    virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::CursedKidType;}
+
+    virtual Tower* Upgrade();
+};
+
+class MaskedKid : public AttackTower {
+public:
+    MaskedKid() : AttackTower("Masked Kid", "Damages and sends enemies back\nby three squares.", 2, 5, 50, 300) { }
+    ~MaskedKid(){}
+    virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::MaskedKidType;}
+
+    virtual Tower* Upgrade();
+};
+
+class MaskedGod : public AttackTower {
+public:
+    MaskedGod() : AttackTower("Masked God", "Damages and sends enemies back\nby five squares.", 2, 5, 70, 300) { }
+    ~MaskedGod(){}
+    virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::MaskedGodType;}
+
+    virtual Tower* Upgrade();
+};

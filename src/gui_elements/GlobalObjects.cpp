@@ -145,6 +145,29 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
+    if(!cursedProjectileTexture_.loadFromFile("../src/assets/projectiles/CursedProjectile.png")) {
+        std::cout << "Error retrieving Cursed projectile sprite" << std::endl;
+        return;
+    }
+
+    if(!cursedProjectileHitTexture_.loadFromFile("../src/assets/projectiles/CursedProjectileHit.png")) {
+        std::cout << "Error retrieving Cursed projectile hit sprite" << std::endl;
+        return;
+    }
+
+    if(!cursedKidTexture_.loadFromFile("../src/assets/towers/CursedKid.png")) {
+        std::cout << "Error retrieving Cursed Kid sprite" << std::endl;
+        return;
+    }
+    if(!maskedKidTexture_.loadFromFile("../src/assets/towers/MaskedKid.png")) {
+        std::cout << "Error retrieving Masked Kid sprite" << std::endl;
+        return;
+    }
+
+    if(!maskedGodTexture_.loadFromFile("../src/assets/towers/MaskedGod.png")) {
+        std::cout << "Error retrieving Masked God sprite" << std::endl;
+        return;
+    }
 
     enemySprite_.setTexture(enemyTexture_);
     purpleEnemySprite_.setTexture(purpleEnemyTexture_);
@@ -171,14 +194,21 @@ GlobalObjects::GlobalObjects() {
 
     stereoDudeSprite_.setTexture(stereoDudeTexture_);
     djDudeSprite_.setTexture(djDudeTexture_);
+    cursedKidSprite_.setTexture(cursedKidTexture_);
+    maskedKidSprite_.setTexture(maskedKidTexture_);
+    maskedGodSprite_.setTexture(maskedGodTexture_);
 
 
     bombProjecSprite_.setTexture(bombProjecTexture_);
     gunProjecSprite_.setTexture(gunProjecTexture_);
+    cursedProjectileSprite_.setTexture(cursedProjectileTexture_);
 
     gunProjecHitSprite_.setTexture(gunProjecHitTexture_);
     bombProjecHit1Sprite_.setTexture(bombProjecHit1Texture_);
     bombProjecHit2Sprite_.setTexture(bombProjecHit2Texture_);
+    cursedProjectileHitSprite_.setTexture(cursedProjectileHitTexture_);
+
+
 }
 
 sf::Sprite &GlobalObjects::getFreeSquareSprite(float scaledBy) {
@@ -308,6 +338,31 @@ sf::Sprite &GlobalObjects::getBombProjecHit2Sprite(float scaledBy) {
     return bombProjecHit2Sprite_;
 }
 
+sf::Sprite &GlobalObjects::getCursedProjectileSprite(float scaledBy) {
+    cursedProjectileSprite_.scale(scaledBy, scaledBy);
+    return cursedProjectileSprite_;
+}
+
+sf::Sprite &GlobalObjects::getCursedProjectileHitSprite(float scaledBy) {
+    cursedProjectileHitSprite_.scale(scaledBy, scaledBy);
+    return cursedProjectileHitSprite_;
+}
+
+sf::Sprite &GlobalObjects::getCursedKidSprite(float scaledBy) {
+    cursedKidSprite_.scale(scaledBy, scaledBy);
+    return cursedKidSprite_;
+}
+
+sf::Sprite &GlobalObjects::getMaskedKidSprite(float scaledBy) {
+    maskedKidSprite_.scale(scaledBy, scaledBy);
+    return maskedKidSprite_;
+}
+
+sf::Sprite &GlobalObjects::getMaskedGodSprite(float scaledBy) {
+    maskedGodSprite_.scale(scaledBy, scaledBy);
+    return maskedGodSprite_;
+}
+
 sf::Sprite &GlobalObjects::getTowerSpriteByType(TowerTypes type, float scaledBy) {
 
     switch (type) {
@@ -323,8 +378,12 @@ sf::Sprite &GlobalObjects::getTowerSpriteByType(TowerTypes type, float scaledBy)
             return getSuperBomberSprite(scaledBy);
         case UltraBomberType:
             return getUltraBomberSprite(scaledBy);
-        case Attack3:
-            return getGunnerSprite(scaledBy);
+        case CursedKidType:
+            return getCursedKidSprite(scaledBy);
+        case MaskedKidType:
+            return getMaskedKidSprite(scaledBy);
+        case MaskedGodType:
+            return getMaskedGodSprite(scaledBy);
         case Attack4:
             return getGunnerSprite(scaledBy);
         case ClockerType:

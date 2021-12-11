@@ -54,4 +54,17 @@ class BulletProjectile : public Projectile {
     std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
 };
 
+class CursedProjectile : public Projectile {
+public:
+    CursedProjectile(Tower* sender, int squares_back) : Projectile(sender) {
+        squares_back_ = squares_back;
+    }
+    ~CursedProjectile() override { }
+    virtual std::string GetType();
+    std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
+private:
+    int squares_back_;
+};
+
+
 #endif

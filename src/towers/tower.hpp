@@ -6,7 +6,7 @@
 
 
 enum TowerTypes {GunnerType, MultiGunnerType, GunFiendType, BomberType, SuperBomberType, UltraBomberType,
-        Attack3, Attack4, ClockerType, ClockerBlockerType, SeerType, MotherBrainType,
+        CursedKidType, MaskedKidType, MaskedGodType, Attack4, ClockerType, ClockerBlockerType, SeerType, MotherBrainType,
         StereoType, DJDudeType, Support4
 };
 

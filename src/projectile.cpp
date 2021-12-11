@@ -75,4 +75,22 @@ std::string BulletProjectile::GetType() {
 }
 
 
+std::string CursedProjectile::GetType() {
+    return "cursed";
+}
 
+std::vector<std::pair<int, int>> CursedProjectile::Effect(EnemySquare *enemy) {
+    std::vector<std::pair<int, int>> list = std::vector<std::pair<int, int>>();
+    if(enemy == nullptr || enemy->GetEnemies().empty() || !this->GetTarget() || !enemy->ContainsEnemy(this->GetTarget())) return list;
+    this->GetTarget()->ChangeHealth(-1 * this->GetStrength());
+    list.emplace_back(std::make_pair(enemy->GetX(), enemy->GetY()));
+    EnemySquare* prev = enemy->GetPrevious();
+    if(!prev) return list;
+    for(int i = 1; i < squares_back_; i++) {
+        if(!prev->GetPrevious()) break;
+        prev = prev->GetPrevious();
+    }
+    enemy->RemoveEnemy(this->GetTarget());
+    prev->AddEnemy(this->GetTarget());
+    return list;
+}

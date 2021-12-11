@@ -212,9 +212,14 @@ Game* JSON::loadLatestSave() {
             case UltraBomberType:
                 newTower = new UltraBomber();
                 break;
-            case Attack3:
-                // TODO: Add new attack tower
-                newTower = new Gunner();
+            case CursedKidType:
+                newTower = new CursedKid();
+                break;
+            case MaskedKidType:
+                newTower = new MaskedKid();
+                break;
+            case MaskedGodType:
+                newTower = new MaskedGod();
                 break;
             case Attack4:
                 // TODO: Add new attack tower

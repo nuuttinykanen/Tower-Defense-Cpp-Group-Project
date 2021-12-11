@@ -19,7 +19,7 @@
     }
 
     void AttackTower::RestartCooldown() {
-        cooldown_ = this->cooldownLimit_;
+        cooldown_ = this->GetCooldownLimit();
         cooldownModifiers_ = 0;
     }
 

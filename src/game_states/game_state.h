@@ -6,7 +6,6 @@
 #include "../Game.hpp"
 #include "../towers/tower.hpp"
 #include "../gui_elements/TowerButton.h"
-#include "../gui_elements/EnemyGui.h"
 #include "../utils/json_driver.h"
 #include "finishState.h"
 

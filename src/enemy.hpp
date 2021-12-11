@@ -33,6 +33,7 @@ class Enemy {
 
     void ChangeHealth(int amount);
     virtual Enemy* Inner() = 0;
+    virtual bool HasInner() = 0;
 
     private:
     std::string name_;
@@ -52,6 +53,7 @@ class Zombie : public Enemy {
     Enemy("Zombie", health, attack, speed, bounty) {}
     ~Zombie(){}
     virtual Enemy* Inner();
+    virtual bool HasInner();
 };
 
 class ZombieHorde : public Enemy {
@@ -60,6 +62,7 @@ class ZombieHorde : public Enemy {
     Enemy("Zombie Horde", health, attack, speed, bounty) {}
     ~ZombieHorde(){}
     virtual Enemy* Inner();
+    virtual bool HasInner();
 };
 
 class MichaelMyers : public Enemy {
@@ -68,6 +71,7 @@ class MichaelMyers : public Enemy {
     Enemy("Michael Myers", health, attack, speed, bounty) {}
     ~MichaelMyers(){}
     virtual Enemy* Inner();
+    virtual bool HasInner();
 };
 
 class Dracula : public Enemy {
@@ -76,6 +80,7 @@ class Dracula : public Enemy {
     Enemy("Dracula", health, attack, speed, bounty) {}
     ~Dracula(){}
     virtual Enemy* Inner();
+    virtual bool HasInner();
 };
 
 class Bat : public Enemy {
@@ -84,6 +89,7 @@ class Bat : public Enemy {
     Enemy("Bat", health, attack, speed, bounty) {}
     ~Bat(){}
     virtual Enemy* Inner();
+    virtual bool HasInner();
 };
 
 #endif

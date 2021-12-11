@@ -57,21 +57,41 @@ Enemy *Zombie::Inner() {
     return nullptr;
 }
 
+bool Zombie::HasInner() {
+    return false;
+}
+
 
 Enemy *ZombieHorde::Inner() {
     auto inner = new Zombie();
     return inner;
 }
 
+bool ZombieHorde::HasInner() {
+    return true;
+}
+
 Enemy *MichaelMyers::Inner() {
     return nullptr;
+}
+
+bool MichaelMyers::HasInner() {
+    return false;
 }
 
 Enemy *Dracula::Inner() {
     return nullptr;
 }
 
+bool Dracula::HasInner() {
+    return false;
+}
+
 Enemy *Bat::Inner() {
     auto inner = new Dracula();
     return inner;
+}
+
+bool Bat::HasInner() {
+    return true;
 }

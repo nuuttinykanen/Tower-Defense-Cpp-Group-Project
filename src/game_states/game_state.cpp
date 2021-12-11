@@ -531,8 +531,8 @@ void GameState::draw_tower_info(int x, int y, Tower* tow) {
     sprite.setScale(6, 6);
     sprite.setPosition(50, 550);
 
-    sf::Text name, description, range, strength;
-    std::vector<sf::Text*> c = {&name, &description, &range, &strength};
+    sf::Text name, description, range, strength, cooldown;
+    std::vector<sf::Text*> c = {&name, &description, &range, &strength, &cooldown};
     for (int i = 0; i < c.size(); i++) {
         auto d = c[i];
         d->setCharacterSize(15);
@@ -544,14 +544,15 @@ void GameState::draw_tower_info(int x, int y, Tower* tow) {
 
     name.setString("Name: " + tow->GetName());
     description.setString(desc);
+    description.setPosition(180, 580 + numberOfNewLines * 20);
     range.setString("Range: " + std::to_string(tow->GetRange()));
     range.setPosition(180, 640 + numberOfNewLines * 20);
     strength.setString("Strength: " + std::to_string(tow->GetStrength()));
     strength.setPosition(180, 660 + numberOfNewLines * 20);
     if(tow->GetMainType() == "attack") {
         auto att = (AttackTower*)tow;
-        strength.setString("Cooldown: " + std::to_string(att->GetCooldownLimit()));
-        strength.setPosition(180, 680 + numberOfNewLines * 20);
+        cooldown.setString("Cooldown: " + std::to_string(att->GetCooldownLimit()));
+        cooldown.setPosition(180, 680 + numberOfNewLines * 20);
     }
 
 

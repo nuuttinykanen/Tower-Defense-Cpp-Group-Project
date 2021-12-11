@@ -215,15 +215,6 @@ void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destinat
       }
     }
   }
-  for(auto it = s_enemies.begin(); it != s_enemies.end(); it++) {
-    auto h = *it;
-    if(h.second == destination) {
-      if(enemy != nullptr) {
-        h.second->RemoveEnemy(enemy);
-        destination->AddEnemy(enemy);
-      }
-    }
-  }
 }
 
 void LevelMap::MoveEnemies() {
@@ -235,6 +226,10 @@ void LevelMap::MoveEnemies() {
     for(auto et = enemies.begin(); et != enemies.end(); et++) {
       auto e = *et;
       if(e->GetHealth() < 1) {
+        if(e->HasInner()) {
+            auto new_e = e->Inner();
+            this->PlaceEnemy(it->first.first, it->first.second, *new_e);
+        }
         e->RemoveFromMap();
         this->EraseEnemy(e);
       }

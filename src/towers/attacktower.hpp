@@ -49,7 +49,7 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target.", 6, 2, 35, 500) { }
+    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 6, 2, 35, 500) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
 
@@ -60,7 +60,7 @@ class Bomber : public AttackTower {
 
 class SuperBomber : public AttackTower {
     public:
-    SuperBomber() : AttackTower("Super Bomber", "Launches bombs that also deal\ndamage to enemies next to a target.", 7, 3, 30, 510) { }
+    SuperBomber() : AttackTower("Super Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 7, 3, 30, 510) { }
     virtual Projectile* GetProjectile();
 
     virtual TowerTypes getType() const {return TowerTypes::SuperBomberType;}
@@ -70,7 +70,7 @@ class SuperBomber : public AttackTower {
 
 class UltraBomber : public AttackTower {
     public:
-    UltraBomber() : AttackTower("Ultra Bomber", "Launches bombs that also deal\ndamage to enemies next to a target.", 10, 4, 25, 700) { }
+    UltraBomber() : AttackTower("Ultra Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 10, 4, 25, 700) { }
     virtual Projectile* GetProjectile();
 
     bool CanUpgrade() override {return false;}

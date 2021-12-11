@@ -56,7 +56,7 @@ class Seer : public SupportTower {
 
 class MotherBrain : public SupportTower {
 public:
-    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers \nwithin range by 'STRENGTH'. Does not stack.", 1, 2, 1) {}
+    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers \nwithin range by 'STRENGTH'. \nDoes not stack.", 1, 2, 1) {}
     ~MotherBrain() {};
 
     bool CanUpgrade() override {return false;}
@@ -71,7 +71,7 @@ public:
 
 class StereoDude : public SupportTower {
     public:
-    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack towers \nwithin range by 'STRENGTH'. Does not stack.", 30, 4, 1) {}
+    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 30, 4, 1) {}
     ~StereoDude() { };
     virtual Tower* Upgrade();
 
@@ -82,7 +82,7 @@ class StereoDude : public SupportTower {
 
 class DJDude : public SupportTower {
 public:
-    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack towers \nwithin range by strength. Does not stack.", 50, 3, 1) { }
+    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 50, 3, 1) { }
     ~DJDude() { };
 
     virtual TowerTypes getType() const {return TowerTypes::DJDudeType;}

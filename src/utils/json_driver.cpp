@@ -221,9 +221,14 @@ Game* JSON::loadLatestSave() {
             case MaskedGodType:
                 newTower = new MaskedGod();
                 break;
-            case Attack4:
-                // TODO: Add new attack tower
-                newTower = new Gunner();
+            case KnifeBotType:
+                newTower = new KnifeBot();
+                break;
+            case KnifeBot2Type:
+                newTower = new KnifeBot2();
+                break;
+            case SwordBotType:
+                newTower = new SwordBot();
                 break;
             case ClockerType:
                 newTower = new Clocker();

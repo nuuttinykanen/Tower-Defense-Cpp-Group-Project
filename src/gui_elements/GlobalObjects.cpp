@@ -169,6 +169,21 @@ GlobalObjects::GlobalObjects() {
         return;
     }
 
+    if(!knifeBotTexture_.loadFromFile("../src/assets/towers/KnifeBot.png")) {
+        std::cout << "Error retrieving Knife Bot sprite" << std::endl;
+        return;
+    }
+
+    if(!knifeBot2Texture_.loadFromFile("../src/assets/towers/KnifeBot 2.0.png")) {
+        std::cout << "Error retrieving Bot 2 sprite" << std::endl;
+        return;
+    }
+
+    if(!swordBotTexture_.loadFromFile("../src/assets/towers/SwordBot.png")) {
+        std::cout << "Error retrieving Sword Bot sprite" << std::endl;
+        return;
+    }
+
     enemySprite_.setTexture(enemyTexture_);
     purpleEnemySprite_.setTexture(purpleEnemyTexture_);
     freeSquareSprite_.setTexture(freeSquareTexture_);
@@ -197,7 +212,9 @@ GlobalObjects::GlobalObjects() {
     cursedKidSprite_.setTexture(cursedKidTexture_);
     maskedKidSprite_.setTexture(maskedKidTexture_);
     maskedGodSprite_.setTexture(maskedGodTexture_);
-
+    knifeBotSprite_.setTexture(knifeBotTexture_);
+    knifeBot2Sprite_.setTexture(knifeBot2Texture_);
+    swordBotSprite_.setTexture(swordBotTexture_);
 
     bombProjecSprite_.setTexture(bombProjecTexture_);
     gunProjecSprite_.setTexture(gunProjecTexture_);
@@ -363,6 +380,21 @@ sf::Sprite &GlobalObjects::getMaskedGodSprite(float scaledBy) {
     return maskedGodSprite_;
 }
 
+sf::Sprite &GlobalObjects::getKnifeBotSprite(float scaledBy) {
+    knifeBotSprite_.scale(scaledBy, scaledBy);
+    return knifeBotSprite_;
+}
+
+sf::Sprite &GlobalObjects::getKnifeBot2Sprite(float scaledBy) {
+    knifeBot2Sprite_.scale(scaledBy, scaledBy);
+    return knifeBot2Sprite_;
+}
+
+sf::Sprite &GlobalObjects::getSwordBotSprite(float scaledBy) {
+    swordBotSprite_.scale(scaledBy, scaledBy);
+    return swordBotSprite_;
+}
+
 sf::Sprite &GlobalObjects::getTowerSpriteByType(TowerTypes type, float scaledBy) {
 
     switch (type) {
@@ -384,8 +416,12 @@ sf::Sprite &GlobalObjects::getTowerSpriteByType(TowerTypes type, float scaledBy)
             return getMaskedKidSprite(scaledBy);
         case MaskedGodType:
             return getMaskedGodSprite(scaledBy);
-        case Attack4:
-            return getGunnerSprite(scaledBy);
+        case KnifeBotType:
+            return getKnifeBotSprite(scaledBy);
+        case KnifeBot2Type:
+            return getKnifeBot2Sprite(scaledBy);
+        case SwordBotType:
+            return getSwordBotSprite(scaledBy);
         case ClockerType:
             return getClockerSprite(scaledBy);;
         case ClockerBlockerType:

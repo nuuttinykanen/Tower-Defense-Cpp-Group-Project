@@ -137,3 +137,31 @@ Projectile *MaskedGod::GetProjectile() {
 Tower *MaskedGod::Upgrade() {
     return nullptr;
 }
+Projectile* KnifeBot::GetProjectile() {
+    Projectile* projec = new BulletProjectile(this);
+    return projec;
+}
+
+Tower* KnifeBot::Upgrade() {
+    auto upgrade = new KnifeBot2();
+    return upgrade;
+}
+
+Projectile* KnifeBot2::GetProjectile() {
+    Projectile* projec = new BulletProjectile(this);
+    return projec;
+}
+
+Tower* KnifeBot2::Upgrade() {
+    auto upgrade = new SwordBot();
+    return upgrade;
+}
+
+Projectile* SwordBot::GetProjectile() {
+    Projectile* projec = new BulletProjectile(this);
+    return projec;
+}
+
+Tower* SwordBot::Upgrade() {
+    return nullptr;
+}

@@ -147,3 +147,36 @@ public:
 
     virtual Tower* Upgrade();
 };
+
+class KnifeBot : public AttackTower {
+public:
+    KnifeBot() : AttackTower("Knife Bot", "Attacks close and hard.", 8, 1, 20, 300) { }
+    ~KnifeBot(){}
+    virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::KnifeBotType;}
+
+    virtual Tower* Upgrade();
+};
+
+class KnifeBot2 : public AttackTower {
+public:
+    KnifeBot2() : AttackTower("Knife Bot 2.0", "Attacks close and hard.", 16, 1, 30, 300) { }
+    ~KnifeBot2(){}
+    virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::KnifeBot2Type;}
+
+    virtual Tower* Upgrade();
+};
+
+class SwordBot : public AttackTower {
+public:
+    SwordBot() : AttackTower("Sword Bot", "Attacks close and hard.", 20, 2, 30, 300) { }
+    ~SwordBot(){}
+    virtual Projectile* GetProjectile();
+
+    virtual TowerTypes getType() const {return TowerTypes::SwordBotType;}
+
+    virtual Tower* Upgrade();
+};

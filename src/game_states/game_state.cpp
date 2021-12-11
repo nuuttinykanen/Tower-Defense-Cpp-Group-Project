@@ -421,17 +421,17 @@ void GameState::generateButtons() {
                                          getFont(), 50);
     towerButtons_[TowerTypes::GunnerType] = attack1Button;
 
-    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getBomberSprite(),
-                                         getFont(), 100);
-    towerButtons_[TowerTypes::BomberType] = attack2Button;
-
-    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getCursedKidSprite(),
-                                         getFont(), 200);
-    towerButtons_[TowerTypes::CursedKidType] = attack3Button;
-
-    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
+    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getKnifeBotSprite(),
                                          getFont(), 300);
-    towerButtons_[TowerTypes::Attack4] = attack4Button;
+    towerButtons_[TowerTypes::KnifeBotType] = attack2Button;
+
+    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getBomberSprite(),
+                                         getFont(), 100);
+    towerButtons_[TowerTypes::BomberType] = attack3Button;
+
+    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getCursedKidSprite(),
+                                         getFont(), 200);
+    towerButtons_[TowerTypes::CursedKidType] = attack4Button;
 
     auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite(),
                                           getFont(), 50);
@@ -474,6 +474,9 @@ void GameState::generateTowers() {
     towerSprites_["Masked Kid"]  = gui_->getGlobalObjects()->getMaskedKidSprite();
     towerSprites_["Cursed Kid"]  = gui_->getGlobalObjects()->getCursedKidSprite();
     towerSprites_["Masked God"]  = gui_->getGlobalObjects()->getMaskedGodSprite();
+    towerSprites_["Knife Bot"] = gui_->getGlobalObjects()->getKnifeBotSprite();
+    towerSprites_["Knife Bot 2.0"] = gui_->getGlobalObjects()->getKnifeBot2Sprite();
+    towerSprites_["Sword Bot"] = gui_->getGlobalObjects()->getSwordBotSprite();
 }
 
 void GameState::generateProjectiles() {
@@ -486,6 +489,9 @@ void GameState::generateProjectiles() {
     projectileSprites_["Masked Kid"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
     projectileSprites_["Cursed Kid"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
     projectileSprites_["Masked God"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
+    projectileSprites_["Knife Bot"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
+    projectileSprites_["Knife Bot 2.0"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
+    projectileSprites_["Sword Bot"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
 }
 
 void GameState::generateProjectileHitSprites() {

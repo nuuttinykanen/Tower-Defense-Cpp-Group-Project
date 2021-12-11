@@ -115,8 +115,12 @@ static Tower* getTowerByType(TowerTypes type) {
             return new MaskedKid();
         case MaskedGodType:
             return new MaskedGod();
-        case Attack4:
-            return new Gunner();
+        case KnifeBotType:
+            return new KnifeBot();
+        case KnifeBot2Type:
+            return new KnifeBot2();
+        case SwordBotType:
+            return new SwordBot();
         case ClockerType:
             return new Clocker();
         case ClockerBlockerType:

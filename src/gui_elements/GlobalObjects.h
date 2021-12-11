@@ -49,6 +49,10 @@ public:
     sf::Sprite& getMaskedGodSprite(float scaledBy = 1);
     sf::Sprite& getCursedProjectileSprite(float scaledBy = 1);
 
+    sf::Sprite& getKnifeBotSprite(float scaledBy = 1);
+    sf::Sprite& getKnifeBot2Sprite(float scaledBy = 1);
+    sf::Sprite& getSwordBotSprite(float scaledBy = 1);
+
     sf::Sprite& getTowerSpriteByType(TowerTypes type, float scaledBy = 1);
 
 private:
@@ -73,6 +77,10 @@ private:
     sf::Texture cursedKidTexture_;
     sf::Texture maskedKidTexture_;
     sf::Texture maskedGodTexture_;
+
+    sf::Texture knifeBotTexture_;
+    sf::Texture knifeBot2Texture_;
+    sf::Texture swordBotTexture_;
 
     sf::Texture hordeTexture_;
     sf::Texture zombieTexture_;
@@ -109,6 +117,9 @@ private:
     sf::Sprite cursedKidSprite_;
     sf::Sprite maskedKidSprite_;
     sf::Sprite maskedGodSprite_;
+    sf::Sprite knifeBotSprite_;
+    sf::Sprite knifeBot2Sprite_;
+    sf::Sprite swordBotSprite_;
 
     sf::Sprite hordeSprite_;
     sf::Sprite zombieSprite_;

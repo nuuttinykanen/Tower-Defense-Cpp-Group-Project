@@ -32,7 +32,7 @@
     }
 
     void AttackTower::AddCooldownModifier(int amount) {
-        if(cooldownModifiers_ == 0) cooldownModifiers_ += amount;
+        if(amount < cooldownModifiers_) cooldownModifiers_ += amount;
     }
 
     void AttackTower::AddRangeModifier(int amount) {

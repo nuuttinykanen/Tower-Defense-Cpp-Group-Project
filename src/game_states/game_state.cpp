@@ -368,6 +368,7 @@ void GameState::upgradeTower() {
         if(upgrade != nullptr) {
             if(upgrade->GetPrice() > player_->GetMoney()) {
                 add_popup("You don't have enough money!", 200, false);
+                delete(upgrade);
             } else {
                 player_->AddTower(upgrade);
                 int x = selectedTower_.tower->GetX();

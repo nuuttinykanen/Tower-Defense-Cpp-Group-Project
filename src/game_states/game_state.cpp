@@ -250,7 +250,9 @@ void GameState::poll_events() {
 
                 for (auto b : buttons_) {
                     // Move to next one if this button is not clicked
-                    if (!b.second->contains(mouse_pos)) continue;
+                    if (!b.second->contains(mouse_pos)) {
+                        continue;
+                    }
                     switch (b.first) {
 
                         case QuitToMenu:
@@ -266,12 +268,12 @@ void GameState::poll_events() {
                             startWave();
                             return;
                         case SellTower:
-                            buyingTower = false;
+                            if(buyingTower || !isTowerSelected) return;
                             remove_popup();
                             sellTower();
                             return;
                         case UpgradeTower:
-                            buyingTower = false;
+                            if(buyingTower || !isTowerSelected) return;
                             remove_popup();
                             upgradeTower();
                             return;
@@ -317,9 +319,8 @@ void GameState::poll_events() {
                         break;
                     }
                 }
-
             } else if (event.mouseButton.button == 1) {
-                //right click does nothing
+                isTowerSelected = false;
             }
 
         }

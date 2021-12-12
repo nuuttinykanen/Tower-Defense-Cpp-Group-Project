@@ -19,10 +19,7 @@
     EnemySquare* EnemySquare::GetNext() { return next_; }
     void EnemySquare::SetPrevious(EnemySquare* e_square) { previous_ = e_square; }
     EnemySquare* EnemySquare::GetPrevious() { return previous_; }
-    bool EnemySquare::HasPrevious() {
-        if(this->previous_ != nullptr) return true;
-        else return false;
-    }
+
     void EnemySquare::AddEnemy(Enemy* enemy) {
         enemies_.push_back(enemy);
     }
@@ -52,7 +49,7 @@
         if(this->GetEnemy(enemy) != nullptr) return true;
         else return false;
     }
-    unsigned int EnemySquare::GetNumber() { return number_; }
+    unsigned int EnemySquare::GetNumber() const { return number_; }
     void EnemySquare::SetNumber(unsigned int number) { number_ = number; }
 
     bool TowerSquare::free() const { return false; }

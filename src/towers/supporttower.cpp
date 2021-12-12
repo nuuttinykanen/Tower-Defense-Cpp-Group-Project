@@ -9,7 +9,7 @@ void Clocker::supportEffect(MapSquare* square) {
     std::string type = square->GetType();
     // onko tower
     if(type == "enemy") {
-        EnemySquare* en = (EnemySquare*)square;
+        auto* en = (EnemySquare*)square;
         for(auto it : en->GetEnemies()) {
             if(it->GetCooldownModifier() == false) {
                 it->SetCooldownModifier();

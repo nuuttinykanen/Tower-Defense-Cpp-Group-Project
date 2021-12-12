@@ -23,10 +23,6 @@ void Player::AddTower(Tower *tower) {
     this->TakeMoney(tower->GetPrice());
 }
 
-unsigned int Player::GetMaxHealth() {
-    return maxHealth_;
-}
-
 unsigned int Player::GetHealth() {
     return health_;
 }

@@ -8,11 +8,10 @@
 class Player {
 
     public :
-        Player(unsigned int maxHealth, int money = 10000) : maxHealth_(maxHealth), money_(money) {
+        Player(unsigned int maxHealth, int money = 150) : maxHealth_(maxHealth), money_(money) {
             health_ = maxHealth;
         }
         ~Player();
-
 
         int GetMoney() const;
         void SetMoney(int amount);
@@ -21,7 +20,6 @@ class Player {
         void SellTower(Tower* tower);
         void AddTower(Tower* tower);
 
-        unsigned int GetMaxHealth();
         unsigned int GetHealth();
         void ChangeHealth(int amount);
         void SetHealth(int amount);

@@ -25,7 +25,7 @@ void TowerButton::draw(sf::RenderWindow &window, int currentMoney) {
     window.draw(icon_);
 
     text_.setPosition(pos_.x + 30, pos_.y + 75);
-    if (currentMoney > cost_) {
+    if (currentMoney >= cost_) {
         text_.setFillColor(Color(133,187, 101));
     } else {
         text_.setFillColor(Color::Red);

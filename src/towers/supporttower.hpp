@@ -12,86 +12,86 @@ class SupportTower : public Tower {
 
     virtual void supportEffect(MapSquare* square) = 0;
 
-    virtual std::string GetMainType() const;
+    [[nodiscard]] std::string GetMainType() const override;
 
-    virtual unsigned int GetRange() const;
+    [[nodiscard]] unsigned int GetRange() const override;
 
 };
 
 class Clocker : public SupportTower {
     public:
     Clocker() : SupportTower("Clocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 40, 2, 350) {}
-    ~Clocker() { };
+    ~Clocker() override = default;;
 
-    virtual void supportEffect(MapSquare* square);
+    void supportEffect(MapSquare* square) override;
 
-    virtual TowerTypes getType() const {return TowerTypes::ClockerType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::ClockerType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class ClockBlocker : public SupportTower {
     public:
     ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 60, 3, 450) {}
-    ~ClockBlocker() { };
-    virtual Tower* Upgrade();
+    ~ClockBlocker() override = default;;
+    Tower* Upgrade() override;
 
     bool CanUpgrade() override {return false;}
 
-    virtual TowerTypes getType() const {return TowerTypes::ClockerBlockerType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::ClockerBlockerType;}
 
-    virtual void supportEffect(MapSquare* square);
+    void supportEffect(MapSquare* square) override;
 };
 
 class Seer : public SupportTower {
     public:
     Seer() : SupportTower("Seer", "Increases range of attack towers \nwithin range by 'STRENGTH'. \nDoes not stack.", 1, 1, 450) {}
-    ~Seer() { };
-    virtual Tower* Upgrade();
+    ~Seer() override = default;;
+    Tower* Upgrade() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::SeerType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::SeerType;}
 
-    virtual void supportEffect(MapSquare* square);
+    void supportEffect(MapSquare* square) override;
 };
 
 class MotherBrain : public SupportTower {
 public:
     MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers \nwithin range by 'STRENGTH'. \nDoes not stack.", 1, 2, 500) {}
-    ~MotherBrain() {};
+    ~MotherBrain() override = default;;
 
     bool CanUpgrade() override {return false;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::MotherBrainType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::MotherBrainType;}
 
 
-    virtual void supportEffect(MapSquare* square);
+    void supportEffect(MapSquare* square) override;
 };
 
 class StereoDude : public SupportTower {
     public:
     StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 30, 1, 400) {}
-    ~StereoDude() { };
-    virtual Tower* Upgrade();
+    ~StereoDude() override = default;;
+    Tower* Upgrade() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::StereoType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::StereoType;}
 
-    virtual void supportEffect(MapSquare* square);
+    void supportEffect(MapSquare* square) override;
 };
 
 class DJDude : public SupportTower {
 public:
     DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 50, 2, 500) { }
-    ~DJDude() { };
+    ~DJDude() override = default;;
 
-    virtual TowerTypes getType() const {return TowerTypes::DJDudeType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::DJDudeType;}
 
     bool CanUpgrade() override {return false;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 
-    virtual void supportEffect(MapSquare* square);
+    void supportEffect(MapSquare* square) override;
 };
 
 #endif

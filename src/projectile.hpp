@@ -6,7 +6,7 @@
 #include "towers/tower.hpp"
 class Projectile {
     public:
-    Projectile(Tower* sender) : sender_(sender) {
+    explicit Projectile(Tower* sender) : sender_(sender) {
         location_ = nullptr;
         target_ = nullptr;
         strength_ = sender->GetStrength();
@@ -36,10 +36,10 @@ class Projectile {
 
 class BombProjectile : public Projectile {
     public:
-    BombProjectile(Tower* sender) : Projectile(sender) {
+    explicit BombProjectile(Tower* sender) : Projectile(sender) {
         bomb_radius_ = 2;
     }
-    ~BombProjectile() override { }
+    ~BombProjectile() override = default;
     std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
     virtual std::string GetType();
     private: 
@@ -48,8 +48,8 @@ class BombProjectile : public Projectile {
 
 class BulletProjectile : public Projectile {
     public:
-    BulletProjectile(Tower* sender) : Projectile(sender) { }
-    ~BulletProjectile() override { }
+    explicit BulletProjectile(Tower* sender) : Projectile(sender) { }
+    ~BulletProjectile() override = default;
     virtual std::string GetType();
     std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
 };
@@ -59,7 +59,7 @@ public:
     CursedProjectile(Tower* sender, int squares_back) : Projectile(sender) {
         squares_back_ = squares_back;
     }
-    ~CursedProjectile() override { }
+    ~CursedProjectile() override = default;
     virtual std::string GetType();
     std::vector<std::pair<int, int>> Effect(EnemySquare* enemy);
 private:

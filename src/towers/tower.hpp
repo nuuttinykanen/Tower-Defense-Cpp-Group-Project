@@ -1,6 +1,7 @@
 #ifndef TOWER_HPP
 #define TOWER_HPP
 #include <iostream>
+#include <utility>
 #include <vector>
 
 
@@ -12,25 +13,25 @@ enum TowerTypes {GunnerType, MultiGunnerType, GunFiendType, BomberType, SuperBom
 
 class Tower {
     public:
-    Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(name), description_(description), strength_(strength), range_(range), price_(price) { }
+    Tower(std::string name, std::string description, unsigned int strength, unsigned int range, unsigned int price) : name_(std::move(name)), description_(std::move(description)), strength_(strength), range_(range), price_(price) { }
 
     virtual ~Tower() = default;
 
-    std::string GetName() const;
+    [[nodiscard]] std::string GetName() const;
 
-    std::string GetDescription() const;
+    [[nodiscard]] std::string GetDescription() const;
 
-    unsigned int GetStrength() const;
+    [[nodiscard]] unsigned int GetStrength() const;
 
-    virtual unsigned int GetRange() const;
+    [[nodiscard]] virtual unsigned int GetRange() const;
 
-    unsigned int GetPrice() const;
+    [[nodiscard]] unsigned int GetPrice() const;
 
     virtual bool CanUpgrade() {return true;};
 
-    virtual std::string GetMainType() const = 0;
+    [[nodiscard]] virtual std::string GetMainType() const = 0;
 
-    virtual TowerTypes getType() const = 0;
+    [[nodiscard]] virtual TowerTypes getType() const = 0;
 
     virtual Tower* Upgrade() = 0;
 

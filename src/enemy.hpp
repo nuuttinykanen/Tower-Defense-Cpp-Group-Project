@@ -49,47 +49,47 @@ class Enemy {
 
 class Zombie : public Enemy {
     public:
-    Zombie(int health = 6, int attack = 3, int speed = 2, int bounty = 20) :
+    explicit Zombie(int health = 6, int attack = 3, int speed = 2, int bounty = 20) :
     Enemy("Zombie", health, attack, speed, bounty) {}
-    ~Zombie(){}
-    virtual Enemy* Inner();
-    virtual bool HasInner();
+    ~Zombie() override= default;
+    Enemy* Inner() override;
+    bool HasInner() override;
 };
 
 class ZombieHorde : public Enemy {
     public:
-    ZombieHorde(int health = 16, int attack = 6, int speed = 3, int bounty = 40) :
+    explicit ZombieHorde(int health = 16, int attack = 6, int speed = 3, int bounty = 40) :
     Enemy("Zombie Horde", health, attack, speed, bounty) {}
-    ~ZombieHorde(){}
-    virtual Enemy* Inner();
-    virtual bool HasInner();
+    ~ZombieHorde() override= default;
+    Enemy* Inner() override;
+    bool HasInner() override;
 };
 
 class MichaelMyers : public Enemy {
     public:
-    MichaelMyers(int health = 80, int attack = 30, int speed = 4, int bounty = 200) :
+    explicit MichaelMyers(int health = 80, int attack = 30, int speed = 4, int bounty = 200) :
     Enemy("Michael Myers", health, attack, speed, bounty) {}
-    ~MichaelMyers(){}
-    virtual Enemy* Inner();
-    virtual bool HasInner();
+    ~MichaelMyers() override{}
+    Enemy* Inner() override;
+    bool HasInner() override;
 };
 
 class Dracula : public Enemy {
     public:
-    Dracula(int health = 150, int attack = 32, int speed = 5, int bounty = 400) :
+    explicit Dracula(int health = 150, int attack = 32, int speed = 5, int bounty = 400) :
     Enemy("Dracula", health, attack, speed, bounty) {}
-    ~Dracula(){}
-    virtual Enemy* Inner();
-    virtual bool HasInner();
+    ~Dracula() override= default;
+    Enemy* Inner() override;
+    bool HasInner() override;
 };
 
 class Bat : public Enemy {
     public:
-    Bat(int health = 4, int attack = 20, int speed = 1, int bounty = 10) :
+    explicit Bat(int health = 4, int attack = 20, int speed = 1, int bounty = 10) :
     Enemy("Bat", health, attack, speed, bounty) {}
-    ~Bat(){}
-    virtual Enemy* Inner();
-    virtual bool HasInner();
+    ~Bat() override= default;
+    Enemy* Inner() override;
+    bool HasInner() override;
 };
 
 #endif

@@ -48,14 +48,13 @@ class EnemySquare : public MapSquare {
     EnemySquare* GetNext();
     void SetPrevious(EnemySquare* e_square);
     EnemySquare* GetPrevious();
-    bool HasPrevious();
     void AddEnemy(Enemy* enemy);
     bool RemoveEnemy(Enemy* enemy);
     bool ContainsEnemies() const;
     Enemy* GetEnemy(Enemy* enemy) const;
 
     bool ContainsEnemy(Enemy* enemy) const;
-    unsigned int GetNumber();
+    unsigned int GetNumber() const;
     void SetNumber(unsigned int number);
 
     private:
@@ -70,7 +69,7 @@ public:
     TowerSquare(int x, int y, Tower* tower) : MapSquare(x, y), tower_(tower) {
         enemySquaresInRange_ = std::vector<EnemySquare*>();
     }
-    ~TowerSquare(){delete tower_;}
+    ~TowerSquare(){ delete tower_; }
     virtual bool free() const;
     virtual std::string GetType() const;
 

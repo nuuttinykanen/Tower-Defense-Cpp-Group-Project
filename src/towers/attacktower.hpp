@@ -1,23 +1,22 @@
 #pragma once
 #include "tower.hpp"
 #include <string>
+#include <utility>
 #include "../enemy.hpp"
 #include "../projectile.hpp"
 class AttackTower : public Tower {
     public:
     AttackTower(std::string name, std::string description, unsigned int strength, unsigned int range, int cooldown, unsigned int cost) :
-    Tower(name, description, strength, range, cost),
+    Tower(std::move(name), std::move(description), strength, range, cost),
     cooldownLimit_(cooldown), cooldown_(0), cooldownModifiers_(0), attackCounter_(0), rangeModifiers_(0) {}
 
     ~AttackTower() override = default;;
 
-    int CurrentCooldown() const;
+    [[nodiscard]] int CurrentCooldown() const;
 
-    int GetCooldownLimit() const;
-    
-    double CooldownPercentage() const;
+    [[nodiscard]] int GetCooldownLimit() const;
 
-    bool CanAttack() const;
+    [[nodiscard]] bool CanAttack() const;
 
     void RestartCooldown();
 
@@ -29,11 +28,9 @@ class AttackTower : public Tower {
 
     void ResetModifiers();
 
-    unsigned int GetCurrentRange() const;
-
     virtual Projectile* GetProjectile() = 0;
 
-    virtual unsigned int GetRange() const;
+    [[nodiscard]] unsigned int GetRange() const override;
 
     private:
     int cooldownLimit_;
@@ -44,139 +41,139 @@ class AttackTower : public Tower {
 
 
 
-    virtual std::string GetMainType() const;
+    [[nodiscard]] std::string GetMainType() const override;
 };
 
 class Bomber : public AttackTower {
     public:
     Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 6, 2, 60, 200) { }
-    ~Bomber(){}
-    virtual Projectile* GetProjectile();
+    ~Bomber() override= default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::BomberType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::BomberType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class SuperBomber : public AttackTower {
     public:
     SuperBomber() : AttackTower("Super Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 7, 3, 90, 510) { }
-    virtual Projectile* GetProjectile();
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::SuperBomberType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::SuperBomberType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class UltraBomber : public AttackTower {
     public:
     UltraBomber() : AttackTower("Ultra Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 10, 4, 120, 700) { }
-    virtual Projectile* GetProjectile();
+    Projectile* GetProjectile() override;
 
     bool CanUpgrade() override {return false;}
 
-    virtual TowerTypes getType() const {return TowerTypes::UltraBomberType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::UltraBomberType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class Gunner : public AttackTower {
     public:
     Gunner() : AttackTower("Gunner", "Guns enemies.", 2, 5, 30, 50) { }
-    ~Gunner(){}
-    virtual Projectile* GetProjectile();
+    ~Gunner() override= default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::GunnerType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::GunnerType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class Multigunner : public AttackTower {
     public:
     Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 4, 5, 20, 75) { }
-    ~Multigunner(){}
-    virtual Projectile* GetProjectile();
+    ~Multigunner()  override = default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::MultiGunnerType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::MultiGunnerType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class GunFiend : public AttackTower {
     public:
     GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 6, 6, 18, 100) { }
-    ~GunFiend(){}
-    virtual Projectile* GetProjectile();
+    ~GunFiend() override= default;
+    Projectile* GetProjectile() override;
 
     bool CanUpgrade() override {return false;}
 
-    virtual TowerTypes getType() const {return TowerTypes::GunFiendType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::GunFiendType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class CursedKid : public AttackTower {
 public:
     CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by \ntwo squares.", 2, 1, 100, 400) { }
-    ~CursedKid(){}
-    virtual Projectile* GetProjectile();
+    ~CursedKid() override = default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::CursedKidType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::CursedKidType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class MaskedKid : public AttackTower {
 public:
     MaskedKid() : AttackTower("Masked Kid", "Damages and sends enemies back\nby three squares.", 2, 1, 120, 420) { }
-    ~MaskedKid(){}
-    virtual Projectile* GetProjectile();
+    ~MaskedKid() override= default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::MaskedKidType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::MaskedKidType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class MaskedGod : public AttackTower {
 public:
     MaskedGod() : AttackTower("Masked God", "Damages and sends enemies back\nby five squares.", 2, 1, 160, 450) { }
-    ~MaskedGod(){}
-    virtual Projectile* GetProjectile();
+    ~MaskedGod() override= default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::MaskedGodType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::MaskedGodType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class KnifeBot : public AttackTower {
 public:
     KnifeBot() : AttackTower("Knife Bot", "Attacks close and hard.", 8, 1, 100, 100) { }
-    ~KnifeBot(){}
-    virtual Projectile* GetProjectile();
+    ~KnifeBot() override= default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::KnifeBotType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::KnifeBotType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class KnifeBot2 : public AttackTower {
 public:
     KnifeBot2() : AttackTower("Knife Bot 2.0", "Attacks close and hard.", 16, 1, 100, 110) { }
     ~KnifeBot2(){}
-    virtual Projectile* GetProjectile();
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::KnifeBot2Type;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::KnifeBot2Type;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };
 
 class SwordBot : public AttackTower {
 public:
     SwordBot() : AttackTower("Sword Bot", "Attacks close and hard.", 20, 2, 100, 130) { }
-    ~SwordBot(){}
-    virtual Projectile* GetProjectile();
+    ~SwordBot() override= default;
+    Projectile* GetProjectile() override;
 
-    virtual TowerTypes getType() const {return TowerTypes::SwordBotType;}
+    [[nodiscard]] TowerTypes getType() const override {return TowerTypes::SwordBotType;}
 
-    virtual Tower* Upgrade();
+    Tower* Upgrade() override;
 };

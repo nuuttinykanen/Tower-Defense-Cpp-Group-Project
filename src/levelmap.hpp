@@ -44,9 +44,9 @@ class LevelMap {
   const std::vector<Tower*>& GetTowers() {return towers_;};
   const std::vector<Enemy*>& GetEnemies();
   MapSquare* GetSquare(int x, int y); 
-  const std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
-  const std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
-  const std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
+  std::map<std::pair<int, int>, FreeSquare*> GetFreeSquares();
+  std::map<std::pair<int, int>, TowerSquare*> GetTowerSquares();
+  std::map<std::pair<int, int>, EnemySquare*> GetEnemySquares();
   std::vector<TowerSquare*> GetAttackTowers();
   std::vector<TowerSquare*> GetSupportTowers();
   std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>> GetProjectileMarks();
@@ -57,9 +57,9 @@ class LevelMap {
   bool EraseEnemy(Enemy* enemy);
   bool PlaceEnemy(int x, int y, Enemy& enemy);
   EnemySquare* FindEnemy(Enemy* enemy);
-  EnemySquare* GetFarthestEnemy(std::vector<EnemySquare*> list);
+  static EnemySquare* GetFarthestEnemy(std::vector<EnemySquare*> list);
   MapSquare* GetNextMoveSquare(MapSquare* start, MapSquare* end);
-  unsigned int GetEnemyAmount();
+  unsigned int GetEnemyAmount() const;
 
   bool PlaceTower(int x, int y, Tower* tower);
   void EraseTowerAt(TowerSquare *towerSquare);
@@ -77,7 +77,7 @@ class LevelMap {
   double ProjDistanceToTarget(Projectile* proj);
   void MoveProjectile(Projectile* proj); 
 
-  unsigned int GetEnemiesPassed();
+  unsigned int GetEnemiesPassed() const;
 
   private:
   size_t size_;

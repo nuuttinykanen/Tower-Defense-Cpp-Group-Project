@@ -2,7 +2,7 @@
 #include "gui.h"
 #include "game_states/window_state.h"
 #include "game_states/menu_state.h"
-#define GAME_TITLE "Tower defense"
+#define GAME_TITLE "Bloonless tower defence"
 
 
 Gui::Gui(int width, int height)

@@ -8,24 +8,7 @@ Game::~Game(){
 
 }
 
-void Game::SpawnEnemy(Enemy* enemy) {
-    //Enemypath start square (spawn) coordinates
-    int x = this->map_.GetEnemySquares().begin()->first.first;
-    int y = this-> map_.GetEnemySquares().begin()->first.second;
 
-
-    if(this->map_.PlaceEnemy(x, y, *enemy)){
-        enemies_.push_back(enemy);
-    }
-
-}
-
-void Game::SpawnTower(Tower* tower, double x, double y) {
-    this->player_.AddTower(tower);
-    this->map_.PlaceTower(x, y, tower);
-    towers_.push_back(tower);
-
-}
 
 //Kills enemy locally, gives money to player
 void Game::KillEnemy(Enemy *enemy) {

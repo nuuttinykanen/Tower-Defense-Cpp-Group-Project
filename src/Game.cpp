@@ -15,6 +15,7 @@ void Game::KillEnemy(Enemy *enemy) {
     for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); ++it){
         if(*it == enemy){
             enemies_.erase(it);
+            std::cout << "LOL";
             break;
         }
     }
@@ -120,11 +121,13 @@ void Game::ProcessEnemies() {
 
     //Removes killed and passed enemies locally, gives corresponding bounty
     // or damage to player
+
     for(auto e: this->enemies_){
+
         if(e->GetHealth() <= 0){
             this->KillEnemy(e);
         }
-        else if(e->GetHealth() > 0 and !e->OnMap() and this->map_.GetEnemiesPassed() > 0 && this->waveSpawned_){
+        else if(e->GetHealth() > 0 and !e->OnMap() and  this->waveSpawned_){
             this->TakeDamage(e);
         }
     }

@@ -20,7 +20,7 @@ class SupportTower : public Tower {
 
 class Clocker : public SupportTower {
     public:
-    Clocker() : SupportTower("Clocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 150, 2, 350) {}
+    Clocker() : SupportTower("Clocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 40, 2, 350) {}
     ~Clocker() { };
 
     virtual void supportEffect(MapSquare* square);
@@ -32,7 +32,7 @@ class Clocker : public SupportTower {
 
 class ClockBlocker : public SupportTower {
     public:
-    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 200, 3, 450) {}
+    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 60, 3, 450) {}
     ~ClockBlocker() { };
     virtual Tower* Upgrade();
 
@@ -45,7 +45,7 @@ class ClockBlocker : public SupportTower {
 
 class Seer : public SupportTower {
     public:
-    Seer() : SupportTower("Seer", "Increases range of attack towers \nwithin range by 'STRENGTH'. Does not stack.", 1, 1, 450) {}
+    Seer() : SupportTower("Seer", "Increases range of attack towers \nwithin range by 'STRENGTH'. \nDoes not stack.", 1, 1, 450) {}
     ~Seer() { };
     virtual Tower* Upgrade();
 

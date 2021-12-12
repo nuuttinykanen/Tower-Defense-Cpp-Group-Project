@@ -24,8 +24,8 @@ void Gui::start_main_loop() {
     while (window_.isOpen())
     {
 
-        current_state_->poll_events();
-        current_state_->draw_window();
+        current_state_->PollEvents();
+        current_state_->DrawWindow();
 
 
     }

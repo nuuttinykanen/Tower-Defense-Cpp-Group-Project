@@ -10,18 +10,18 @@ MenuState::MenuState(sf::RenderWindow& window, Gui* gui) : WindowState(window, g
     // Generate buttons
     auto size = window_.getSize();
     auto startButton = new Button(sf::Vector2f (450, 50), sf::Vector2f(450, 125),
-                                  "Start the latest save",this->getFont(), 20, 10);
+                                  "Start the latest save", this->GetFont(), 20, 10);
 
-    buttons_[MenuButtonTarget::StartLatestSave] = startButton;
+    buttons_[MenuButtonTarget::StartLatestSaveTarget] = startButton;
 
     auto levelSelectButton = new Button(sf::Vector2f (450, 50), sf::Vector2f(450, 225),
-                                  "Level selector",this->getFont(), 20, 85);
+                                        "Level selector", this->GetFont(), 20, 85);
 
-    buttons_[MenuButtonTarget::StartLevelSelect] = levelSelectButton;
+    buttons_[MenuButtonTarget::StartLevelSelectTarget] = levelSelectButton;
 
     auto quitButton = new Button(sf::Vector2f (450, 50), sf::Vector2f(450, 325),
-                                  "Quit the game",this->getFont(), 20, 100);
-    buttons_[MenuButtonTarget::Quit] = quitButton;
+                                 "Quit the game", this->GetFont(), 20, 100);
+    buttons_[MenuButtonTarget::QuitTarget] = quitButton;
 
 }
 MenuState::~MenuState() {
@@ -30,11 +30,11 @@ MenuState::~MenuState() {
     }
 }
 
-void MenuState::advance_state() {
+void MenuState::AdvanceState() {
 
 }
 
-void MenuState::draw_current_state() {
+void MenuState::DrawCurrentState() {
 
     for (auto b : buttons_) {
         b.second->draw(window_);
@@ -42,7 +42,7 @@ void MenuState::draw_current_state() {
 
 }
 
-void MenuState::poll_events() {
+void MenuState::PollEvents() {
     sf::Event event{};
 
 
@@ -61,15 +61,15 @@ void MenuState::poll_events() {
                     if (!b.second->contains(mouse_pos)) continue;
                     switch (b.first) {
 
-                        case StartLatestSave:
+                        case StartLatestSaveTarget:
                             gui_->getSoundDriver()->playSound(Hitmarker, 50);
-                            start_latest_save();
+                            StartLatestSave();
                             return;
-                        case StartLevelSelect:
-                            startLevelSelect();
+                        case StartLevelSelectTarget:
+                            StartLevelSelect();
                             return;
-                        case Quit:
-                            quit();
+                        case QuitTarget:
+                            Quit();
                             return;
                     }
                 }
@@ -84,15 +84,15 @@ void MenuState::poll_events() {
     }
 }
 
-void MenuState::start_latest_save() {
+void MenuState::StartLatestSave() {
     gui_->change_game_state(new GameState(window_, gui_, 0));
 
 }
 
-void MenuState::startLevelSelect() {
+void MenuState::StartLevelSelect() {
     gui_->change_game_state(new LevelSelectState(window_, gui_));
 }
 
-void MenuState::quit() {
+void MenuState::Quit() {
     window_.close();
 }

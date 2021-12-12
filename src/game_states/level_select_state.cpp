@@ -2,20 +2,20 @@
 
 
 LevelSelectState::LevelSelectState(sf::RenderWindow &window, Gui* gui): WindowState(window, gui) {
-    generateButtons();
+    GenerateButtons();
 }
 
-void LevelSelectState::advance_state() {
+void LevelSelectState::AdvanceState() {
 
 }
 
-void LevelSelectState::draw_current_state() {
+void LevelSelectState::DrawCurrentState() {
     for (auto b : buttons_) {
         b.second->draw(window_);
     }
 }
 
-void LevelSelectState::poll_events() {
+void LevelSelectState::PollEvents() {
     sf::Event event{};
 
 
@@ -63,9 +63,9 @@ void LevelSelectState::poll_events() {
     }
 }
 
-void LevelSelectState::generateButtons() {
+void LevelSelectState::GenerateButtons() {
     auto latestSaveButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 100),
-                                       "Load latest save", getFont(), 20, 15);
+                                       "Load latest save", GetFont(), 20, 15);
     buttons_[0] = latestSaveButton;
 
     int y = 0;
@@ -73,7 +73,7 @@ void LevelSelectState::generateButtons() {
     // Draw buttons in a 4xX grid
     for (int i = 1; i <= JSON::getNumberOfLevels() ; i++) {
         auto button = new Button(sf::Vector2f(50, 50), sf::Vector2f(475 + 100 * x, 200 + 100 * y),
-                                 std::to_string(i), getFont(), 20, 15);
+                                 std::to_string(i), GetFont(), 20, 15);
         buttons_[i] = button;
         x++;
         if (i % 4 == 0)  {
@@ -82,7 +82,7 @@ void LevelSelectState::generateButtons() {
         }
         if (i == JSON::getNumberOfLevels()) {
             auto backToMenuButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 300 + 100 * y),
-                                               "Back to main menu", getFont(), 20, 10);
+                                               "Back to main menu", GetFont(), 20, 10);
             buttons_[-1] = backToMenuButton;
         }
     }

@@ -7,15 +7,15 @@ WindowState::WindowState(sf::RenderWindow& window, Gui* gui)
 
 }
 
-void WindowState::draw_window() {
+void WindowState::DrawWindow() {
     window_.clear(Color(38, 38, 38));
 
-    advance_state();
-    draw_current_state();
+    AdvanceState();
+    DrawCurrentState();
 
     window_.display();
 }
 
-sf::Font& WindowState::getFont() {
+sf::Font& WindowState::GetFont() {
     return gui_->getGlobalObjects()->getFont();
 }

@@ -7,9 +7,9 @@
 #include "../towers/tower.hpp"
 #include "../gui_elements/TowerButton.h"
 #include "../utils/json_driver.h"
-#include "finishState.h"
+#include "finish_state.h"
 
-enum GameButtonTarget {QuitToMenu, SaveGame, StartWave, SellTower, UpgradeTower, DeselectTower};
+enum GameButtonTarget {QuitToMenuTarget, SaveGameTarget, StartWaveTarget, SellTowerTarget, UpgradeTowerTarget, DeselectTowerTarget};
 
 struct SelectedTower {
     int x;
@@ -28,74 +28,70 @@ struct PopupText {
 
 class GameState: public WindowState {
 public:
-    GameState(sf::RenderWindow& window, Gui* gui, int levelNumber);
+    GameState(sf::RenderWindow& window, Gui* gui, int level_number);
     ~GameState();
 
-    void generateButtons();
+    void GenerateButtons();
 
-    void generateEnemies();
+    void GenerateEnemies();
 
-    void generateTowers();
+    void GenerateTowers();
 
-    void generateProjectiles();
+    void GenerateProjectiles();
 
-    void generateProjectileHitSprites();
+    void GenerateProjectileHitSprites();
 
-    void advance_state() override;
+    void AdvanceState() override;
 
-    void poll_events() override;
+    void PollEvents() override;
 
-    void draw_tower_range(int tx, int ty, Tower* tow);
+    void DrawTowerRange(int tx, int ty, Tower* tow);
 
-    void draw_player_info();
+    void DrawPlayerInfo();
 
-    void draw_tower_info(Tower* tow);
+    void DrawTowerInfo(Tower* tow);
 
-    void draw_popup_text();
+    void DrawPopupText();
 
-    void draw_current_state() override;
+    void DrawCurrentState() override;
 
-    void saveGame();
+    void SaveGame();
 
-    void quitToMenu();
+    void QuitToMenu();
 
-    void startWave();
+    void StartWave();
 
-    void buyTower(Tower*);
+    void BuyTower(Tower* tower);
 
-    void sellTower();
+    void SellTower();
 
-    void upgradeTower();
+    void UpgradeTower();
 
 private:
     std::map<GameButtonTarget, Button*> buttons_;
-    std::map<TowerTypes, TowerButton*> towerButtons_;
-    std::map<std::string, sf::Sprite> enemySprites_;
-    std::map<std::string, sf::Sprite> towerSprites_;
-    std::map<std::string, sf::Sprite> projectileSprites_;
-    std::map<std::string, sf::Sprite> projectileHitSprites_;
+    std::map<TowerTypes, TowerButton*> tower_buttons_;
+    std::map<std::string, sf::Sprite> enemy_sprites_;
+    std::map<std::string, sf::Sprite> tower_sprites_;
+    std::map<std::string, sf::Sprite> projectile_sprites_;
+    std::map<std::string, sf::Sprite> projectile_hit_sprites_;
     Game* game_;
-    LevelMap* levelMap_;
-    int levelNumber_;
+    LevelMap* level_map_;
+    int level_number_;
     Player* player_;
 
-    bool overUpgrade = false;
-    bool isTowerSelected = false;
-    SelectedTower upgradePreview_ = {};
-    SelectedTower selectedTower_ = {};
-    PopupText popupText_ ={1, nullptr, false};
+    bool over_upgrade = false;
+    bool is_tower_selected = false;
+    SelectedTower upgrade_preview_ = {};
+    SelectedTower selected_tower_ = {};
+    PopupText popup_text_ ={1, nullptr, false};
 
-    void add_buying_popup();
+    void AddPopup(const string& content, int posX, bool permanent);
 
-    void add_not_enough_money_popup();
-
-    void add_popup(const string& content, int posX, bool permanent);
-
-    void remove_popup();
+    void RemovePopup();
 };
 
 // TODO: Add the rest of the towers here as well
-static Tower* getTowerByType(TowerTypes type) {
+static Tower* GetTowerByType(TowerTypes type) {
     switch (type) {
         case GunnerType:
             return new Gunner();
@@ -128,7 +124,7 @@ static Tower* getTowerByType(TowerTypes type) {
         case SeerType:
             return new Seer();
         case MotherBrainType:
-            return new Gunner();
+            return new MotherBrain();
         case StereoType:
             return new StereoDude();
         case DJDudeType:

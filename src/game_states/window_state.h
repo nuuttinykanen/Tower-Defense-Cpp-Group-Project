@@ -14,18 +14,18 @@ class WindowState {
 public:
     WindowState(sf::RenderWindow& window, Gui* gui);
     virtual ~WindowState() = default;;
-    void draw_window();
+    void DrawWindow();
 
     // Advance the current game state
-    virtual void advance_state() = 0;
+    virtual void AdvanceState() = 0;
 
     // Draw the current state after advancing
-    virtual void draw_current_state() = 0;
+    virtual void DrawCurrentState() = 0;
 
     // Goes through all the sfml events (clicking, button presses etc.)
-    virtual void poll_events() = 0;
+    virtual void PollEvents() = 0;
 
-    sf::Font& getFont();
+    sf::Font& GetFont();
     // Protected allows us to access this from child classes
 protected:
     sf::RenderWindow& window_;

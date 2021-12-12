@@ -14,13 +14,13 @@ public:
     LevelSelectState(sf::RenderWindow& window, Gui* gui);
     ~LevelSelectState() override = default;
 
-    void advance_state() override;
+    void AdvanceState() override;
 
-    void poll_events() override;
+    void PollEvents() override;
 
-    void draw_current_state() override;
+    void DrawCurrentState() override;
 
-    void generateButtons();
+    void GenerateButtons();
 private:
     std::map<int, Button*> buttons_;
 

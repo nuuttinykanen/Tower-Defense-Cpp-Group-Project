@@ -1,12 +1,12 @@
-#include "finishState.h"
+#include "finish_state.h"
 #include "game_state.h"
 #include "menu_state.h"
 
-FinishState::FinishState(sf::RenderWindow &window, Gui* gui, int levelNumber): levelNumber_(levelNumber), WindowState(window, gui) {
+FinishState::FinishState(sf::RenderWindow &window, Gui* gui, int level_number): level_number_(level_number), WindowState(window, gui) {
 
-    text_.setFont(getFont());
+    text_.setFont(GetFont());
     text_.setCharacterSize(30);
-    text_.setString("Congratulations for finishing lvl: " + std::to_string(levelNumber) + "!" );
+    text_.setString("Congratulations for finishing lvl: " + std::to_string(level_number) + "!" );
     text_.setPosition(125, 75);
     generate_buttons();
     gui_->getSoundDriver()->playSound(VictorySound, 50);
@@ -19,11 +19,11 @@ FinishState::~FinishState() {
     }
 }
 
-void FinishState::advance_state() {
+void FinishState::AdvanceState() {
 
 }
 
-void FinishState::draw_current_state() {
+void FinishState::DrawCurrentState() {
 
     for (auto b : buttons_) {
         b.second->draw(window_);
@@ -31,7 +31,7 @@ void FinishState::draw_current_state() {
     window_.draw(text_);
 }
 
-void FinishState::poll_events() {
+void FinishState::PollEvents() {
     sf::Event event{};
 
 
@@ -49,7 +49,7 @@ void FinishState::poll_events() {
 
                     switch (b.first) {
                         case PlayAgain: {
-                            auto gS = new GameState(window_, gui_, levelNumber_);
+                            auto gS = new GameState(window_, gui_, level_number_);
                             gui_->change_game_state(gS);
                             return;
                         }
@@ -70,11 +70,11 @@ void FinishState::poll_events() {
 }
     void FinishState::generate_buttons() {
         auto maineMenuButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 200),
-                                          "Back to main menu", getFont(), 20, 10);
+                                          "Back to main menu", GetFont(), 20, 10);
         buttons_[FinishButtonTarget::MainMenu] = maineMenuButton;
 
         auto playAgainButton = new Button(sf::Vector2f(350, 50), sf::Vector2f(475, 300),
-                                          "Play again!", getFont(), 20, 50);
+                                          "Play again!", GetFont(), 20, 50);
         buttons_[FinishButtonTarget::PlayAgain] = playAgainButton;
     }
 

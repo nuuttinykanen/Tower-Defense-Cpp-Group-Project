@@ -15,7 +15,7 @@ void Wave::AddEnemyToWave(Enemy *enemy) {
 }
 
 void Wave::RemoveEnemyFromWave(Enemy* enemy) {
-    for (auto e = waveEnemies_.begin(); e != waveEnemies_.end(); e++) {
+    for (auto e = waveEnemies_.begin(); e != waveEnemies_.end(); ++e) {
         if(*e == enemy) {
             waveEnemies_.erase(e);
             break;

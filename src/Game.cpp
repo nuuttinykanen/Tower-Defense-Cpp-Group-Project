@@ -29,7 +29,7 @@ void Game::SpawnTower(Tower* tower, double x, double y) {
 
 //Kills enemy locally, gives money to player
 void Game::KillEnemy(Enemy *enemy) {
-    for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); it++){
+    for(std::vector<Enemy*>::iterator it = enemies_.begin(); it != enemies_.end(); ++it){
         if(*it == enemy){
             enemies_.erase(it);
             break;
@@ -41,7 +41,7 @@ void Game::KillEnemy(Enemy *enemy) {
 //Deals enemy attack's worth of damage to player
 void Game::TakeDamage(Enemy *enemy){
     this->player_.ChangeHealth(-enemy->GetAttack());
-    for(auto it = enemies_.begin(); it != enemies_.end(); it++){
+    for(auto it = enemies_.begin(); it != enemies_.end(); ++it){
         if(*it == enemy){
             if(enemies_.size()==1){
                 enemies_.pop_back();

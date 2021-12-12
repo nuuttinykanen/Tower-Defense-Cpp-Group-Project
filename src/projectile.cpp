@@ -33,7 +33,7 @@ std::vector<std::pair<int, int>> BombProjectile::Effect(EnemySquare* enemy) {
     }
     EnemySquare* prev = enemy->GetPrevious();
     EnemySquare* next = enemy->GetNext();
-    for(unsigned int i = 0; i < this->bomb_radius_; i++) {
+    for(unsigned int i = 0; i < this->bomb_radius_; ++i) {
         if(prev != nullptr) {
             for(auto it : prev->GetEnemies()) {
                 it->ChangeHealth(-1 * this->GetStrength());
@@ -88,7 +88,7 @@ std::vector<std::pair<int, int>> CursedProjectile::Effect(EnemySquare *enemy) {
     list.emplace_back(std::make_pair(enemy->GetX(), enemy->GetY()));
     EnemySquare* prev = enemy->GetPrevious();
     if(!prev) return list;
-    for(int i = 1; i < squares_back_; i++) {
+    for(int i = 1; i < squares_back_; ++i) {
         if(!prev->GetPrevious()) break;
         prev = prev->GetPrevious();
     }

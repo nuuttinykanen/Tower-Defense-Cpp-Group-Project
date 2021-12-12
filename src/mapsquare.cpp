@@ -27,7 +27,7 @@
         enemies_.push_back(enemy);
     }
     bool EnemySquare::RemoveEnemy(Enemy* enemy) {
-        for(auto it = enemies_.begin(); it != enemies_.end(); it++) {
+        for(auto it = enemies_.begin(); it != enemies_.end(); ++it) {
             if(*it == enemy) {
                 this->enemies_.erase(it);
                 return true;

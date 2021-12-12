@@ -220,10 +220,10 @@ void LevelMap::MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destinat
 void LevelMap::MoveEnemies() {
   this->projectileMarks_.clear();
   auto e_squares = this->GetEnemySquares();
-  for(auto it = e_squares.rbegin(); it != e_squares.rend(); it++) {
+  for(auto it = e_squares.rbegin(); it != e_squares.rend(); ++it) {
     auto h = *it;
     auto enemies = h.second->GetEnemies();
-    for(auto et = enemies.begin(); et != enemies.end(); et++) {
+    for(auto et = enemies.begin(); et != enemies.end(); ++et) {
       auto e = *et;
       if(e->GetHealth() < 1) {
         if(e->HasInner()) {
@@ -253,7 +253,7 @@ void LevelMap::MoveEnemies() {
 
 EnemySquare* LevelMap::FindEnemy(Enemy* enemy) {
   auto s_enemies = this->GetEnemySquares();
-  for(auto it = s_enemies.rbegin(); it != s_enemies.rend(); it++) {
+  for(auto it = s_enemies.rbegin(); it != s_enemies.rend(); ++it) {
     auto h = *it;
     if(h.second->ContainsEnemy(enemy)) {
       return h.second;
@@ -264,7 +264,7 @@ EnemySquare* LevelMap::FindEnemy(Enemy* enemy) {
 
 bool LevelMap::PlaceTower(int x, int y, Tower* tower) {
     auto t_squares = this->GetFreeSquares();
-    for(auto it = t_squares.begin(); it != t_squares.end(); it++) {
+    for(auto it = t_squares.begin(); it != t_squares.end(); ++it) {
       auto h = *it;
       if(h.first.first == x && h.first.second == y) {
         TowerSquare* t_square;
@@ -294,7 +294,7 @@ void LevelMap::EraseTowerAt(TowerSquare *towerSquare) {
 
 TowerSquare* LevelMap::FindTower(Tower* tower) {
   auto towers = this->GetTowerSquares();
-  for(auto it = towers.rbegin(); it != towers.rend(); it++) {
+  for(auto it = towers.rbegin(); it != towers.rend(); ++it) {
     auto h = *it;
     if(h.second->ContainsTower(tower)) {
       return h.second;
@@ -351,7 +351,7 @@ MapSquare* LevelMap::GetProjStartSquare(TowerSquare* tower, Enemy* enemy) {
 }
 
 EnemySquare* LevelMap::GetFarthestEnemy(std::vector<EnemySquare*> list) {
-    for(auto it = list.rbegin(); it != list.rend(); it++) {
+    for(auto it = list.rbegin(); it != list.rend(); ++it) {
         auto es = *it;
         if (es->ContainsEnemies()) {
             return es;
@@ -379,7 +379,7 @@ void LevelMap::ShootProjectile(TowerSquare* sender) {
 
 
 void LevelMap::ScanProjectiles() {
-  for(auto it = projectiles_.begin(); it != projectiles_.end(); it++) {
+  for(auto it = projectiles_.begin(); it != projectiles_.end(); ++it) {
     Projectile* h = *it;
     if(h != nullptr && h->ToBeRemoved()) {
       projectiles_.erase(it);

@@ -3,7 +3,7 @@
 
 #include "window_state.h"
 #include <iostream>
-#include "../Gui.h"
+#include "../gui.h"
 enum FinishButtonTarget {PlayAgain, MainMenu};
 
 

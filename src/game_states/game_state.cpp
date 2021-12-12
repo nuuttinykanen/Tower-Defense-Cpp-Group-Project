@@ -1,4 +1,4 @@
-#include "../Gui.h"
+#include "../gui.h"
 #include "game_state.h"
 #include "menu_state.h"
 #include <cmath>
@@ -18,18 +18,18 @@ GameState::GameState(sf::RenderWindow &window, Gui* gui, int level_number): Wind
     GenerateProjectileHitSprites();
 
     // 0 level number means that we are loading the latest save, also check that the file exists
-    if (level_number == 0 && JSON::latestSaveExists()) {
-        game_ = JSON::loadLatestSave();
+    if (level_number == 0 && JSON::LatestSaveExists()) {
+        game_ = JSON::LoadLatestSave();
         level_map_ = &game_->GetMap();
         level_number_ = level_map_->getLevelNumber();
         player_ = &game_->GetPlayer();
 
     } else {
-        if (!JSON::latestSaveExists() && level_number == 0) { level_number_ = 1;}
+        if (!JSON::LatestSaveExists() && level_number == 0) { level_number_ = 1;}
         else { level_number_ = level_number;}
 
-        level_map_ = JSON::loadLevelMap(level_number_);
-        auto waves = JSON::loadWaves(level_number_);
+        level_map_ = JSON::LoadLevelMap(level_number_);
+        auto waves = JSON::LoadWaves(level_number_);
         player_ = new Player(100);
         game_ = new Game(*level_map_, *player_, waves);
     }
@@ -96,7 +96,7 @@ void GameState::DrawCurrentState() {
     for (auto t : tower_buttons_)  {
         t.second->draw(window_, player_->GetMoney());
     }
-    auto globals = gui_->getGlobalObjects();
+    auto globals = gui_->GetGlobalObjects();
 
     LevelMap& map = game_->GetMap();
 
@@ -220,7 +220,7 @@ void GameState::DrawCurrentState() {
 void GameState::PollEvents() {
     sf::Event event{};
     LevelMap& map = game_->GetMap();
-    auto globals = gui_->getGlobalObjects();
+    auto globals = gui_->GetGlobalObjects();
     while (window_.pollEvent(event))
     {
         if (event.type == sf::Event::Closed) {
@@ -330,14 +330,14 @@ void GameState::PollEvents() {
     if (game_->isGameOver()) {
         auto newState = new FinishState(window_, gui_, level_number_);
 
-        gui_->change_game_state(newState);
+        gui_->ChangeGameState(newState);
         return;
     }
 }
 
 void GameState::QuitToMenu() {
     SaveGame();
-    gui_->change_game_state(new MenuState(window_, gui_));
+    gui_->ChangeGameState(new MenuState(window_, gui_));
 }
 
 void GameState::StartWave() {
@@ -416,88 +416,95 @@ void GameState::GenerateButtons() {
 
     // TODO: Add the correct sprites here when they are made
     // TODO: Add correct costs in the end
-    auto attack1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getGunnerSprite(),
+    auto attack1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y),
+                                         gui_->GetGlobalObjects()->getGunnerSprite(),
                                          GetFont(), 50);
     tower_buttons_[TowerTypes::GunnerType] = attack1Button;
 
-    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getKnifeBotSprite(),
+    auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y),
+                                         gui_->GetGlobalObjects()->getKnifeBotSprite(),
                                          GetFont(), 100);
     tower_buttons_[TowerTypes::KnifeBotType] = attack2Button;
 
-    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getBomberSprite(),
+    auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET),
+                                         gui_->GetGlobalObjects()->getBomberSprite(),
                                          GetFont(), 200);
     tower_buttons_[TowerTypes::BomberType] = attack3Button;
 
-    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getCursedKidSprite(),
+    auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET),
+                                         gui_->GetGlobalObjects()->getCursedKidSprite(),
                                          GetFont(), 400);
     tower_buttons_[TowerTypes::CursedKidType] = attack4Button;
 
-    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite(),
+    auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET),
+                                          gui_->GetGlobalObjects()->getClockerSprite(),
                                           GetFont(), 350);
     tower_buttons_[TowerTypes::ClockerType] = support1Button;
 
-    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getSeerSprite(),
+    auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET),
+                                          gui_->GetGlobalObjects()->getSeerSprite(),
                                           GetFont(), 450);
     tower_buttons_[TowerTypes::SeerType] = support2Button;
 
-    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 3 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getStereoDudeSprite(),
+    auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 3 * TOWER_BUTTON_OFFSET),
+                                          gui_->GetGlobalObjects()->getStereoDudeSprite(),
                                           GetFont(), 400);
     tower_buttons_[TowerTypes::StereoType] = support3Button;
 
 }
 
 void GameState::GenerateEnemies() {
-    enemy_sprites_["Zombie"] = gui_->getGlobalObjects()->getZombieSprite();
-    enemy_sprites_["Michael Myers"] = gui_->getGlobalObjects()->getMichaelSprite();
-    enemy_sprites_["Zombie Horde"] = gui_->getGlobalObjects()->getHordeSprite();
-    enemy_sprites_["Dracula"] = gui_->getGlobalObjects()->getDraculaSprite();
-    enemy_sprites_["Bat"] = gui_->getGlobalObjects()->getBatSprite();
+    enemy_sprites_["Zombie"] = gui_->GetGlobalObjects()->getZombieSprite();
+    enemy_sprites_["Michael Myers"] = gui_->GetGlobalObjects()->getMichaelSprite();
+    enemy_sprites_["Zombie Horde"] = gui_->GetGlobalObjects()->getHordeSprite();
+    enemy_sprites_["Dracula"] = gui_->GetGlobalObjects()->getDraculaSprite();
+    enemy_sprites_["Bat"] = gui_->GetGlobalObjects()->getBatSprite();
 }
 
 void GameState::GenerateTowers() {
-    tower_sprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
-    tower_sprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
-    tower_sprites_["Super Bomber"] = gui_->getGlobalObjects()->getSuperBomberSprite();
-    tower_sprites_["Ultra Bomber"]  = gui_->getGlobalObjects()->getUltraBomberSprite();
-    tower_sprites_["Stereo Dude"]  = gui_->getGlobalObjects()->getStereoDudeSprite();
-    tower_sprites_["DJ Dude"]  = gui_->getGlobalObjects()->getDJDudeSprite();
-    tower_sprites_["Seer"]  = gui_->getGlobalObjects()->getSeerSprite();
-    tower_sprites_["Mother Brain"]  = gui_->getGlobalObjects()->getMotherBrainSprite();
-    tower_sprites_["Clocker"]  = gui_->getGlobalObjects()->getClockerSprite();
-    tower_sprites_["Clock Blocker"]  = gui_->getGlobalObjects()->getClockBlockerSprite();
-    tower_sprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
-    tower_sprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
-    tower_sprites_["Masked Kid"]  = gui_->getGlobalObjects()->getMaskedKidSprite();
-    tower_sprites_["Cursed Kid"]  = gui_->getGlobalObjects()->getCursedKidSprite();
-    tower_sprites_["Masked God"]  = gui_->getGlobalObjects()->getMaskedGodSprite();
-    tower_sprites_["Knife Bot"] = gui_->getGlobalObjects()->getKnifeBotSprite();
-    tower_sprites_["Knife Bot 2.0"] = gui_->getGlobalObjects()->getKnifeBot2Sprite();
-    tower_sprites_["Sword Bot"] = gui_->getGlobalObjects()->getSwordBotSprite();
+    tower_sprites_["Bomber"] = gui_->GetGlobalObjects()->getBomberSprite();
+    tower_sprites_["Gunner"] = gui_->GetGlobalObjects()->getGunnerSprite();
+    tower_sprites_["Super Bomber"] = gui_->GetGlobalObjects()->getSuperBomberSprite();
+    tower_sprites_["Ultra Bomber"]  = gui_->GetGlobalObjects()->getUltraBomberSprite();
+    tower_sprites_["Stereo Dude"]  = gui_->GetGlobalObjects()->getStereoDudeSprite();
+    tower_sprites_["DJ Dude"]  = gui_->GetGlobalObjects()->getDJDudeSprite();
+    tower_sprites_["Seer"]  = gui_->GetGlobalObjects()->getSeerSprite();
+    tower_sprites_["Mother Brain"]  = gui_->GetGlobalObjects()->getMotherBrainSprite();
+    tower_sprites_["Clocker"]  = gui_->GetGlobalObjects()->getClockerSprite();
+    tower_sprites_["Clock Blocker"]  = gui_->GetGlobalObjects()->getClockBlockerSprite();
+    tower_sprites_["Multigunner"]  = gui_->GetGlobalObjects()->getMultigunnerSprite();
+    tower_sprites_["Gun Fiend"]  = gui_->GetGlobalObjects()->getGunFiendSprite();
+    tower_sprites_["Masked Kid"]  = gui_->GetGlobalObjects()->getMaskedKidSprite();
+    tower_sprites_["Cursed Kid"]  = gui_->GetGlobalObjects()->getCursedKidSprite();
+    tower_sprites_["Masked God"]  = gui_->GetGlobalObjects()->getMaskedGodSprite();
+    tower_sprites_["Knife Bot"] = gui_->GetGlobalObjects()->getKnifeBotSprite();
+    tower_sprites_["Knife Bot 2.0"] = gui_->GetGlobalObjects()->getKnifeBot2Sprite();
+    tower_sprites_["Sword Bot"] = gui_->GetGlobalObjects()->getSwordBotSprite();
 }
 
 void GameState::GenerateProjectiles() {
-    projectile_sprites_["Bomber"] = gui_->getGlobalObjects()->getBomberSprite();
-    projectile_sprites_["Gunner"] = gui_->getGlobalObjects()->getGunnerSprite();
-    projectile_sprites_["Super Bomber"] = gui_->getGlobalObjects()->getSuperBomberSprite();
-    projectile_sprites_["Ultra Bomber"]  = gui_->getGlobalObjects()->getUltraBomberSprite();
-    projectile_sprites_["Multigunner"]  = gui_->getGlobalObjects()->getMultigunnerSprite();
-    projectile_sprites_["Gun Fiend"]  = gui_->getGlobalObjects()->getGunFiendSprite();
-    projectile_sprites_["Masked Kid"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
-    projectile_sprites_["Cursed Kid"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
-    projectile_sprites_["Masked God"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
-    projectile_sprites_["Knife Bot"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
-    projectile_sprites_["Knife Bot 2.0"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
-    projectile_sprites_["Sword Bot"]  = gui_->getGlobalObjects()->getCursedProjectileSprite();
+    projectile_sprites_["Bomber"] = gui_->GetGlobalObjects()->getBomberSprite();
+    projectile_sprites_["Gunner"] = gui_->GetGlobalObjects()->getGunnerSprite();
+    projectile_sprites_["Super Bomber"] = gui_->GetGlobalObjects()->getSuperBomberSprite();
+    projectile_sprites_["Ultra Bomber"]  = gui_->GetGlobalObjects()->getUltraBomberSprite();
+    projectile_sprites_["Multigunner"]  = gui_->GetGlobalObjects()->getMultigunnerSprite();
+    projectile_sprites_["Gun Fiend"]  = gui_->GetGlobalObjects()->getGunFiendSprite();
+    projectile_sprites_["Masked Kid"]  = gui_->GetGlobalObjects()->getCursedProjectileSprite();
+    projectile_sprites_["Cursed Kid"]  = gui_->GetGlobalObjects()->getCursedProjectileSprite();
+    projectile_sprites_["Masked God"]  = gui_->GetGlobalObjects()->getCursedProjectileSprite();
+    projectile_sprites_["Knife Bot"]  = gui_->GetGlobalObjects()->getCursedProjectileSprite();
+    projectile_sprites_["Knife Bot 2.0"]  = gui_->GetGlobalObjects()->getCursedProjectileSprite();
+    projectile_sprites_["Sword Bot"]  = gui_->GetGlobalObjects()->getCursedProjectileSprite();
 }
 
 void GameState::GenerateProjectileHitSprites() {
-    projectile_hit_sprites_["bomb"] = gui_->getGlobalObjects()->getBombProjecHit1Sprite();
-    projectile_hit_sprites_["bullet"] = gui_->getGlobalObjects()->getBombProjecHit2Sprite();
-    projectile_hit_sprites_["cursed"] = gui_->getGlobalObjects()->getCursedProjectileHitSprite();
+    projectile_hit_sprites_["bomb"] = gui_->GetGlobalObjects()->getBombProjecHit1Sprite();
+    projectile_hit_sprites_["bullet"] = gui_->GetGlobalObjects()->getBombProjecHit2Sprite();
+    projectile_hit_sprites_["cursed"] = gui_->GetGlobalObjects()->getCursedProjectileHitSprite();
 }
 
 void GameState::SaveGame() {
-    JSON::saveCurrentGame(game_, level_number_);
+    JSON::SaveCurrentGame(game_, level_number_);
 }
 
 void GameState::DrawPlayerInfo() {
@@ -538,7 +545,7 @@ void GameState::DrawPlayerInfo() {
 
 void GameState::DrawTowerInfo(Tower* tow) {
     if ((!is_tower_selected && newTower == nullptr)) return;
-    auto globals = gui_->getGlobalObjects();
+    auto globals = gui_->GetGlobalObjects();
 
     auto &sprite = globals->getTowerSpriteByType(tow->getType());
     sprite.setScale(6, 6);

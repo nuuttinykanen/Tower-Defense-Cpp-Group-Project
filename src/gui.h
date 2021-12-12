@@ -17,20 +17,18 @@ class Gui {
 public:
     Gui(int width, int height);
 
-    void start_main_loop();
+    void StartMainLoop();
 
-    void change_game_state(WindowState* new_state);
+    void ChangeGameState(WindowState* new_state);
 
-    int get_screen_width() const { return screen_width_;}
-    int get_screen_height() const { return screen_height_;}
 
-    GlobalObjects* getGlobalObjects() { return globalObjects_; };
-    SoundDriver* getSoundDriver() { return sound_; }
+    GlobalObjects* GetGlobalObjects() { return global_objects_; };
+    SoundDriver* GetSoundDriver() { return sound_; }
 
 private:
     sf::RenderWindow window_;
     WindowState* current_state_;
-    GlobalObjects* globalObjects_;
+    GlobalObjects* global_objects_;
     SoundDriver* sound_;
 
 

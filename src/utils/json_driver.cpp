@@ -3,7 +3,7 @@
 #include "json_driver.h"
 
 // Maps each map index to a save file name
-std::map<int, std::string> indexToFile {
+std::map<int, std::string> index_to_file {
         make_pair(0, "latest_save/save.json"),
         make_pair(1, "level1.json"),
         make_pair(2, "level2.json"),
@@ -17,14 +17,14 @@ enum Enemies {
     ZombieType, ZombieHordeType, MichaelMyersType, DraculaType, BatType
 };
 
-bool JSON::latestSaveExists() {
-    std::ifstream f("../src/level_files/" + indexToFile[0]);
+bool JSON::LatestSaveExists() {
+    std::ifstream f("../src/level_files/" + index_to_file[0]);
     return f.good();
 }
 
 
-LevelMap* JSON::loadLevelMap(int index) {
-    auto fileName = indexToFile[index];
+LevelMap* JSON::LoadLevelMap(int index) {
+    auto fileName = index_to_file[index];
     Json::Value root;
     std::ifstream ifs;
     ifs.open("../src/level_files/" + fileName);
@@ -60,8 +60,8 @@ LevelMap* JSON::loadLevelMap(int index) {
     return levelMap;
 }
 
-std::vector<Wave*> JSON::loadWaves(int index) {
-    auto fileName = indexToFile[index];
+std::vector<Wave*> JSON::LoadWaves(int index) {
+    auto fileName = index_to_file[index];
     Json::Value root;
     std::ifstream ifs;
     ifs.open("../src/level_files/" + fileName);
@@ -114,12 +114,12 @@ std::vector<Wave*> JSON::loadWaves(int index) {
 }
 
 
-int JSON::getNumberOfLevels() {
-    return indexToFile.size() - 1;
+int JSON::GetNumberOfLevels() {
+    return index_to_file.size() - 1;
 }
 
-void JSON::saveCurrentGame(Game* game, int levelNumber) {
-    auto fileName = indexToFile[0];
+void JSON::SaveCurrentGame(Game* game, int levelNumber) {
+    auto fileName = index_to_file[0];
     Json::Value root;
     std::ofstream ofs;
     ofs.open("../src/level_files/" + fileName);
@@ -155,8 +155,8 @@ void JSON::saveCurrentGame(Game* game, int levelNumber) {
     ofs.close();
 }
 
-Game* JSON::loadLatestSave() {
-    auto fileName = indexToFile[0];
+Game* JSON::LoadLatestSave() {
+    auto fileName = index_to_file[0];
     Json::Value root;
     std::ifstream ifs;
     ifs.open("../src/level_files/" + fileName);
@@ -174,8 +174,8 @@ Game* JSON::loadLatestSave() {
     int playerHealth = root["health"].asInt();
     float playerMoney = root["money"].asFloat();
 
-    auto lvlMap = loadLevelMap(levelIndex);
-    auto waves = loadWaves(levelIndex);
+    auto lvlMap = LoadLevelMap(levelIndex);
+    auto waves = LoadWaves(levelIndex);
 
 
     auto player = new Player(100);

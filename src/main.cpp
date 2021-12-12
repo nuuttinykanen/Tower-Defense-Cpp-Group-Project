@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "Gui.h"
+#include "gui.h"
 int main()
 {
     Gui(1280, 720);

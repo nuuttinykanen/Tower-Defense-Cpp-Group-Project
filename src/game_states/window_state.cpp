@@ -1,5 +1,5 @@
 #include "window_state.h"
-#include "../Gui.h"
+#include "../gui.h"
 
 
 WindowState::WindowState(sf::RenderWindow& window, Gui* gui)
@@ -17,5 +17,5 @@ void WindowState::DrawWindow() {
 }
 
 sf::Font& WindowState::GetFont() {
-    return gui_->getGlobalObjects()->getFont();
+    return gui_->GetGlobalObjects()->getFont();
 }

@@ -20,12 +20,12 @@ using std::pair;
 
 class JSON {
 public:
-    static bool latestSaveExists();
-    static int getNumberOfLevels();
-    static LevelMap* loadLevelMap(int index);
-    static std::vector<Wave*> loadWaves(int index);
-    static void saveCurrentGame(Game* game, int levelNumber);
-    static Game* loadLatestSave();
+    static bool LatestSaveExists();
+    static int GetNumberOfLevels();
+    static LevelMap* LoadLevelMap(int index);
+    static std::vector<Wave*> LoadWaves(int index);
+    static void SaveCurrentGame(Game* game, int levelNumber);
+    static Game* LoadLatestSave();
 };
 
 

@@ -1,5 +1,5 @@
 #include "menu_state.h"
-#include "../Gui.h"
+#include "../gui.h"
 #include "game_state.h"
 #include "level_select_state.h"
 #include "../utils/sound_driver.h"
@@ -62,7 +62,7 @@ void MenuState::PollEvents() {
                     switch (b.first) {
 
                         case StartLatestSaveTarget:
-                            gui_->getSoundDriver()->playSound(Hitmarker, 50);
+                            gui_->GetSoundDriver()->playSound(Hitmarker, 50);
                             StartLatestSave();
                             return;
                         case StartLevelSelectTarget:
@@ -85,12 +85,12 @@ void MenuState::PollEvents() {
 }
 
 void MenuState::StartLatestSave() {
-    gui_->change_game_state(new GameState(window_, gui_, 0));
+    gui_->ChangeGameState(new GameState(window_, gui_, 0));
 
 }
 
 void MenuState::StartLevelSelect() {
-    gui_->change_game_state(new LevelSelectState(window_, gui_));
+    gui_->ChangeGameState(new LevelSelectState(window_, gui_));
 }
 
 void MenuState::Quit() {

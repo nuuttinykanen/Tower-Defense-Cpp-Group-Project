@@ -9,7 +9,7 @@ FinishState::FinishState(sf::RenderWindow &window, Gui* gui, int level_number): 
     text_.setString("Congratulations for finishing lvl: " + std::to_string(level_number) + "!" );
     text_.setPosition(125, 75);
     generate_buttons();
-    gui_->getSoundDriver()->playSound(VictorySound, 50);
+    gui_->GetSoundDriver()->playSound(VictorySound, 50);
 
 }
 
@@ -50,12 +50,12 @@ void FinishState::PollEvents() {
                     switch (b.first) {
                         case PlayAgain: {
                             auto gS = new GameState(window_, gui_, level_number_);
-                            gui_->change_game_state(gS);
+                            gui_->ChangeGameState(gS);
                             return;
                         }
                         case MainMenu: {
                             auto mS = new MenuState(window_, gui_);
-                            gui_->change_game_state(mS);
+                            gui_->ChangeGameState(mS);
                             return;
                         }
                     }

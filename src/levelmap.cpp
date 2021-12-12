@@ -140,24 +140,8 @@ std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>> LevelMap::
     return projectileMarks_;
 }
 
-std::vector<Enemy*> LevelMap::EnemiesAt(int x, int y) {
-    const MapSquare* square = this->GetSquare(x, y);
-    for(auto it : this->GetEnemySquares()) {
-      if(it.second == square) return it.second->GetEnemies();
-    }
-    return std::vector<Enemy*>();
-}
-
 unsigned int LevelMap::GetEnemyAmount() {
     return enemy_count_;
-}
-
-Tower* LevelMap::TowerAt(int x, int y) {
-    const MapSquare* square = this->GetSquare(x, y);
-    for(auto it : this->GetTowerSquares()) {
-      if(it.second == square) return it.second->GetTower();
-    }
-    throw std::invalid_argument("No tower found!");
 }
 
 void LevelMap::ChangeSquare(int x, int y, MapSquare& new_square) {
@@ -172,10 +156,6 @@ void LevelMap::ChangeSquare(int x, int y, MapSquare& new_square) {
 
 const MapSquare* LevelMap::GetStartSquare() {
     return this->start_square_;
-}
-
-const MapSquare* LevelMap::GetEndSquare() {
-    return this->end_square_;
 }
 
 bool LevelMap::PlaceEnemy(int x, int y, Enemy& enemy) {
@@ -239,7 +219,6 @@ void LevelMap::MoveEnemies() {
             if(!h.second->HasNext()) {
                 this->EraseEnemy(e);
                 e->RemoveFromMap();
-                this->enemies_passed_ += 1;
             }
             else {
                 this->MoveEnemy(e, h.second, h.second->GetNext());

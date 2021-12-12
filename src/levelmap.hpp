@@ -51,9 +51,6 @@ class LevelMap {
   std::vector<TowerSquare*> GetSupportTowers();
   std::vector<std::pair<std::string, std::vector<std::pair<int, int>>>> GetProjectileMarks();
 
-
-  std::vector<Enemy*> EnemiesAt(int x, int y);
-  Tower* TowerAt(int x, int y);
   void ChangeSquare(int x, int y, MapSquare& new_square);
   void MoveEnemy(Enemy* enemy, EnemySquare* start, EnemySquare* destination);
   void MoveEnemies();

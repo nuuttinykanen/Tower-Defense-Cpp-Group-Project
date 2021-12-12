@@ -430,7 +430,7 @@ void GameState::generateButtons() {
     towerButtons_[TowerTypes::BomberType] = attack3Button;
 
     auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getCursedKidSprite(),
-                                         getFont(), 200);
+                                         getFont(), 100);
     towerButtons_[TowerTypes::CursedKidType] = attack4Button;
 
     auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite(),

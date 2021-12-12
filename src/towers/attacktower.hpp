@@ -49,7 +49,7 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 6, 2, 35, 500) { }
+    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 6, 2, 35, 100) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
 
@@ -82,7 +82,7 @@ class UltraBomber : public AttackTower {
 
 class Gunner : public AttackTower {
     public:
-    Gunner() : AttackTower("Gunner", "Guns enemies.", 2, 5, 30, 300) { }
+    Gunner() : AttackTower("Gunner", "Guns enemies.", 2, 5, 30, 50) { }
     ~Gunner(){}
     virtual Projectile* GetProjectile();
 
@@ -117,7 +117,7 @@ class GunFiend : public AttackTower {
 
 class CursedKid : public AttackTower {
 public:
-    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by \ntwo squares.", 2, 1, 100, 300) { }
+    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by \ntwo squares.", 2, 1, 100, 100) { }
     ~CursedKid(){}
     virtual Projectile* GetProjectile();
 

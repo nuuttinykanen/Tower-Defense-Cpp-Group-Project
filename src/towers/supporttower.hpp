@@ -71,7 +71,7 @@ public:
 
 class StereoDude : public SupportTower {
     public:
-    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 30, 4, 400) {}
+    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 30, 1, 400) {}
     ~StereoDude() { };
     virtual Tower* Upgrade();
 
@@ -82,7 +82,7 @@ class StereoDude : public SupportTower {
 
 class DJDude : public SupportTower {
 public:
-    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 50, 3, 500) { }
+    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 50, 2, 500) { }
     ~DJDude() { };
 
     virtual TowerTypes getType() const {return TowerTypes::DJDudeType;}

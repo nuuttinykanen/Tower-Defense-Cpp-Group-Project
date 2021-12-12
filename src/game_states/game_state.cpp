@@ -133,10 +133,9 @@ void GameState::draw_current_state() {
             }
         }
     }
-    else if(isTowerSelected && overUpgrade) {
-        draw_tower_info(upgradePreview_.tower->GetTower());
-        draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
-    } else if(isTowerSelected) {
+    else if(isTowerSelected) {
+        for(auto b : buttons_) {
+        }
         draw_tower_info(selectedTower_.tower->GetTower());
         draw_tower_range(selectedTower_.x, selectedTower_.y, selectedTower_.tower->GetTower());
     }
@@ -422,27 +421,27 @@ void GameState::generateButtons() {
     towerButtons_[TowerTypes::GunnerType] = attack1Button;
 
     auto attack2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y), gui_->getGlobalObjects()->getKnifeBotSprite(),
-                                         getFont(), 300);
+                                         getFont(), 100);
     towerButtons_[TowerTypes::KnifeBotType] = attack2Button;
 
     auto attack3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getBomberSprite(),
-                                         getFont(), 100);
+                                         getFont(), 200);
     towerButtons_[TowerTypes::BomberType] = attack3Button;
 
     auto attack4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getCursedKidSprite(),
-                                         getFont(), 100);
+                                         getFont(), 400);
     towerButtons_[TowerTypes::CursedKidType] = attack4Button;
 
     auto support1Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getClockerSprite(),
-                                          getFont(), 50);
+                                          getFont(), 350);
     towerButtons_[TowerTypes::ClockerType] = support1Button;
 
     auto support2Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 2 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getSeerSprite(),
-                                          getFont(), 50);
+                                          getFont(), 450);
     towerButtons_[TowerTypes::SeerType] = support2Button;
 
     auto support3Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X, TOWER_BUTTON_GRID_START_Y + 3 * TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getStereoDudeSprite(),
-                                          getFont(), 50);
+                                          getFont(), 400);
     towerButtons_[TowerTypes::StereoType] = support3Button;
 
 }

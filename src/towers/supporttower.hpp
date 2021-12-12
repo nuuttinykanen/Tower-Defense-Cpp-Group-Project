@@ -20,7 +20,7 @@ class SupportTower : public Tower {
 
 class Clocker : public SupportTower {
     public:
-    Clocker() : SupportTower("Clocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 150, 2, 50) {}
+    Clocker() : SupportTower("Clocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 150, 2, 350) {}
     ~Clocker() { };
 
     virtual void supportEffect(MapSquare* square);
@@ -32,7 +32,7 @@ class Clocker : public SupportTower {
 
 class ClockBlocker : public SupportTower {
     public:
-    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 200, 3, 1) {}
+    ClockBlocker() : SupportTower("Clock Blocker", "Slows down enemies in its range \nby 'STRENGTH' percent.\nDoes not stack.", 200, 3, 450) {}
     ~ClockBlocker() { };
     virtual Tower* Upgrade();
 
@@ -45,7 +45,7 @@ class ClockBlocker : public SupportTower {
 
 class Seer : public SupportTower {
     public:
-    Seer() : SupportTower("Seer", "Increases range of attack towers \nwithin range by 'STRENGTH'. Does not stack.", 1, 1, 50) {}
+    Seer() : SupportTower("Seer", "Increases range of attack towers \nwithin range by 'STRENGTH'. Does not stack.", 1, 1, 450) {}
     ~Seer() { };
     virtual Tower* Upgrade();
 
@@ -56,7 +56,7 @@ class Seer : public SupportTower {
 
 class MotherBrain : public SupportTower {
 public:
-    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers \nwithin range by 'STRENGTH'. \nDoes not stack.", 1, 2, 1) {}
+    MotherBrain() : SupportTower("Mother Brain", "Increases range of attack towers \nwithin range by 'STRENGTH'. \nDoes not stack.", 1, 2, 500) {}
     ~MotherBrain() {};
 
     bool CanUpgrade() override {return false;}
@@ -71,7 +71,7 @@ public:
 
 class StereoDude : public SupportTower {
     public:
-    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 30, 4, 50) {}
+    StereoDude() : SupportTower("Stereo Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 30, 4, 400) {}
     ~StereoDude() { };
     virtual Tower* Upgrade();
 
@@ -82,7 +82,7 @@ class StereoDude : public SupportTower {
 
 class DJDude : public SupportTower {
 public:
-    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 50, 3, 1) { }
+    DJDude() : SupportTower("DJ Dude", "Increases attack rate of attack \ntowers within range by 'STRENGTH'. \nDoes not stack.", 50, 3, 500) { }
     ~DJDude() { };
 
     virtual TowerTypes getType() const {return TowerTypes::DJDudeType;}

@@ -49,7 +49,7 @@ class AttackTower : public Tower {
 
 class Bomber : public AttackTower {
     public:
-    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 6, 2, 35, 100) { }
+    Bomber() : AttackTower("Bomber", "Launches bombs that also deal\ndamage to enemies next to a target", 6, 2, 35, 200) { }
     ~Bomber(){}
     virtual Projectile* GetProjectile();
 
@@ -93,7 +93,7 @@ class Gunner : public AttackTower {
 
 class Multigunner : public AttackTower {
     public:
-    Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 4, 5, 20, 500) { }
+    Multigunner() : AttackTower("Multigunner", "Same gunner. More guns.", 4, 5, 20, 75) { }
     ~Multigunner(){}
     virtual Projectile* GetProjectile();
 
@@ -104,7 +104,7 @@ class Multigunner : public AttackTower {
 
 class GunFiend : public AttackTower {
     public:
-    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 6, 6, 18, 550) { }
+    GunFiend() : AttackTower("Gun Fiend", "The gunner became a gun themselves.", 6, 6, 18, 100) { }
     ~GunFiend(){}
     virtual Projectile* GetProjectile();
 
@@ -117,7 +117,7 @@ class GunFiend : public AttackTower {
 
 class CursedKid : public AttackTower {
 public:
-    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by \ntwo squares.", 2, 1, 100, 100) { }
+    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by \ntwo squares.", 2, 1, 100, 400) { }
     ~CursedKid(){}
     virtual Projectile* GetProjectile();
 
@@ -128,7 +128,7 @@ public:
 
 class MaskedKid : public AttackTower {
 public:
-    MaskedKid() : AttackTower("Masked Kid", "Damages and sends enemies back\nby three squares.", 2, 1, 120, 300) { }
+    MaskedKid() : AttackTower("Masked Kid", "Damages and sends enemies back\nby three squares.", 2, 1, 120, 420) { }
     ~MaskedKid(){}
     virtual Projectile* GetProjectile();
 
@@ -139,7 +139,7 @@ public:
 
 class MaskedGod : public AttackTower {
 public:
-    MaskedGod() : AttackTower("Masked God", "Damages and sends enemies back\nby five squares.", 2, 1, 160, 300) { }
+    MaskedGod() : AttackTower("Masked God", "Damages and sends enemies back\nby five squares.", 2, 1, 160, 450) { }
     ~MaskedGod(){}
     virtual Projectile* GetProjectile();
 
@@ -150,7 +150,7 @@ public:
 
 class KnifeBot : public AttackTower {
 public:
-    KnifeBot() : AttackTower("Knife Bot", "Attacks close and hard.", 8, 1, 20, 300) { }
+    KnifeBot() : AttackTower("Knife Bot", "Attacks close and hard.", 8, 1, 20, 100) { }
     ~KnifeBot(){}
     virtual Projectile* GetProjectile();
 
@@ -161,7 +161,7 @@ public:
 
 class KnifeBot2 : public AttackTower {
 public:
-    KnifeBot2() : AttackTower("Knife Bot 2.0", "Attacks close and hard.", 16, 1, 30, 300) { }
+    KnifeBot2() : AttackTower("Knife Bot 2.0", "Attacks close and hard.", 16, 1, 30, 110) { }
     ~KnifeBot2(){}
     virtual Projectile* GetProjectile();
 
@@ -172,7 +172,7 @@ public:
 
 class SwordBot : public AttackTower {
 public:
-    SwordBot() : AttackTower("Sword Bot", "Attacks close and hard.", 20, 2, 30, 300) { }
+    SwordBot() : AttackTower("Sword Bot", "Attacks close and hard.", 20, 2, 30, 130) { }
     ~SwordBot(){}
     virtual Projectile* GetProjectile();
 

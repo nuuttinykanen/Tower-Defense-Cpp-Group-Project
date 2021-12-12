@@ -49,7 +49,7 @@ class Enemy {
 
 class Zombie : public Enemy {
     public:
-    Zombie(int health = 4, int attack = 3, int speed = 2, int bounty = 20) :
+    Zombie(int health = 6, int attack = 3, int speed = 2, int bounty = 20) :
     Enemy("Zombie", health, attack, speed, bounty) {}
     ~Zombie(){}
     virtual Enemy* Inner();
@@ -58,7 +58,7 @@ class Zombie : public Enemy {
 
 class ZombieHorde : public Enemy {
     public:
-    ZombieHorde(int health = 8, int attack = 6, int speed = 3, int bounty = 40) :
+    ZombieHorde(int health = 16, int attack = 6, int speed = 3, int bounty = 40) :
     Enemy("Zombie Horde", health, attack, speed, bounty) {}
     ~ZombieHorde(){}
     virtual Enemy* Inner();

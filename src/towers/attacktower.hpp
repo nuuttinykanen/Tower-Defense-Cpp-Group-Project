@@ -150,7 +150,7 @@ public:
 
 class KnifeBot : public AttackTower {
 public:
-    KnifeBot() : AttackTower("Knife Bot", "Attacks close and hard.", 8, 1, 20, 100) { }
+    KnifeBot() : AttackTower("Knife Bot", "Attacks close and hard.", 8, 1, 100, 100) { }
     ~KnifeBot(){}
     virtual Projectile* GetProjectile();
 
@@ -161,7 +161,7 @@ public:
 
 class KnifeBot2 : public AttackTower {
 public:
-    KnifeBot2() : AttackTower("Knife Bot 2.0", "Attacks close and hard.", 16, 1, 30, 110) { }
+    KnifeBot2() : AttackTower("Knife Bot 2.0", "Attacks close and hard.", 16, 1, 100, 110) { }
     ~KnifeBot2(){}
     virtual Projectile* GetProjectile();
 
@@ -172,7 +172,7 @@ public:
 
 class SwordBot : public AttackTower {
 public:
-    SwordBot() : AttackTower("Sword Bot", "Attacks close and hard.", 20, 2, 30, 130) { }
+    SwordBot() : AttackTower("Sword Bot", "Attacks close and hard.", 20, 2, 100, 130) { }
     ~SwordBot(){}
     virtual Projectile* GetProjectile();
 

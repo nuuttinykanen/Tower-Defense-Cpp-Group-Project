@@ -65,7 +65,7 @@ class Game {
 
     void ProcessEnemies();
 
-    void ProcessAttackTowers();
+    void ProcessTowers();
 
     bool isGameOver() const { return gameEnd_;}
     void TakeDamage(Enemy* enemy);

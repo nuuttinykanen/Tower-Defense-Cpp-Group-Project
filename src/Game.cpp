@@ -147,7 +147,7 @@ void Game::ProcessEnemies() {
     }
 }
 
-void Game::ProcessAttackTowers() {
+void Game::ProcessTowers() {
     for(auto it : this->map_.GetAttackTowers()) {
         auto att = (AttackTower*)it->GetTower();
         if(att->CanAttack()) {
@@ -179,7 +179,7 @@ void Game::UpdateState() {
         }
 
         if(this->waveInProgress_) {
-            this->ProcessAttackTowers();
+            this->ProcessTowers();
             this->ProcessEnemies();
             if(this->player_.GetHealth() < 1) {
                 this->EndGame();

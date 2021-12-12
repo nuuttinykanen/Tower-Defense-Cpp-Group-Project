@@ -117,7 +117,7 @@ class GunFiend : public AttackTower {
 
 class CursedKid : public AttackTower {
 public:
-    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by two squares.", 2, 5, 60, 300) { }
+    CursedKid() : AttackTower("Cursed Kid", "Damages and sends enemies back by \ntwo squares.", 2, 1, 100, 300) { }
     ~CursedKid(){}
     virtual Projectile* GetProjectile();
 
@@ -128,7 +128,7 @@ public:
 
 class MaskedKid : public AttackTower {
 public:
-    MaskedKid() : AttackTower("Masked Kid", "Damages and sends enemies back\nby three squares.", 2, 5, 50, 300) { }
+    MaskedKid() : AttackTower("Masked Kid", "Damages and sends enemies back\nby three squares.", 2, 1, 120, 300) { }
     ~MaskedKid(){}
     virtual Projectile* GetProjectile();
 
@@ -139,7 +139,7 @@ public:
 
 class MaskedGod : public AttackTower {
 public:
-    MaskedGod() : AttackTower("Masked God", "Damages and sends enemies back\nby five squares.", 2, 5, 70, 300) { }
+    MaskedGod() : AttackTower("Masked God", "Damages and sends enemies back\nby five squares.", 2, 1, 160, 300) { }
     ~MaskedGod(){}
     virtual Projectile* GetProjectile();
 

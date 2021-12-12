@@ -445,9 +445,6 @@ void GameState::generateButtons() {
                                           getFont(), 50);
     towerButtons_[TowerTypes::StereoType] = support3Button;
 
-    auto support4Button = new TowerButton(sf::Vector2f(TOWER_BUTTON_GRID_START_X + TOWER_BUTTON_OFFSET, TOWER_BUTTON_GRID_START_Y + 3*TOWER_BUTTON_OFFSET), gui_->getGlobalObjects()->getGunnerSprite(),
-                                          getFont(), 50);
-    towerButtons_[TowerTypes::Support4] = support4Button;
 }
 
 void GameState::generateEnemies() {

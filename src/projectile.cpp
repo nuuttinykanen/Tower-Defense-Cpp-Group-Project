@@ -59,6 +59,7 @@ std::string BombProjectile::GetType() {
 
 std::vector<std::pair<int, int>> BulletProjectile::Effect(EnemySquare* enemy) {
     std::vector<std::pair<int, int>> list = std::vector<std::pair<int, int>>();
+    this->to_be_removed_ = true;
     if(enemy == nullptr) return list;
     if(this->GetTarget() != nullptr) {
         Enemy* target = enemy->GetEnemy(this->GetTarget());
@@ -80,6 +81,7 @@ std::string CursedProjectile::GetType() {
 }
 
 std::vector<std::pair<int, int>> CursedProjectile::Effect(EnemySquare *enemy) {
+    this->to_be_removed_ = true;
     std::vector<std::pair<int, int>> list = std::vector<std::pair<int, int>>();
     if(enemy == nullptr || enemy->GetEnemies().empty() || !this->GetTarget() || !enemy->ContainsEnemy(this->GetTarget())) return list;
     this->GetTarget()->ChangeHealth(-1 * this->GetStrength());
@@ -90,7 +92,8 @@ std::vector<std::pair<int, int>> CursedProjectile::Effect(EnemySquare *enemy) {
         if(!prev->GetPrevious()) break;
         prev = prev->GetPrevious();
     }
-    enemy->RemoveEnemy(this->GetTarget());
     prev->AddEnemy(this->GetTarget());
+    enemy->RemoveEnemy(this->GetTarget());
+    list.emplace_back(std::make_pair(prev->GetX(), prev->GetY()));
     return list;
 }

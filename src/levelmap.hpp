@@ -14,7 +14,6 @@
 class LevelMap {
 
   public:
-  // TODO: Path validity checks. 
   LevelMap(unsigned int width, unsigned int height, int levelNumber): width_(width), height_(height), levelNumber_(levelNumber) {
     towers_ = std::vector<Tower*>();
     enemies_ = std::vector<Enemy*>();

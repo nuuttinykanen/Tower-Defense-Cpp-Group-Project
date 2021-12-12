@@ -224,7 +224,6 @@ void GameState::PollEvents() {
     while (window_.pollEvent(event))
     {
         if (event.type == sf::Event::Closed) {
-            SaveGame();
             window_.close();
         }
 
@@ -261,8 +260,12 @@ void GameState::PollEvents() {
                             QuitToMenu();
                             return;
                         case SaveGameTarget:
-                            SaveGame();
-                            AddPopup("Game saved!", 400, false);
+                            if (game_->isWaveInProgress()) {
+                                AddPopup("Can't save while in the middle of a wave!", 200, false);
+                            } else {
+                                SaveGame();
+                                AddPopup("Game saved!", 400, false);
+                            }
                             return;
                         case StartWaveTarget:
                             buyingTower = false;
@@ -336,7 +339,6 @@ void GameState::PollEvents() {
 }
 
 void GameState::QuitToMenu() {
-    SaveGame();
     gui_->ChangeGameState(new MenuState(window_, gui_));
 }
 

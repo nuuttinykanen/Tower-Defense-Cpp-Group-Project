@@ -129,8 +129,8 @@ void JSON::SaveCurrentGame(Game* game, int levelNumber) {
     JSONCPP_STRING errs;
 
     root["index"] = levelNumber;
-    root["health"] = game->GetStartOfWaveHealth();
-    root["money"] = game->GetStartOfWaveMoney();
+    root["health"] = game->GetPlayer().GetHealth();
+    root["money"] = game->GetPlayer().GetMoney();
 
     // Save towers and their positions
     auto towerSquares = game->GetMap().GetTowerSquares();
@@ -247,10 +247,6 @@ Game* JSON::LoadLatestSave() {
                 break;
             case DJDudeType:
                 newTower = new DJDude();
-                break;
-            case Support4:
-                // TODO: Add new support tower
-                newTower = new Clocker();
                 break;
             default:
                 Json::throwLogicError("Unknown tower id");

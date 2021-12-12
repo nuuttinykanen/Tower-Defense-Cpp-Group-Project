@@ -49,7 +49,7 @@ class Enemy {
 
 class Zombie : public Enemy {
     public:
-    Zombie(int health = 4, int attack = 3, int speed = 2, int bounty = 19) :
+    Zombie(int health = 4, int attack = 3, int speed = 2, int bounty = 20) :
     Enemy("Zombie", health, attack, speed, bounty) {}
     ~Zombie(){}
     virtual Enemy* Inner();
@@ -58,7 +58,7 @@ class Zombie : public Enemy {
 
 class ZombieHorde : public Enemy {
     public:
-    ZombieHorde(int health = 8, int attack = 6, int speed = 2, int bounty = 40) :
+    ZombieHorde(int health = 8, int attack = 6, int speed = 3, int bounty = 40) :
     Enemy("Zombie Horde", health, attack, speed, bounty) {}
     ~ZombieHorde(){}
     virtual Enemy* Inner();
@@ -67,7 +67,7 @@ class ZombieHorde : public Enemy {
 
 class MichaelMyers : public Enemy {
     public:
-    MichaelMyers(int health = 80, int attack = 30, int speed = 2, int bounty = 100) :
+    MichaelMyers(int health = 80, int attack = 30, int speed = 4, int bounty = 200) :
     Enemy("Michael Myers", health, attack, speed, bounty) {}
     ~MichaelMyers(){}
     virtual Enemy* Inner();
@@ -76,7 +76,7 @@ class MichaelMyers : public Enemy {
 
 class Dracula : public Enemy {
     public:
-    Dracula(int health = 150, int attack = 32, int speed = 1, int bounty = 400) :
+    Dracula(int health = 150, int attack = 32, int speed = 5, int bounty = 400) :
     Enemy("Dracula", health, attack, speed, bounty) {}
     ~Dracula(){}
     virtual Enemy* Inner();
@@ -85,7 +85,7 @@ class Dracula : public Enemy {
 
 class Bat : public Enemy {
     public:
-    Bat(int health = 4, int attack = 20, int speed = 4, int bounty = 1) :
+    Bat(int health = 4, int attack = 20, int speed = 1, int bounty = 10) :
     Enemy("Bat", health, attack, speed, bounty) {}
     ~Bat(){}
     virtual Enemy* Inner();
